@@ -2,13 +2,14 @@
 
 import React from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { createTheme, MantineProvider } from '@mantine/core';
+import { MantineProvider } from "@mantine/core";
+import { theme } from "./theme";
 
 const client = new QueryClient();
 function Providers({ children }: React.PropsWithChildren) {
   return (
     <QueryClientProvider client={client}>
-      <MantineProvider>{children}</MantineProvider>
+      <MantineProvider theme={theme}>{children}</MantineProvider>
     </QueryClientProvider>
   );
 }

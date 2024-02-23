@@ -1,0 +1,8 @@
+.mantine-Switch-input:checked + .mantine-Switch-track {
+  --switch-color_gradient: linear-gradient(90deg, #ff9e00 0%, #37ceb5 100%);
+}
+
+.mantine-Switch-input {
+  --switch-color_gradient: linear-gradient(90deg, #3700ff 0%, #393a3a 100%);
+  background: var(--switch-color_gradient);
+}
