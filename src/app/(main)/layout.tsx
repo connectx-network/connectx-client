@@ -1,9 +1,10 @@
 "use client";
-import { AppShell, Burger, Group, Skeleton, Image, Text } from "@mantine/core";
+import { AppShell, Burger, Group, Image, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import NextImage from "next/image";
 
 import ConnectXLogo from "@images/logo/logo.png";
+import { Sidebar } from "@/components/layout";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
@@ -31,12 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
+        <Sidebar />
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
