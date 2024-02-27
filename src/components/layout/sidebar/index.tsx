@@ -54,11 +54,18 @@ const Sidebar = () => {
           Johny Deep
         </Title>
       </Stack>
-      <Stack mt={48}>
+      <Stack mt={48} gap={4}>
         {sidebarList.map((item, index) => (
-          <Flex key={index} gap={14}>
+          <Flex
+            key={index}
+            gap={12}
+            p={12}
+            className="hover:bg-slate-100 rounded-md hover:cursor-pointer"
+          >
             {item.icon}
-            <Link href={item.path}>{item.title}</Link>
+            <Link className="no-underline text-black" href={item.path}>
+              {item.title}
+            </Link>
           </Flex>
         ))}
       </Stack>
