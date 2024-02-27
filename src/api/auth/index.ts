@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "@utils/axios";
 import {
   AuthToken,
@@ -7,8 +6,6 @@ import {
   SignUpBody,
   VerifyOtpBody,
 } from "@/types/auth";
-import { getToken } from "@/utils";
-import { TOKEN_KEY } from "@constant/auth";
 
 export const signupRequest = async (body: SignUpBody) => {
   const { data } = await axiosInstance.post("/auth/sign-up", body);

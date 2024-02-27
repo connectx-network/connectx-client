@@ -1,4 +1,5 @@
 import { ROLE } from "@/constant";
+import { User } from "./user";
 
 export type SignUpBody = {
   fullName: string;
@@ -26,4 +27,7 @@ export type ResetPasswordBody = {
 export type AuthToken = {
   accessToken: string;
   refreshToken: string;
+  user: User;
 };
+
+

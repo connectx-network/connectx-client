@@ -45,6 +45,7 @@ const SignInPage = () => {
     onSuccess: (data: AuthToken) => {
       setToken(TOKEN_KEY.ACCESS, data.accessToken);
       setToken(TOKEN_KEY.REFRESH, data.refreshToken);
+      setToken(TOKEN_KEY.USER_ID, data.user.id);
       showSuccessNotification({
         message: "Sign in successfully",
       });
