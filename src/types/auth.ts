@@ -12,9 +12,15 @@ export type SignInBody = {
   password: string;
 };
 
-export type VerifyOtpAccountBody = {
+export type VerifyOtpBody = {
   email: string;
   verifyCode: string;
+};
+
+export type ResetPasswordBody = {
+  email: string;
+  password: string;
+  otp: string;
 };
 
 export type AuthToken = {

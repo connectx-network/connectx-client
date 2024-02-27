@@ -114,6 +114,7 @@ const SignInPage = () => {
               justify="space-between"
               leftSection={<span />}
               rightSection={<Icons.rightArrow />}
+              loading={mutation.isPending}
             >
               SIGN IN
             </Button>

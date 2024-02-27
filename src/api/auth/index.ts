@@ -2,9 +2,10 @@ import axios from "axios";
 import axiosInstance from "@utils/axios";
 import {
   AuthToken,
+  ResetPasswordBody,
   SignInBody,
   SignUpBody,
-  VerifyOtpAccountBody,
+  VerifyOtpBody,
 } from "@/types/auth";
 import { getToken } from "@/utils";
 import { TOKEN_KEY } from "@constant/auth";
@@ -14,7 +15,7 @@ export const signupRequest = async (body: SignUpBody) => {
   return data;
 };
 
-export const verifyOtpAccountRequest = async (body: VerifyOtpAccountBody) => {
+export const verifyOtpAccountRequest = async (body: VerifyOtpBody) => {
   const { data } = await axiosInstance.post("/auth/verify-otp/account", body);
   return data;
 };
@@ -30,6 +31,18 @@ export const signinRequest = async (body: SignInBody): Promise<AuthToken> => {
 
 export const resetPasswordRequest = async (email: string) => {
   await axiosInstance.post(`/auth/request/reset-password`, { email });
+};
+
+export const verifyOtpResetPasswordRequest = async (body: VerifyOtpBody) => {
+  const { data } = await axiosInstance.post(
+    "/auth/verify-otp/reset-password",
+    body
+  );
+  return data;
+};
+
+export const changePasswordRequest = async (body: ResetPasswordBody) => {
+  await axiosInstance.post(`/auth/reset-password`, body);
 };
 
 // export const refreshTokenRequest = async () => {

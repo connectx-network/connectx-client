@@ -13,8 +13,12 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-import { resendOtpCodeRequest, verifyOtpAccountRequest } from "@/api/auth";
-import { VerifyOtpAccountBody } from "@/types/auth";
+import {
+  resendOtpCodeRequest,
+  verifyOtpAccountRequest,
+  verifyOtpResetPasswordRequest,
+} from "@/api/auth";
+import { VerifyOtpBody } from "@/types/auth";
 import { useOTPStore } from "@/store/otp.store";
 import { showErrorNotification, showSuccessNotification } from "@/utils";
 import { ROUTER } from "@/constant";
@@ -25,20 +29,38 @@ const initialTimer = {
 };
 
 const VerificationPage = () => {
-  const [otpCode, setOtpCode] = useState("");
+  const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(initialTimer);
-  const { email, resetEmail } = useOTPStore();
+  const { email, isResetPassword, setOtpCode, resetOtpStore } = useOTPStore();
   const router = useRouter();
 
-  const mutation = useMutation({
-    mutationFn: async (data: VerifyOtpAccountBody) =>
+  const mutationVerifyOtpAccount = useMutation({
+    mutationFn: async (data: VerifyOtpBody) =>
       await verifyOtpAccountRequest(data),
     onSuccess: (data) => {
       showSuccessNotification({
         message: "Account verified successfully",
       });
-      resetEmail();
+      resetOtpStore();
       router.push(ROUTER.SIGN_IN);
+    },
+    onError: (error) => {
+      showErrorNotification({
+        message: (error as any).response.data.message,
+      });
+      console.log("😻 ~ SignUpPage ~ error:", error);
+    },
+  });
+
+  const mutationVerifyOtpResetPassword = useMutation({
+    mutationFn: async (data: VerifyOtpBody) =>
+      await verifyOtpResetPasswordRequest(data),
+    onSuccess: (data) => {
+      showSuccessNotification({
+        message: "Verified successfully",
+      });
+      setOtpCode(otp);
+      router.push(ROUTER.CHANGE_PASSWORD);
     },
     onError: (error) => {
       showErrorNotification({
@@ -54,11 +76,17 @@ const VerificationPage = () => {
   };
 
   const handleVerifyCode = (optCode: string) => {
-    const verifyOtpAccountBody: VerifyOtpAccountBody = {
+    const verifyOtpBody: VerifyOtpBody = {
       email,
       verifyCode: optCode,
     };
-    const data = mutation.mutateAsync(verifyOtpAccountBody);
+
+    if (isResetPassword) {
+      const data = mutationVerifyOtpResetPassword.mutateAsync(verifyOtpBody);
+      return;
+    }
+
+    const data = mutationVerifyOtpAccount.mutateAsync(verifyOtpBody);
     console.log("😻 ~ handleVerifyCode ~ data:", data);
   };
 
@@ -100,8 +128,8 @@ const VerificationPage = () => {
               fontWeight: 600,
             },
           }}
-          value={otpCode}
-          onChange={(value) => setOtpCode(value)}
+          value={otp}
+          onChange={(value) => setOtp(value)}
           onComplete={(value) => handleVerifyCode(value)}
         />
       </Center>
@@ -123,9 +151,12 @@ const VerificationPage = () => {
             fontSize: "16px",
           },
         }}
-        disabled={otpCode.length < 6}
-        loading={mutation.isPending}
-        onClick={() => handleVerifyCode(otpCode)}
+        disabled={otp.length < 6}
+        loading={
+          mutationVerifyOtpAccount.isPending ||
+          mutationVerifyOtpResetPassword.isPending
+        }
+        onClick={() => handleVerifyCode(otp)}
       >
         CONTINUE
       </Button>
