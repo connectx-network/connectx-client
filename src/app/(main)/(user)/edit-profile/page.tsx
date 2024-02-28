@@ -1,7 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/icons";
-import { COUNTRIES } from "@/constant";
+import { COUNTRIES, TOKEN_KEY } from "@/constant";
 import {
   Avatar,
   Button,
@@ -14,37 +14,112 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { validateEmail, validatePhone } from "@/utils/validate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  getUserRequest,
+  updateUserRequest,
+  uploadUserAvatar,
+} from "@/api/user";
+import {
+  getToken,
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/utils";
+import { useMutation } from "@tanstack/react-query";
+import { UpdateUserBody, User } from "@/types/user";
 
-const USER_PROFILE = {
-  fullName: "Jonny Deep",
-  nickName: "Jonyyy",
+const INIT_USER_PROFILE = {
+  fullName: "",
+  nickname: "",
   avatarUrl: "",
-  email: "test@gmail.com",
-  phone: "12312312312",
-  gender: "Male",
-  address: "Hanoi, Vietnam",
-  country: "Vietnam",
+  email: "",
+  phoneNumber: "",
+  gender: "",
+  address: "",
+  country: "",
 };
-const GENDER_LIST = ["Male", "Female"];
+const GENDER_LIST = [
+  { value: "MALE", label: "Male" },
+  { value: "FEMALE", label: "Female" },
+  { value: "OTHER", label: "Other" },
+];
 
 export default function EditProfilePage() {
   const form = useForm({
-    initialValues: USER_PROFILE,
+    initialValues: INIT_USER_PROFILE,
     validate: {
       email: (value) => (validateEmail(value) ? null : "Invalid email"),
-      phone: (value) => (validatePhone(value) ? null : "Invalid phone number"),
+      phoneNumber: (value) =>
+        validatePhone(value) ? null : "Invalid phone number",
       fullName: (value) => (value ? null : "Invalid full name"),
     },
   });
+
+  const [loading, setLoading] = useState(false);
+
+  const mutationFetchProfile = useMutation({
+    mutationFn: async (userId: string) => await getUserRequest(userId),
+    onSuccess: (data: User) => {
+      form.setValues({ ...data, gender: capitalizeString(data.gender) });
+    },
+    onError: (error) => {},
+  });
+  const mutationEditProfile = useMutation({
+    mutationFn: async (body: UpdateUserBody) => {
+      setLoading(true);
+      return await updateUserRequest(body);
+    },
+    onSuccess: (data: User) => {
+      setLoading(false);
+      showSuccessNotification({
+        message: "Edit profile successfully",
+      });
+    },
+    onError: (error) => {
+      setLoading(false);
+      showErrorNotification({
+        message: "Edit profile failed",
+      });
+    },
+  });
+  const mutationUploadAvatar = useMutation({
+    mutationFn: async (form: FormData) => await uploadUserAvatar(form),
+    onSuccess: (data: User) => {},
+    onError: (error) => {},
+  });
+
+  const capitalizeString = (str: string) =>
+    `${str?.charAt(0)?.toUpperCase()}${str?.slice(1)}`;
+
+  useEffect(() => {
+    const userId = getToken(TOKEN_KEY.USER_ID);
+    if (userId) mutationFetchProfile.mutateAsync(userId);
+  }, []);
 
   const [avatarUpload, setAvatarUpload] = useState<string | ArrayBuffer | null>(
     null
   );
 
+  const [file, setFile] = useState();
+
   const handleSubmitForm = () => {
-    console.log(form.values);
+    let body = {
+      fullName: form.values.fullName,
+      nickname: form.values.nickname,
+      phoneNumber: form.values.phoneNumber,
+      country: form.values.country,
+      address: form.values.address,
+      gender: form.values.gender,
+    };
+    mutationEditProfile.mutateAsync(body);
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file as any);
+      mutationUploadAvatar.mutateAsync(formData);
+    }
   };
+
   const handleClickAvatar = () => {
     document.getElementById("avatarUpload")?.click();
   };
@@ -59,6 +134,7 @@ export default function EditProfilePage() {
       };
 
       reader.readAsDataURL(file);
+      setFile(file);
     }
   };
 
@@ -104,13 +180,14 @@ export default function EditProfilePage() {
               size="lg"
               description="Nick name"
               className="w-full"
-              {...form.getInputProps("nickName")}
+              {...form.getInputProps("nickname")}
             />
             <Space h="md" />
             <TextInput
               type="email"
               radius={12}
               size="lg"
+              readOnly
               placeholder="abc@email.com"
               description="Email"
               className="w-full"
@@ -130,7 +207,7 @@ export default function EditProfilePage() {
                   className="ml-2 mr-1"
                 />
               }
-              {...form.getInputProps("phone")}
+              {...form.getInputProps("phoneNumber")}
             />
             <Space h="md" />
             <Flex gap={16}>
@@ -164,6 +241,7 @@ export default function EditProfilePage() {
             />
             <Space h="lg" />
             <Button
+              loading={loading}
               type="submit"
               h={44}
               radius={12}

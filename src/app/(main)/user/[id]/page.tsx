@@ -1,10 +1,16 @@
 "use client";
 
+import { getUserRequest } from "@/api/user";
 import { Event } from "@/components/event/EventItem";
 import { EventList } from "@/components/event/EventList";
 import { Icons } from "@/components/icons";
 import { Review } from "@/components/review/ReviewItem";
 import { ReviewList } from "@/components/review/ReviewList";
+import { InterestList } from "@/components/user/InterestList";
+import { TOKEN_KEY } from "@/constant";
+import { COLORS } from "@/constant/color";
+import { User } from "@/types/user";
+import { getToken, showErrorNotification } from "@/utils";
 import {
   Avatar,
   Button,
@@ -16,7 +22,8 @@ import {
   Tabs,
   Spoiler,
 } from "@mantine/core";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { use, useEffect, useState } from "react";
 
 const MOCK_LIST_EVENT: Event[] = [
   {
@@ -108,27 +115,32 @@ const MOCK_LIST_REVIEW: Review[] = [
   },
 ];
 export default function UserDetailPage({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState({
-    name: "Jonny Deep",
-    avatarUrl: "",
-    aboutMe:
-      "Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.",
-    interests: [
-      { value: "Games online", color: "red" },
-      { value: "Conchert", color: "yellow" },
-      { value: "Music", color: "orange" },
-      { value: "Art", color: "green" },
-      { value: "Movie", color: "" },
-      { value: "Others", color: "" },
-    ],
-  });
+  const [user, setUser] = useState<User>();
 
+  useEffect(() => {
+    const userId = getToken(TOKEN_KEY.USER_ID) || "";
+    mutationFetchProfile.mutateAsync(userId);
+  }, []);
+
+  const mutationFetchProfile = useMutation({
+    mutationFn: async (userId: string) => {
+      return await getUserRequest(userId);
+    },
+    onSuccess: (data: User) => {
+      setUser(data);
+    },
+    onError: (error) => {
+      showErrorNotification({
+        message: "Failed to fetch user profile",
+      });
+    },
+  });
   return (
     <>
       <Flex justify={"center"} direction={"column"} align={"center"}>
         <Avatar
           color="blue"
-          src={""}
+          src={user?.avatarUrl}
           alt="User avatar"
           size={"xl"}
           h={96}
@@ -137,18 +149,18 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
           <Icons.camera />
         </Avatar>
         <Title order={2} c="dark" fz={24} className="my-4" my={20}>
-          Jonny Deep
+          {user?.fullName}
         </Title>
         <Flex gap={16}>
           <Flex align={"center"} justify={"center"} direction={"column"}>
-            <Text>350</Text>
+            <Text>{user?.follwing || 0}</Text>
             <Text c="dimmed" fz={14}>
               Following
             </Text>
           </Flex>
           <Divider orientation="vertical" />
           <Flex align={"center"} justify={"center"} direction={"column"}>
-            <Text>350</Text>
+            <Text>{user?.follwers || 0}</Text>
             <Text c="dimmed" fz={14}>
               Followers
             </Text>
@@ -176,7 +188,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
             h={50}
             radius={"lg"}
             variant="outline"
-            color="#5669FF"
+            color={COLORS.PURPLE}
           >
             Messages
           </Button>
@@ -185,7 +197,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
 
         <Tabs
           defaultValue={"about"}
-          color="#5669FF"
+          color={COLORS.PURPLE}
           className="w-full md:w-3/4 lg:w-1/2"
           styles={{
             tabLabel: { fontSize: 16, fontWeight: 500, color: "#747688" },
@@ -199,8 +211,13 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
           <Space h="md" />
 
           <Tabs.Panel value="about">
-            <Spoiler maxHeight={100} showLabel="Read More" hideLabel="Hide">
-              {user.aboutMe}
+            <Spoiler
+              maxHeight={100}
+              showLabel="Read More"
+              hideLabel="Hide"
+              ta={"justify"}
+            >
+              {user?.description}
             </Spoiler>
             <Space h="lg" />
             <Title order={4} c="dark">
@@ -208,17 +225,10 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
             </Title>
             <Space h="md" />
             <div className="flex gap-2 flex-wrap">
-              {user?.interests?.map((e, index) => (
-                <Button
-                  key={index}
-                  variant="filled"
-                  color={e.color}
-                  radius={"xl"}
-                  size="xs"
-                >
-                  {e.value}
-                </Button>
-              ))}
+              <InterestList
+                interests={user?.userInterests || []}
+                isEditMode={false}
+              />
             </div>
           </Tabs.Panel>
           <Tabs.Panel value="events">

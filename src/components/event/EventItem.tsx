@@ -36,7 +36,6 @@ export const EventItem: React.FC<EventItemProps> = ({ event }) => {
           radius={"lg"}
           src={event?.createEventAssetDto?.[0]?.url}
           w={79}
-          //   h={92}
         />
         <div>
           <Text fz={12} c="#5669FF">

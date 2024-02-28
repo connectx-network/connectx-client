@@ -1,13 +1,5 @@
 "use client";
-import {
-  ActionIcon,
-  AppShell,
-  Burger,
-  Flex,
-  Group,
-  Image,
-  Text,
-} from "@mantine/core";
+import { AppShell, Burger, Flex, Group, Image, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import NextImage from "next/image";
 
