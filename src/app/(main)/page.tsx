@@ -2,6 +2,7 @@
 import { getEventListRequest } from "@/api/event";
 import { EventCard, EventHorizontialCard } from "@/components/event";
 import { Icons } from "@/components/icons";
+import { ROUTER } from "@/constant";
 import { QUERY_KEY } from "@/constant/query-key";
 import { useEventListParamStore } from "@/store/event-list.store";
 import {
@@ -17,9 +18,11 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const { param } = useEventListParamStore();
+  const router = useRouter();
   const { data: eventListData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
@@ -28,7 +31,7 @@ const HomePage = () => {
     <div>
       <Flex gap={40}>
         <Text fz={18}>Upcoming Events</Text>
-        <UnstyledButton>
+        <UnstyledButton onClick={() => router.push(ROUTER.EVENT)}>
           <Text c="gray" display="inline-block" mr={4}>
             See all
           </Text>

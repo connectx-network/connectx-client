@@ -210,7 +210,8 @@ const SignUpPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.google />}
           onClick={handleGoogleSignUp}
         >
@@ -220,19 +221,26 @@ const SignUpPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.facebook />}
         >
           <Text c="dark">Sign-up with Facebook</Text>
         </Button>
         <Flex gap={8} justify="center" align="center">
           <Text>Already have an account?</Text>
-          <Link
-            href={ROUTER.SIGN_IN}
-            className="font-extralight text-transparent bg-clip-text bg-gradient-to-t from-blue-800 to-fuchsia-600 hover:underline"
+          <Text
+            className="hover:cursor-pointer"
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={() => router.push(ROUTER.SIGN_IN)}
           >
             Sign in
-          </Link>
+          </Text>
         </Flex>
       </Stack>
     </>

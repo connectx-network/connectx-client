@@ -12,7 +12,12 @@ export default function AuthLayout({
 }) {
   return (
     <div className="relative mx-auto max-w-xl h-screen">
-      <div className="h-full backdrop-filter backdrop-blur-lg  bg-opacity-80 bg-white">
+      <div
+        className="h-full bg-opacity-80 bg-white"
+        style={{
+          backdropFilter: "blur(16px)",
+        }}
+      >
         <div className="flex flex-col gap-2 items-center pt-20">
           <Image
             component={NextImage}

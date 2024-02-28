@@ -8,4 +8,5 @@ export enum ROUTER {
   VERIFICATION = "/verification",
   RESET_PASSWORD = "/reset-password",
   CHANGE_PASSWORD = "/change-password",
+  EVENT = "/event",
 }

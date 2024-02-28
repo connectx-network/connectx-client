@@ -126,11 +126,11 @@ const SignInPage = () => {
               <Switch
                 size="md"
                 color="rgba(86, 105, 255, 1)"
-                label={<p className="font-extralight">Remember Me</p>}
+                label={<Text fw={200}>Remember Me</Text>}
               />
               <Link
                 href={ROUTER.RESET_PASSWORD}
-                className="font-extralight hover:underline"
+                className="font-extralight text-gray-800 no-underline hover:underline"
               >
                 Forgot Password?
               </Link>
@@ -160,7 +160,8 @@ const SignInPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.google />}
           onClick={handleGoogleSignIn}
         >
@@ -170,19 +171,26 @@ const SignInPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.facebook />}
         >
           <Text c="dark">Login with Facebook</Text>
         </Button>
         <Flex gap={4} justify="center" align="center">
           <Text>Don’t have an account?</Text>
-          <Link
-            href={ROUTER.SIGN_UP}
-            className="font-extralight text-transparent bg-clip-text bg-gradient-to-t from-blue-800 to-fuchsia-600 hover:underline"
+          <Text
+            className="hover:cursor-pointer"
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={() => router.push(ROUTER.SIGN_UP)}
           >
             Sign up
-          </Link>
+          </Text>
         </Flex>
       </Stack>
     </>
