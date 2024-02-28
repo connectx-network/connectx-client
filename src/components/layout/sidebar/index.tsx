@@ -1,72 +1,81 @@
+"use client";
+
 import { Icons } from "@/components/icons";
-import { Avatar, Flex, Stack, Title } from "@mantine/core";
-import Link from "next/link";
+import { ROUTER, TOKEN_KEY } from "@/constant";
+import { getToken } from "@/utils";
+import { Avatar, NavLink, Stack, Title } from "@mantine/core";
+import { usePathname } from "next/navigation";
 
 const sidebarList = [
   {
     title: "My Profile",
     icon: <Icons.profile />,
-    path: "/",
+    path: ROUTER.PROFILE,
   },
   {
     title: "Message",
     icon: <Icons.messageCircle />,
-    path: "/message",
+    path: ROUTER.MESSAGE,
   },
   {
     title: "Calender",
     icon: <Icons.calender />,
-    path: "/calender",
+    path: ROUTER.CALENDAR,
   },
   {
     title: "Bookmark",
     icon: <Icons.bookmark />,
-    path: "/bookmark",
+    path: ROUTER.BOOKMARK,
   },
   {
     title: "Contact Us",
     icon: <Icons.mail />,
-    path: "/contact-us",
+    path: ROUTER.CONTACT_US,
   },
   {
     title: "Settings",
     icon: <Icons.setting />,
-    path: "/setting",
+    path: ROUTER.SETTINGS,
   },
   {
     title: "Helps & FAQs",
     icon: <Icons.questionMarkCircle />,
-    path: "/helps-faqs",
+    path: ROUTER.HELPS_FAQS,
   },
   {
     title: "Sign Out",
     icon: <Icons.signout />,
-    path: "/sign-out",
+    path: "#",
   },
 ];
+
+const avatarUrl = getToken(TOKEN_KEY.AVATAR_URL);
+const fullname = getToken(TOKEN_KEY.FULLNAME);
+// const pathname = usePathname();
 
 const Sidebar = () => {
   return (
     <>
       <Stack>
-        <Avatar variant="light" radius="xl" size="lg" color="blue" src="" />
+        <Avatar
+          variant="light"
+          radius="xl"
+          size="lg"
+          color="blue"
+          src={avatarUrl}
+        />
         <Title order={2} c="dark" fz={24}>
-          Johny Deep
+          {fullname}
         </Title>
       </Stack>
       <Stack mt={48} gap={4}>
         {sidebarList.map((item, index) => (
-          <Flex
+          <NavLink
             key={index}
-            gap={12}
-            p={12}
-            className="hover:bg-slate-100 rounded-md hover:cursor-pointer"
-          >
-            {item.icon}
-            <Link className="no-underline text-black" href={item.path}>
-              {item.title}
-            </Link>
-          </Flex>
+            href={item.path}
+            leftSection={item.icon}
+            label={item.title}
+          ></NavLink>
         ))}
       </Stack>
     </>

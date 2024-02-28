@@ -1,18 +1,9 @@
 "use client";
-import {
-  ActionIcon,
-  AppShell,
-  Burger,
-  Flex,
-  Group,
-  Image,
-  Text,
-} from "@mantine/core";
+import { AppShell, Burger, Flex, Group, Image, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import NextImage from "next/image";
 
 import ConnectXLogo from "@images/logo/logo.png";
-import { NavBar } from "@/components/NavBar";
 import { Sidebar } from "@/components/layout";
 import { useRouter } from "next/navigation";
 import { ROUTER } from "@/constant";
@@ -56,7 +47,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Flex>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <NavBar />
         <Sidebar />
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
