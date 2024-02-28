@@ -1,10 +1,9 @@
 "use client";
-import {
-  EventCard,
-  EventHorizontialCard,
-  EventFilter,
-} from "@/components/event";
+import { getEventListRequest } from "@/api/event";
+import { EventCard, EventHorizontialCard } from "@/components/event";
 import { Icons } from "@/components/icons";
+import { QUERY_KEY } from "@/constant/query-key";
+import { useEventListParamStore } from "@/store/event-list.store";
 import {
   Box,
   Button,
@@ -17,11 +16,16 @@ import {
   Title,
   UnstyledButton,
 } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 
-const Main = () => {
+const HomePage = () => {
+  const { param } = useEventListParamStore();
+  const { data: eventListData } = useQuery({
+    queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
+    queryFn: () => getEventListRequest(param),
+  });
   return (
     <div>
-      <EventFilter />
       <Flex gap={40}>
         <Text fz={18}>Upcoming Events</Text>
         <UnstyledButton>
@@ -32,10 +36,16 @@ const Main = () => {
         </UnstyledButton>
       </Flex>
       <SimpleGrid cols={{ base: 2, sm: 2, md: 3, lg: 4 }} mt={6}>
-        <EventCard />
-        <EventCard />
-        <EventCard />
-        <EventCard />
+        {eventListData?.data.map((event) => (
+          <EventCard
+            key={event.id}
+            id={event.id}
+            name={event.name}
+            imageUrl={event.eventAssets?.[0].url}
+            eventDate={event.eventDate}
+            location={event.location}
+          />
+        ))}
       </SimpleGrid>
       <Space h={40} />
       <Box pos="relative" maw={500}>
@@ -102,4 +112,4 @@ const Main = () => {
     </div>
   );
 };
-export default Main;
+export default HomePage;

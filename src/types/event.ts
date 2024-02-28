@@ -14,6 +14,8 @@ export type EventListResponse = {
   agenda: any;
   speakers: any;
   eventCategoryId: string;
+  eventAssets: EventAsset[];
+  eventHosts: EventHost[];
 };
 
 export type EventDetail = {

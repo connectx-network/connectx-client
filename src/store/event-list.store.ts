@@ -3,6 +3,7 @@ import { EventListParam } from "@/types/event";
 
 type EventListParamState = {
   param: EventListParam;
+  setEventQuery: (param: EventListParam) => void;
 };
 
 const initialEventListParam: EventListParam = {
@@ -10,7 +11,7 @@ const initialEventListParam: EventListParam = {
   size: 10,
 };
 
-export const useOTPStore = create<EventListParamState>()((set) => ({
+export const useEventListParamStore = create<EventListParamState>()((set) => ({
   param: initialEventListParam,
   setEventQuery: (param: EventListParam) => set((prev) => ({ ...prev, param })),
 }));

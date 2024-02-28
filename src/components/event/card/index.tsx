@@ -15,20 +15,42 @@ import {
   Title,
 } from "@mantine/core";
 import classes from "./card.module.css";
+import { useMemo } from "react";
+import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
-const EventCard = () => {
+type EventCardProps = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  location: string;
+  eventDate: string;
+};
+
+const EventCard = (props: EventCardProps) => {
+  const { id, name, imageUrl, location, eventDate } = props;
+  const router = useRouter();
+  const eventDateFormat = useMemo(() => {
+    return {
+      month: dayjs(eventDate).format("MMMM"),
+      day: dayjs(eventDate).format("DD"),
+    };
+  }, [eventDate]);
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      className="hover:cursor-pointer hover:opacity-80"
+      onClick={() => router.push(`/event/${id}`)}
+    >
       <Card.Section
         style={{
           position: "relative",
         }}
       >
-        <Image
-          radius={8}
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-          alt="Norway"
-        />
+        <Image radius={8} src={imageUrl} alt={name} h={170} />
       </Card.Section>
 
       <Paper className={classes.date}>
@@ -43,7 +65,7 @@ const EventCard = () => {
           fw={800}
           ta="center"
         >
-          10
+          {eventDateFormat.day}
         </Text>
         <Text
           variant="gradient"
@@ -54,7 +76,7 @@ const EventCard = () => {
           }}
           ta="center"
         >
-          JUNE
+          {eventDateFormat.month}
         </Text>
       </Paper>
 
@@ -62,9 +84,9 @@ const EventCard = () => {
         <Icons.bookmarkGradient className="h-5 w-5" />
       </ActionIcon>
 
-      <Stack mt={8} gap={4}>
-        <Title c="dark.9" fz={18}>
-          Name of the event
+      <Stack mt={12} gap={8}>
+        <Title c="dark.9" fz={18} lineClamp={2}>
+          {name}
         </Title>
         <Flex gap={10} align="center">
           <Avatar.Group>
@@ -76,7 +98,9 @@ const EventCard = () => {
         </Flex>
         <Flex gap={8} align="center">
           <Icons.location />
-          <Text c="gray">Location</Text>
+          <Text c="gray" truncate="end">
+            {location}
+          </Text>
         </Flex>
       </Stack>
     </Card>
