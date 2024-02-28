@@ -5,6 +5,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import { Notifications } from "@mantine/notifications";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const client = new QueryClient();
 function Providers({ children }: React.PropsWithChildren) {

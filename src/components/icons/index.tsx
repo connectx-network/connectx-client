@@ -201,16 +201,16 @@ export const Icons = {
         <path
           d="M10.0834 3.66669H3.66671C3.18048 3.66669 2.71416 3.85984 2.37034 4.20366C2.02653 4.54747 1.83337 5.01379 1.83337 5.50002V18.3334C1.83337 18.8196 2.02653 19.2859 2.37034 19.6297C2.71416 19.9735 3.18048 20.1667 3.66671 20.1667H16.5C16.9863 20.1667 17.4526 19.9735 17.7964 19.6297C18.1402 19.2859 18.3334 18.8196 18.3334 18.3334V11.9167"
           stroke="#5669FF"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M16.9584 2.29165C17.323 1.92698 17.8176 1.72211 18.3334 1.72211C18.8491 1.72211 19.3437 1.92698 19.7084 2.29165C20.073 2.65632 20.2779 3.15093 20.2779 3.66665C20.2779 4.18238 20.073 4.67698 19.7084 5.04165L11 13.75L7.33337 14.6667L8.25004 11L16.9584 2.29165Z"
           stroke="#5669FF"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>
@@ -232,16 +232,16 @@ export const Icons = {
       <path
         d="M6.5 10.8333H11.375"
         stroke="#5669FF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.9375 1.89587C9.15299 1.68039 9.44525 1.55933 9.75 1.55933C9.90089 1.55933 10.0503 1.58905 10.1897 1.64679C10.3291 1.70454 10.4558 1.78918 10.5625 1.89587C10.6692 2.00257 10.7538 2.12924 10.8116 2.26865C10.8693 2.40806 10.899 2.55748 10.899 2.70837C10.899 2.85927 10.8693 3.00869 10.8116 3.1481C10.7538 3.28751 10.6692 3.41418 10.5625 3.52087L3.79167 10.2917L1.625 10.8334L2.16667 8.66671L8.9375 1.89587Z"
         stroke="#5669FF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),
@@ -272,30 +272,30 @@ export const Icons = {
       <path
         d="M14.6666 19.25V17.4167C14.6666 16.4442 14.2803 15.5116 13.5927 14.8239C12.9051 14.1363 11.9724 13.75 11 13.75H4.58329C3.61083 13.75 2.6782 14.1363 1.99057 14.8239C1.30293 15.5116 0.916626 16.4442 0.916626 17.4167V19.25"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.79167 10.0833C9.81671 10.0833 11.4583 8.44171 11.4583 6.41667C11.4583 4.39162 9.81671 2.75 7.79167 2.75C5.76662 2.75 4.125 4.39162 4.125 6.41667C4.125 8.44171 5.76662 10.0833 7.79167 10.0833Z"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.3334 7.33333V12.8333"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M21.0834 10.0833H15.5834"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),
@@ -311,9 +311,9 @@ export const Icons = {
       <path
         d="M19.25 10.5417C19.2532 11.7515 18.9705 12.9451 18.425 14.025C17.7782 15.3191 16.7839 16.4076 15.5535 17.1685C14.3231 17.9294 12.9051 18.3328 11.4583 18.3333C10.2485 18.3365 9.05494 18.0538 7.975 17.5083L2.75 19.25L4.49167 14.025C3.94619 12.9451 3.66351 11.7515 3.66667 10.5417C3.66723 9.09494 4.07056 7.67694 4.83149 6.4465C5.59242 5.21606 6.6809 4.22177 7.975 3.575C9.05494 3.02952 10.2485 2.74684 11.4583 2.75H11.9167C13.8273 2.8554 15.632 3.66186 16.985 5.01495C18.3381 6.36804 19.1446 8.17268 19.25 10.0833V10.5417Z"
         stroke="#5669FF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),

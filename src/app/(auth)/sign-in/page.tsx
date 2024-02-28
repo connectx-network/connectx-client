@@ -10,20 +10,28 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant/router";
-import { useForm } from "@mantine/form";
-import { useMutation } from "@tanstack/react-query";
 import { AuthToken, SignInBody } from "@/types/auth";
-import { signinRequest } from "@/api/auth";
-import { setToken, showSuccessNotification } from "@/utils";
+import { signinByGoogleRequest, signinRequest } from "@/api/auth";
+import {
+  setToken,
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/utils";
 import { TOKEN_KEY } from "@/constant";
-import { useRouter } from "next/navigation";
+import { auth, googleProvider } from "@/config/firebase-cfg";
+import { useAuthStore } from "@/store/auth.store";
 
 const SignInPage = () => {
   const router = useRouter();
+  const { setAuth } = useAuthStore();
   const signInForm = useForm({
     initialValues: {
       email: "",
@@ -43,6 +51,10 @@ const SignInPage = () => {
   const mutation = useMutation({
     mutationFn: async (data: SignInBody) => await signinRequest(data),
     onSuccess: (data: AuthToken) => {
+      setAuth({
+        isAuthenticated: true,
+        user: data.user,
+      });
       setToken(TOKEN_KEY.ACCESS, data.accessToken);
       setToken(TOKEN_KEY.REFRESH, data.refreshToken);
       showSuccessNotification({
@@ -62,6 +74,28 @@ const SignInPage = () => {
 
   const handleSignin = async (data: SignInBody) => {
     mutation.mutateAsync(data);
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const idToken = await userCredential.user.getIdToken();
+      const data = await signinByGoogleRequest(idToken);
+      setAuth({
+        isAuthenticated: true,
+        user: data.user,
+      });
+      setToken(TOKEN_KEY.ACCESS, data.accessToken);
+      setToken(TOKEN_KEY.REFRESH, data.refreshToken);
+      router.push(ROUTER.HOME);
+      showSuccessNotification({
+        message: "Sign in successfully",
+      });
+    } catch (error) {
+      showErrorNotification({
+        message: "Sign in with Google failed!",
+      });
+    }
   };
   return (
     <>
@@ -128,6 +162,7 @@ const SignInPage = () => {
           autoContrast
           variant="transparent"
           leftSection={<Icons.google />}
+          onClick={handleGoogleSignIn}
         >
           <Text c="dark">Login with Google</Text>
         </Button>

@@ -45,6 +45,15 @@ export const changePasswordRequest = async (body: ResetPasswordBody) => {
   await axiosInstance.post(`/auth/reset-password`, body);
 };
 
+export const signinByGoogleRequest = async (
+  idToken: string
+): Promise<AuthToken> => {
+  const { data } = await axiosInstance.post<AuthToken>("/auth/sign-in/google", {
+    token: idToken,
+  });
+  return data;
+};
+
 // export const refreshTokenRequest = async () => {
 //   const refreshToken = getToken(TOKEN_KEY.REFRESH);
 //   const { data } = await axios.post<AuthToken>(

@@ -51,7 +51,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <Text>Connect X</Text>
             </Group>
           </Group>
-          <SearchSpotlight />
+          <Flex>
+            <SearchSpotlight />
+          </Flex>
         </Flex>
       </AppShell.Header>
       <AppShell.Navbar p="md">
