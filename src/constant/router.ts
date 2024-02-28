@@ -8,4 +8,10 @@ export enum ROUTER {
   VERIFICATION = "/verification",
   RESET_PASSWORD = "/reset-password",
   CHANGE_PASSWORD = "/change-password",
+  MESSAGE = '/messages',
+  CALENDAR = '/calendar',
+  BOOKMARK = '/bookmark',
+  CONTACT_US = '/contact-us',
+  SETTINGS = '/settings',
+  HELPS_FAQS = '/helps-and-faqs',
 }

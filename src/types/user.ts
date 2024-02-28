@@ -14,7 +14,9 @@ export type User = {
     isPrivate: boolean,
     activated: boolean,
     userRole: ROLE,
-    userInterests: UserInterest[]
+    userInterests: UserInterest[],
+    follwers?: number,
+    follwing?: number,
 }
 export type UpdateUserBody = {
     fullName: string,
