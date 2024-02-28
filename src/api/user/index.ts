@@ -1,7 +1,7 @@
 import { UpdateUserBody, User } from "@/types/user";
 import axiosInstance from "@/utils/axios"
 
-export const getUserRequest = async (id: string) => {
+export const getUserRequest = async (id: string | null) => {
     const { data } = await axiosInstance.get<User>(`/user/${id}`);
     return data;
 }
