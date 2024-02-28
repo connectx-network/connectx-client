@@ -201,16 +201,16 @@ export const Icons = {
         <path
           d="M10.0834 3.66669H3.66671C3.18048 3.66669 2.71416 3.85984 2.37034 4.20366C2.02653 4.54747 1.83337 5.01379 1.83337 5.50002V18.3334C1.83337 18.8196 2.02653 19.2859 2.37034 19.6297C2.71416 19.9735 3.18048 20.1667 3.66671 20.1667H16.5C16.9863 20.1667 17.4526 19.9735 17.7964 19.6297C18.1402 19.2859 18.3334 18.8196 18.3334 18.3334V11.9167"
           stroke="#5669FF"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M16.9584 2.29165C17.323 1.92698 17.8176 1.72211 18.3334 1.72211C18.8491 1.72211 19.3437 1.92698 19.7084 2.29165C20.073 2.65632 20.2779 3.15093 20.2779 3.66665C20.2779 4.18238 20.073 4.67698 19.7084 5.04165L11 13.75L7.33337 14.6667L8.25004 11L16.9584 2.29165Z"
           stroke="#5669FF"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>
@@ -232,16 +232,16 @@ export const Icons = {
       <path
         d="M6.5 10.8333H11.375"
         stroke="#5669FF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.9375 1.89587C9.15299 1.68039 9.44525 1.55933 9.75 1.55933C9.90089 1.55933 10.0503 1.58905 10.1897 1.64679C10.3291 1.70454 10.4558 1.78918 10.5625 1.89587C10.6692 2.00257 10.7538 2.12924 10.8116 2.26865C10.8693 2.40806 10.899 2.55748 10.899 2.70837C10.899 2.85927 10.8693 3.00869 10.8116 3.1481C10.7538 3.28751 10.6692 3.41418 10.5625 3.52087L3.79167 10.2917L1.625 10.8334L2.16667 8.66671L8.9375 1.89587Z"
         stroke="#5669FF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),
@@ -272,30 +272,30 @@ export const Icons = {
       <path
         d="M14.6666 19.25V17.4167C14.6666 16.4442 14.2803 15.5116 13.5927 14.8239C12.9051 14.1363 11.9724 13.75 11 13.75H4.58329C3.61083 13.75 2.6782 14.1363 1.99057 14.8239C1.30293 15.5116 0.916626 16.4442 0.916626 17.4167V19.25"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.79167 10.0833C9.81671 10.0833 11.4583 8.44171 11.4583 6.41667C11.4583 4.39162 9.81671 2.75 7.79167 2.75C5.76662 2.75 4.125 4.39162 4.125 6.41667C4.125 8.44171 5.76662 10.0833 7.79167 10.0833Z"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.3334 7.33333V12.8333"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M21.0834 10.0833H15.5834"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),
@@ -793,28 +793,16 @@ export const Icons = {
   ),
   search: (props: IconProps) => (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
+      enableBackground="new 0 0 461.516 461.516"
+      height="512"
+      viewBox="0 0 461.516 461.516"
+      width="512"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
-        stroke="#1F1212"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        opacity="0.4"
-        d="M20.9999 21L16.6499 16.65"
-        stroke="#1F1212"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <g>
+        <path d="m185.746 371.332c41.251.001 81.322-13.762 113.866-39.11l122.778 122.778c9.172 8.858 23.787 8.604 32.645-.568 8.641-8.947 8.641-23.131 0-32.077l-122.778-122.778c62.899-80.968 48.252-197.595-32.716-260.494s-197.594-48.252-260.493 32.716-48.252 197.595 32.716 260.494c32.597 25.323 72.704 39.06 113.982 39.039zm-98.651-284.273c54.484-54.485 142.82-54.486 197.305-.002s54.486 142.82.002 197.305-142.82 54.486-197.305.002c-.001-.001-.001-.001-.002-.002-54.484-54.087-54.805-142.101-.718-196.585.239-.24.478-.479.718-.718z" />
+      </g>
     </svg>
   ),
   caretRightFill: (props: IconProps) => (
@@ -887,6 +875,84 @@ export const Icons = {
         d="M24 36.5C27.4518 36.5 30.25 35.9404 30.25 35.25C30.25 34.5596 27.4518 34 24 34C20.5482 34 17.75 34.5596 17.75 35.25C17.75 35.9404 20.5482 36.5 24 36.5Z"
         fill="#5669FF"
       />
+    </svg>
+  ),
+  bell: (props: IconProps) => (
+    <svg
+      height="512"
+      viewBox="0 0 24 24"
+      width="512"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g id="Bell">
+        <path d="m20 13.171v-4.171a8 8 0 0 0 -16 0v4.169a2.845 2.845 0 0 0 -1.107.7 2.937 2.937 0 0 0 -.893 2.131 3 3 0 0 0 3 3h2.1a5 5 0 0 0 9.8 0h2.1a3.015 3.015 0 0 0 3-3 3.006 3.006 0 0 0 -2-2.829zm-8 7.829a3.006 3.006 0 0 1 -2.829-2h5.658a3.006 3.006 0 0 1 -2.829 2zm7.693-4.287a.959.959 0 0 1 -.693.287h-14a1 1 0 0 1 -1-1 .977.977 0 0 1 .307-.713.959.959 0 0 1 .693-.287 1 1 0 0 0 1-1v-5a6 6 0 1 1 12 0v5a1 1 0 0 0 1 1 1 1 0 0 1 1 1 .977.977 0 0 1 -.307.713z" />
+      </g>
+    </svg>
+  ),
+  userCirleOutline: (props: IconProps) => (
+    <svg
+      version="1.1"
+      id="svg963"
+      width="682.66669"
+      height="682.66669"
+      viewBox="0 0 682.66669 682.66669"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <defs id="defs967">
+        <clipPath clipPathUnits="userSpaceOnUse" id="clipPath977">
+          <path d="M 0,512 H 512 V 0 H 0 Z" id="path975" />
+        </clipPath>
+      </defs>
+      <g id="g969" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">
+        <g id="g971">
+          <g id="g973" clip-path="url(#clipPath977)">
+            <g id="g979" transform="translate(20,256)">
+              <path
+                d="M 0,0 C 0,-130.339 105.661,-236 236,-236 366.339,-236 472,-130.339 472,0 472,130.339 366.339,236 236,236 105.661,236 0,130.339 0,0 Z"
+                fill="none"
+                stroke="#000000"
+                stroke-width="40"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-dasharray="none"
+                stroke-opacity="1"
+                id="path981"
+              />
+            </g>
+            <g id="g983" transform="translate(331,333)">
+              <path
+                d="m 0,0 c 0,-41.974 -34.026,-76 -76,-76 -41.974,0 -76,34.026 -76,76 0,41.974 34.026,76 76,76 C -34.026,76 0,41.974 0,0 Z"
+                fill="none"
+                stroke="#000000"
+                stroke-width="40"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-dasharray="none"
+                stroke-opacity="1"
+                id="path985"
+              />
+            </g>
+            <g id="g987" transform="translate(369.0391,136)">
+              <path
+                d="m 0,0 c -23.499,28.689 -59.197,47 -99.174,47 h -23.73 c -39.977,0 -75.675,-18.311 -99.174,-47"
+                fill="none"
+                stroke="#000000"
+                stroke-width="40"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-dasharray="none"
+                stroke-opacity="1"
+                id="path989"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
     </svg>
   ),
 };

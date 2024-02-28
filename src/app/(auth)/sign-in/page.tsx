@@ -10,20 +10,28 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant/router";
-import { useForm } from "@mantine/form";
-import { useMutation } from "@tanstack/react-query";
 import { AuthToken, SignInBody } from "@/types/auth";
-import { signinRequest } from "@/api/auth";
-import { setToken, showSuccessNotification } from "@/utils";
+import { signinByGoogleRequest, signinRequest } from "@/api/auth";
+import {
+  setToken,
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/utils";
 import { TOKEN_KEY } from "@/constant";
-import { useRouter } from "next/navigation";
+import { auth, googleProvider } from "@/config/firebase-cfg";
+import { useAuthStore } from "@/store/auth.store";
 
 const SignInPage = () => {
   const router = useRouter();
+  const { setAuth } = useAuthStore();
   const signInForm = useForm({
     initialValues: {
       email: "",
@@ -43,6 +51,10 @@ const SignInPage = () => {
   const mutation = useMutation({
     mutationFn: async (data: SignInBody) => await signinRequest(data),
     onSuccess: (data: AuthToken) => {
+      setAuth({
+        isAuthenticated: true,
+        user: data.user,
+      });
       setToken(TOKEN_KEY.ACCESS, data.accessToken);
       setToken(TOKEN_KEY.REFRESH, data.refreshToken);
       setToken(TOKEN_KEY.USER_ID, data.user.id);
@@ -65,6 +77,28 @@ const SignInPage = () => {
 
   const handleSignin = async (data: SignInBody) => {
     mutation.mutateAsync(data);
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const idToken = await userCredential.user.getIdToken();
+      const data = await signinByGoogleRequest(idToken);
+      setAuth({
+        isAuthenticated: true,
+        user: data.user,
+      });
+      setToken(TOKEN_KEY.ACCESS, data.accessToken);
+      setToken(TOKEN_KEY.REFRESH, data.refreshToken);
+      router.push(ROUTER.HOME);
+      showSuccessNotification({
+        message: "Sign in successfully",
+      });
+    } catch (error) {
+      showErrorNotification({
+        message: "Sign in with Google failed!",
+      });
+    }
   };
   return (
     <>
@@ -95,11 +129,11 @@ const SignInPage = () => {
               <Switch
                 size="md"
                 color="rgba(86, 105, 255, 1)"
-                label={<p className="font-extralight">Remember Me</p>}
+                label={<Text fw={200}>Remember Me</Text>}
               />
               <Link
                 href={ROUTER.RESET_PASSWORD}
-                className="font-extralight hover:underline"
+                className="font-extralight text-gray-800 no-underline hover:underline"
               >
                 Forgot Password?
               </Link>
@@ -129,8 +163,10 @@ const SignInPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.google />}
+          onClick={handleGoogleSignIn}
         >
           <Text c="dark">Login with Google</Text>
         </Button>
@@ -138,19 +174,26 @@ const SignInPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.facebook />}
         >
           <Text c="dark">Login with Facebook</Text>
         </Button>
         <Flex gap={4} justify="center" align="center">
           <Text>Don’t have an account?</Text>
-          <Link
-            href={ROUTER.SIGN_UP}
-            className="font-extralight text-transparent bg-clip-text bg-gradient-to-t from-blue-800 to-fuchsia-600 hover:underline"
+          <Text
+            className="hover:cursor-pointer"
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={() => router.push(ROUTER.SIGN_UP)}
           >
             Sign up
-          </Link>
+          </Text>
         </Flex>
       </Stack>
     </>

@@ -6,6 +6,9 @@ import {
   SignUpBody,
   VerifyOtpBody,
 } from "@/types/auth";
+import { getToken } from "@/utils";
+import { TOKEN_KEY } from "@constant/auth";
+import { User } from "@/types/user";
 
 export const signupRequest = async (body: SignUpBody) => {
   const { data } = await axiosInstance.post("/auth/sign-up", body);
@@ -40,6 +43,20 @@ export const verifyOtpResetPasswordRequest = async (body: VerifyOtpBody) => {
 
 export const changePasswordRequest = async (body: ResetPasswordBody) => {
   await axiosInstance.post(`/auth/reset-password`, body);
+};
+
+export const signinByGoogleRequest = async (
+  idToken: string
+): Promise<AuthToken> => {
+  const { data } = await axiosInstance.post<AuthToken>("/auth/sign-in/google", {
+    token: idToken,
+  });
+  return data;
+};
+
+export const getUserInfoRequest = async (): Promise<User> => {
+  const { data } = await axiosInstance.get("/auth/self");
+  return data;
 };
 
 // export const refreshTokenRequest = async () => {

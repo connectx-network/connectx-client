@@ -16,11 +16,21 @@ import { useMutation } from "@tanstack/react-query";
 
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant/router";
-import { resendOtpCodeRequest, signupRequest } from "@/api/auth";
+import {
+  resendOtpCodeRequest,
+  signinByGoogleRequest,
+  signupRequest,
+} from "@/api/auth";
 import { SignUpBody } from "@/types/auth";
-import { setToken, showErrorNotification } from "@/utils";
+import {
+  setToken,
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/utils";
 import { ROLE, TOKEN_KEY } from "@/constant";
 import { useOTPStore } from "@/store/otp.store";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/config/firebase-cfg";
 
 type SignUpFormData = {
   fullName: string;
@@ -110,6 +120,24 @@ const SignUpPage = () => {
     mutation.mutateAsync(signUpBody);
   };
 
+  const handleGoogleSignUp = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const idToken = await userCredential.user.getIdToken();
+      const data = await signinByGoogleRequest(idToken);
+      setToken(TOKEN_KEY.ACCESS, data.accessToken);
+      setToken(TOKEN_KEY.REFRESH, data.refreshToken);
+      router.push(ROUTER.HOME);
+      showSuccessNotification({
+        message: "Sign in successfully",
+      });
+    } catch (error) {
+      showErrorNotification({
+        message: "Sign in with Google failed!",
+      });
+    }
+  };
+
   return (
     <>
       <Stack p={12}>
@@ -182,28 +210,37 @@ const SignUpPage = () => {
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.google />}
+          onClick={handleGoogleSignUp}
         >
-          <Text c="dark">Login with Google</Text>
+          <Text c="dark">Sign-up with Google</Text>
         </Button>
         <Button
           h={58}
           radius={12}
           autoContrast
-          variant="transparent"
+          color="gray"
+          variant="subtle"
           leftSection={<Icons.facebook />}
         >
-          <Text c="dark">Login with Facebook</Text>
+          <Text c="dark">Sign-up with Facebook</Text>
         </Button>
         <Flex gap={8} justify="center" align="center">
           <Text>Already have an account?</Text>
-          <Link
-            href={ROUTER.SIGN_IN}
-            className="font-extralight text-transparent bg-clip-text bg-gradient-to-t from-blue-800 to-fuchsia-600 hover:underline"
+          <Text
+            className="hover:cursor-pointer"
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={() => router.push(ROUTER.SIGN_IN)}
           >
             Sign in
-          </Link>
+          </Text>
         </Flex>
       </Stack>
     </>

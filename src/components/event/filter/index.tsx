@@ -4,7 +4,6 @@ import { useDisclosure } from "@mantine/hooks";
 import {
   Drawer,
   Button,
-  Title,
   Chip,
   Flex,
   RangeSlider,
