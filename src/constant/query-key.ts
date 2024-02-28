@@ -1,0 +1,3 @@
+export enum QUERY_KEY {
+  "GET_EVENT_DETAIL" = "GET_EVENT_DETAIL",
+}

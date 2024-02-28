@@ -4,28 +4,41 @@ import {
   EventHorizontialCard,
   EventFilter,
 } from "@/components/event";
+import { Icons } from "@/components/icons";
 import {
   Box,
   Button,
   Flex,
   Image,
   SimpleGrid,
+  Space,
   Stack,
+  Text,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 
 const Main = () => {
   return (
     <div>
       <EventFilter />
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 5 }}>
+      <Flex gap={40}>
+        <Text fz={18}>Upcoming Events</Text>
+        <UnstyledButton>
+          <Text c="gray" display="inline-block" mr={4}>
+            See all
+          </Text>
+          <Icons.caretRightFill />
+        </UnstyledButton>
+      </Flex>
+      <SimpleGrid cols={{ base: 2, sm: 2, md: 3, lg: 4 }} mt={6}>
         <EventCard />
         <EventCard />
         <EventCard />
         <EventCard />
       </SimpleGrid>
-
-      <Box mx="auto" pos="relative" maw={500} my={16}>
+      <Space h={40} />
+      <Box pos="relative" maw={500}>
         <Image
           src="https://cryptoevents.global/wp-content/uploads/Crypto-Fest-2022.jpg"
           alt="Banner ads"
@@ -64,11 +77,23 @@ const Main = () => {
           </Button>
         </Flex>
       </Box>
+      <Space h={40} />
+
       <Stack>
-        <Title order={2} c="dark.9" fz={24}>
-          Upcoming Events
-        </Title>
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
+        <Flex gap={40}>
+          <Text fz={18}>Upcoming Events</Text>
+          <UnstyledButton>
+            <Text c="gray" display="inline-block" mr={4}>
+              See all
+            </Text>
+            <Icons.caretRightFill />
+          </UnstyledButton>
+        </Flex>
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 3, xl: 4 }}>
+          <EventHorizontialCard />
+          <EventHorizontialCard />
+          <EventHorizontialCard />
+          <EventHorizontialCard />
           <EventHorizontialCard />
           <EventHorizontialCard />
           <EventHorizontialCard />
