@@ -92,8 +92,8 @@ export default function EditProfilePage() {
     `${str?.charAt(0)?.toUpperCase()}${str?.slice(1)}`;
 
   useEffect(() => {
-    const userId = getToken(TOKEN_KEY.USER_ID) || "";
-    mutationFetchProfile.mutateAsync(userId);
+    const userId = getToken(TOKEN_KEY.USER_ID);
+    if (userId) mutationFetchProfile.mutateAsync(userId);
   }, []);
 
   const [avatarUpload, setAvatarUpload] = useState<string | ArrayBuffer | null>(

@@ -5,6 +5,7 @@ import { EventList } from "@/components/event/EventList";
 import { Icons } from "@/components/icons";
 import { Review } from "@/components/review/ReviewItem";
 import { ReviewList } from "@/components/review/ReviewList";
+import { InterestList } from "@/components/user/InterestList";
 import {
   Avatar,
   Button,
@@ -113,14 +114,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
     avatarUrl: "",
     aboutMe:
       "Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase. Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.",
-    interests: [
-      { value: "Games online", color: "red" },
-      { value: "Conchert", color: "yellow" },
-      { value: "Music", color: "orange" },
-      { value: "Art", color: "green" },
-      { value: "Movie", color: "" },
-      { value: "Others", color: "" },
-    ],
+    interests: [],
   });
 
   return (
@@ -208,17 +202,10 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
             </Title>
             <Space h="md" />
             <div className="flex gap-2 flex-wrap">
-              {user?.interests?.map((e, index) => (
-                <Button
-                  key={index}
-                  variant="filled"
-                  color={e.color}
-                  radius={"xl"}
-                  size="xs"
-                >
-                  {e.value}
-                </Button>
-              ))}
+              <InterestList
+                interests={user?.interests || []}
+                isEditMode={false}
+              />
             </div>
           </Tabs.Panel>
           <Tabs.Panel value="events">

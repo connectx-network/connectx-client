@@ -5,7 +5,7 @@ export type User = {
     email: string,
     fullName: string,
     nickname: string,
-    description: string,
+    description?: string,
     country: string,
     phoneNumber: string,
     gender: string,
@@ -13,7 +13,8 @@ export type User = {
     avatarUrl: string,
     isPrivate: boolean,
     activated: boolean,
-    userRole: ROLE
+    userRole: ROLE,
+    userInterests: UserInterest[]
 }
 export type UpdateUserBody = {
     fullName: string,
@@ -22,4 +23,8 @@ export type UpdateUserBody = {
     country: string,
     address: string,
     gender: string
+}
+export type UserInterest = {
+    id?: string,
+    name: string
 }
