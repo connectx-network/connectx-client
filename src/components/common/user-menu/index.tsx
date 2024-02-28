@@ -20,7 +20,7 @@ const UserMenu = (props: UserMenuProps) => {
         size={32}
         variant="transparent"
       >
-        <Icons.user className="w-7 h-7" />
+        <Icons.userCirleOutline className="w-7 h-7" />
       </Avatar>
     </Group>
   );

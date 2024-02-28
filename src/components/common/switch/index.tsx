@@ -1,3 +1,4 @@
+"use client";
 import { Switch, SwitchProps } from "@mantine/core";
 import classes from "./switch.module.css";
 
