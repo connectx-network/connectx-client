@@ -49,11 +49,11 @@ const sidebarList = [
   },
 ];
 
-const avatarUrl = getToken(TOKEN_KEY.AVATAR_URL);
-const fullname = getToken(TOKEN_KEY.FULLNAME);
-// const pathname = usePathname();
-
 const Sidebar = () => {
+  const avatarUrl = getToken(TOKEN_KEY.AVATAR_URL);
+  const fullname = getToken(TOKEN_KEY.FULLNAME);
+  const pathname = usePathname();
+
   return (
     <>
       <Stack>
@@ -71,6 +71,7 @@ const Sidebar = () => {
       <Stack mt={48} gap={4}>
         {sidebarList.map((item, index) => (
           <NavLink
+            active={pathname === item.path}
             key={index}
             href={item.path}
             leftSection={item.icon}
