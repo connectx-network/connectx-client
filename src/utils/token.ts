@@ -1,12 +1,14 @@
 export const setToken = (key: string, token: string) => {
-  localStorage?.setItem(key, token);
+  if (typeof localStorage !== undefined) localStorage?.setItem(key, token);
 };
 
 export const getToken = (key: string) => {
-  const token = localStorage?.getItem(key);
-  return token;
+  if (typeof localStorage !== undefined) {
+    const token = localStorage?.getItem(key);
+    return token;
+  } else return "";
 };
 
 export const clearToken = (key: string) => {
-  localStorage?.removeItem(key);
+  if (typeof localStorage !== undefined) localStorage?.removeItem(key);
 };
