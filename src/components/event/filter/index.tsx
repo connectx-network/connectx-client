@@ -77,8 +77,8 @@ const EventFilter = () => {
                 },
               }}
               thumbChildren={[
-                <Icons.thumbSliderRange />,
-                <Icons.thumbSliderRange />,
+                <Icons.thumbSliderRange key="thumb-left" />,
+                <Icons.thumbSliderRange key="thumb-right" />,
               ]}
             />
           </div>
