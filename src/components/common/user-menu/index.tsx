@@ -17,10 +17,12 @@ const UserMenu = (props: UserMenuProps) => {
   const { user } = props;
   const router = useRouter();
   const { auth, setAuth } = useAuthStore();
+
   const handleSignOut = () => {
     clearToken(TOKEN_KEY.ACCESS);
     clearToken(TOKEN_KEY.REFRESH);
     setAuth({ isAuthenticated: false, user: null });
+    router.push(ROUTER.HOME);
   };
   return (
     <Menu

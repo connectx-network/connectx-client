@@ -17,6 +17,7 @@ export const EventItem: React.FC<EventItemProps> = ({ event }) => {
           src={event?.eventAssets?.[0]?.url}
           w={90}
           h={100}
+          alt="Image"
         />
         <Flex direction={"column"} justify={"space-between"}>
           <div>
