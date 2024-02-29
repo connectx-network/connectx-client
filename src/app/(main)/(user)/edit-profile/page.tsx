@@ -97,7 +97,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     const userId = auth.user?.id || "";
     if (userId) mutationFetchProfile.mutateAsync(userId);
-  }, []);
+  }, [auth]);
 
   const [avatarUpload, setAvatarUpload] = useState<string | ArrayBuffer | null>(
     null

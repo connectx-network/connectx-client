@@ -29,8 +29,10 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const userId = auth.user?.id || "";
-    mutationFetchProfile.mutateAsync(userId);
-  }, []);
+    if (userId) {
+      mutationFetchProfile.mutateAsync(userId);
+    }
+  }, [auth]);
 
   const mutationFetchProfile = useMutation({
     mutationFn: async (userId: string) => {
