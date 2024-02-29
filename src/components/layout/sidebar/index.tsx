@@ -3,7 +3,7 @@
 import { Icons } from "@/components/icons";
 import { ROUTER, TOKEN_KEY } from "@/constant";
 import { useAuthStore } from "@/store/auth.store";
-import { getToken } from "@/utils";
+import { clearToken, getToken } from "@/utils";
 import { Avatar, NavLink, Stack, Title } from "@mantine/core";
 import { usePathname } from "next/navigation";
 
@@ -52,7 +52,12 @@ const sidebarList = [
 
 const Sidebar = () => {
   const pathname = usePathname();
-  const { auth } = useAuthStore();
+  const { auth, setAuth } = useAuthStore();
+  const handleSignOut = () => {
+    clearToken(TOKEN_KEY.ACCESS);
+    clearToken(TOKEN_KEY.REFRESH);
+    setAuth({ isAuthenticated: false, user: null });
+  };
 
   return (
     <>
@@ -76,6 +81,7 @@ const Sidebar = () => {
             href={item.path}
             leftSection={item.icon}
             label={item.title}
+            onClick={() => item.path === "#" && handleSignOut()}
           ></NavLink>
         ))}
       </Stack>
