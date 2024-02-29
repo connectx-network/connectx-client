@@ -7,10 +7,10 @@ import { Icons } from "@/components/icons";
 import { Review } from "@/components/review/ReviewItem";
 import { ReviewList } from "@/components/review/ReviewList";
 import { InterestList } from "@/components/user/InterestList";
-import { TOKEN_KEY } from "@/constant";
 import { COLORS } from "@/constant/color";
+import { useAuthStore } from "@/store/auth.store";
 import { User } from "@/types/user";
-import { getToken, showErrorNotification } from "@/utils";
+import { showErrorNotification } from "@/utils";
 import {
   Avatar,
   Button,
@@ -23,7 +23,7 @@ import {
   Spoiler,
 } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const MOCK_LIST_EVENT: Event[] = [
   {
@@ -117,9 +117,10 @@ const MOCK_LIST_REVIEW: Review[] = [
 export default function UserDetailPage({ params }: { params: { id: string } }) {
   const [user, setUser] = useState<User>();
 
+  const { auth } = useAuthStore();
+
   useEffect(() => {
-    const userId = getToken(TOKEN_KEY.USER_ID) || "";
-    mutationFetchProfile.mutateAsync(userId);
+    mutationFetchProfile.mutateAsync(auth.user?.id || "");
   }, []);
 
   const mutationFetchProfile = useMutation({

@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { InterestList } from "@/components/user/InterestList";
+import { useAuthStore } from "@/store/auth.store";
 
 export default function ProfilePage() {
   const [userProfile, setUserProfile] = useState<User>();
@@ -24,9 +25,10 @@ export default function ProfilePage() {
   const [description, setDescription] = useState<string>();
   const [interests, setInterests] = useState<UserInterest[]>([]);
   const [loading, setLoading] = useState(false);
+  const { auth } = useAuthStore();
 
   useEffect(() => {
-    const userId = getToken(TOKEN_KEY.USER_ID) || "";
+    const userId = auth.user?.id || "";
     mutationFetchProfile.mutateAsync(userId);
   }, []);
 
