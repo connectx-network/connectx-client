@@ -102,14 +102,19 @@ const HomePage = () => {
             <Icons.caretRightFill />
           </UnstyledButton>
         </Flex>
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3, xl: 4 }}>
-          <EventHorizontialCard />
-          <EventHorizontialCard />
-          <EventHorizontialCard />
-          <EventHorizontialCard />
-          <EventHorizontialCard />
-          <EventHorizontialCard />
-          <EventHorizontialCard />
+        <SimpleGrid cols={{ base: 1, xs: 2, sm: 1, md: 2, xl: 3 }}>
+          {eventListData?.data.map((event) => (
+            <EventHorizontialCard
+              key={event.id}
+              event={{
+                id: event.id,
+                name: event.name,
+                date: event.eventDate,
+                imageUrl: event.eventAssets?.[0]?.url,
+                location: event.location,
+              }}
+            />
+          ))}
         </SimpleGrid>
       </Stack>
     </div>

@@ -43,7 +43,11 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
         <Center>
           <Stack maw={672}>
             <Box maw={672} pos="relative">
-              <Image src={eventDetailData.eventAssets?.[0].url} radius={12} />
+              <Image
+                src={eventDetailData.eventAssets?.[0].url}
+                radius={12}
+                alt={eventDetailData.name}
+              />
               <Flex
                 gap={10}
                 align="center"
@@ -87,7 +91,6 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   }}
                   px={8}
                   radius={10}
-                  onClick={close}
                 >
                   <Text fz={10} c="rbga(255, 255, 255, 1)">
                     Invite

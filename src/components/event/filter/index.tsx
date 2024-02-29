@@ -28,10 +28,10 @@ const EventFilter = () => {
         opened={opened}
         onClose={close}
         position="right"
-        withCloseButton={false}
+        title={<Text fz={24}>Filter</Text>}
         styles={{
           body: {
-            height: "100%",
+            height: "calc(100% - 70px)",
           },
         }}
       >
@@ -41,8 +41,6 @@ const EventFilter = () => {
           justify="space-between"
         >
           <div>
-            <Text fz={24}>Filter</Text>
-            <Space h="lg" />
             <Text fz={16}>Time & Date</Text>
             <Flex gap={8} my={8} wrap="wrap">
               <Chip.Group>
