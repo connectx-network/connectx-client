@@ -2,6 +2,7 @@
 
 import { Icons } from "@/components/icons";
 import { ROUTER, TOKEN_KEY } from "@/constant";
+import { useAuthStore } from "@/store/auth.store";
 import { getToken } from "@/utils";
 import { Avatar, NavLink, Stack, Title } from "@mantine/core";
 import { usePathname } from "next/navigation";
@@ -50,9 +51,8 @@ const sidebarList = [
 ];
 
 const Sidebar = () => {
-  const avatarUrl = getToken(TOKEN_KEY.AVATAR_URL);
-  const fullname = getToken(TOKEN_KEY.FULLNAME);
   const pathname = usePathname();
+  const { auth } = useAuthStore();
 
   return (
     <>
@@ -62,10 +62,10 @@ const Sidebar = () => {
           radius="xl"
           size="lg"
           color="blue"
-          src={avatarUrl}
+          src={auth.user?.avatarUrl}
         />
         <Title order={2} c="dark" fz={24}>
-          {fullname}
+          {auth.user?.fullName}
         </Title>
       </Stack>
       <Stack mt={48} gap={4}>

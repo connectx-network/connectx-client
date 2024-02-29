@@ -57,9 +57,6 @@ const SignInPage = () => {
       });
       setToken(TOKEN_KEY.ACCESS, data.accessToken);
       setToken(TOKEN_KEY.REFRESH, data.refreshToken);
-      setToken(TOKEN_KEY.USER_ID, data.user.id);
-      setToken(TOKEN_KEY.FULLNAME, data.user.fullName);
-      setToken(TOKEN_KEY.AVATAR_URL, data.user.avatarUrl);
       showSuccessNotification({
         message: "Sign in successfully",
       });
