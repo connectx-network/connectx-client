@@ -1,14 +1,15 @@
 "use client";
 
+import { getEventListRequest } from "@/api/event";
 import { getUserRequest } from "@/api/user";
-import { Event } from "@/components/event/EventItem";
 import { EventList } from "@/components/event/EventList";
 import { Icons } from "@/components/icons";
 import { Review } from "@/components/review/ReviewItem";
 import { ReviewList } from "@/components/review/ReviewList";
 import { InterestList } from "@/components/user/InterestList";
 import { COLORS } from "@/constant/color";
-import { useAuthStore } from "@/store/auth.store";
+import { PaginationResponse } from "@/types/common";
+import { EventListResponse } from "@/types/event";
 import { User } from "@/types/user";
 import { showErrorNotification } from "@/utils";
 import {
@@ -25,77 +26,6 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-const MOCK_LIST_EVENT: Event[] = [
-  {
-    name: "Name of event",
-    eventCategoryId: "string",
-    tiketPrice: 0,
-    eventDate: "2024-02-27T08:22:10.856Z",
-    location: "string",
-    description: "string",
-    sponsors: "string",
-    agenda: "string",
-    speakers: "string",
-    createEventHostDto: [
-      {
-        title: "string",
-        url: "string",
-      },
-    ],
-    createEventAssetDto: [
-      {
-        url: "https://picsum.photos/200",
-        type: "BACKGROUND",
-      },
-    ],
-  },
-  {
-    name: "Name of event 4",
-    eventCategoryId: "stringeqweqweqw",
-    tiketPrice: 0,
-    eventDate: "2024-02-27T08:22:10.856Z",
-    location: "string",
-    description: "string",
-    sponsors: "string",
-    agenda: "string",
-    speakers: "string",
-    createEventHostDto: [
-      {
-        title: "string",
-        url: "string",
-      },
-    ],
-    createEventAssetDto: [
-      {
-        url: "https://picsum.photos/200",
-        type: "BACKGROUND",
-      },
-    ],
-  },
-  {
-    name: "Name of event 2",
-    eventCategoryId: "stringdasda",
-    tiketPrice: 0,
-    eventDate: "2024-02-27T08:22:10.856Z",
-    location: "string",
-    description: "string",
-    sponsors: "string",
-    agenda: "string",
-    speakers: "string",
-    createEventHostDto: [
-      {
-        title: "string",
-        url: "string",
-      },
-    ],
-    createEventAssetDto: [
-      {
-        url: "https://picsum.photos/200",
-        type: "BACKGROUND",
-      },
-    ],
-  },
-];
 const MOCK_LIST_REVIEW: Review[] = [
   {
     image: "https://picsum.photos/200",
@@ -116,11 +46,11 @@ const MOCK_LIST_REVIEW: Review[] = [
 ];
 export default function UserDetailPage({ params }: { params: { id: string } }) {
   const [user, setUser] = useState<User>();
-
-  const { auth } = useAuthStore();
+  const [joinedEvents, setJoinedEvents] = useState<EventListResponse[]>([]);
 
   useEffect(() => {
-    mutationFetchProfile.mutateAsync(auth.user?.id || "");
+    mutationFetchProfile.mutateAsync(params.id);
+    mutationFetchListEventJoined.mutateAsync(params.id);
   }, []);
 
   const mutationFetchProfile = useMutation({
@@ -134,6 +64,20 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
       showErrorNotification({
         message: "Failed to fetch user profile",
       });
+    },
+  });
+
+  const mutationFetchListEventJoined = useMutation({
+    mutationFn: async (userId: string) => {
+      return await getEventListRequest({
+        userId: userId,
+      });
+    },
+    onSuccess: (data: PaginationResponse<EventListResponse>) => {
+      setJoinedEvents(data.data);
+    },
+    onError: (error) => {
+      console.log("Error:", error);
     },
   });
   return (
@@ -233,7 +177,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
             </div>
           </Tabs.Panel>
           <Tabs.Panel value="events">
-            <EventList events={MOCK_LIST_EVENT} />
+            <EventList events={joinedEvents} />
           </Tabs.Panel>
           <Tabs.Panel value="reviews">
             <ReviewList reviews={MOCK_LIST_REVIEW} />

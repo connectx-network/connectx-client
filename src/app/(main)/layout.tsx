@@ -136,9 +136,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </Flex>
             </Flex>
           </AppShell.Header>
-          <AppShell.Navbar p="md">
-            <Sidebar />
-          </AppShell.Navbar>
+          {auth.isAuthenticated && (
+            <AppShell.Navbar p="md">
+              <Sidebar />
+            </AppShell.Navbar>
+          )}
+
           <AppShell.Main>{children}</AppShell.Main>
         </AppShell>
       )}

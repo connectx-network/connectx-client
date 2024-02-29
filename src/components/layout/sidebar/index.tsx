@@ -1,17 +1,16 @@
 "use client";
 
 import { Icons } from "@/components/icons";
-import { ROUTER, TOKEN_KEY } from "@/constant";
-import { useAuthStore } from "@/store/auth.store";
-import { clearToken, getToken } from "@/utils";
-import { Avatar, NavLink, Stack, Title } from "@mantine/core";
+import { ROUTER } from "@/constant";
+import { Stack, NavLink } from "@mantine/core";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const sidebarList = [
   {
-    title: "My Profile",
-    icon: <Icons.profile />,
-    path: ROUTER.PROFILE,
+    title: "Home",
+    icon: <Icons.home />,
+    path: ROUTER.HOME,
   },
   {
     title: "Message",
@@ -43,46 +42,23 @@ const sidebarList = [
     icon: <Icons.questionMarkCircle />,
     path: ROUTER.HELPS_FAQS,
   },
-  {
-    title: "Sign Out",
-    icon: <Icons.signout />,
-    path: "#",
-  },
 ];
 
 const Sidebar = () => {
   const pathname = usePathname();
-  const { auth, setAuth } = useAuthStore();
-  const handleSignOut = () => {
-    clearToken(TOKEN_KEY.ACCESS);
-    clearToken(TOKEN_KEY.REFRESH);
-    setAuth({ isAuthenticated: false, user: null });
-  };
 
   return (
     <>
-      <Stack>
-        <Avatar
-          variant="light"
-          radius="xl"
-          size="lg"
-          color="blue"
-          src={auth.user?.avatarUrl}
-        />
-        <Title order={2} c="dark" fz={24}>
-          {auth.user?.fullName}
-        </Title>
-      </Stack>
-      <Stack mt={48} gap={4}>
+      <Stack gap={4}>
         {sidebarList.map((item, index) => (
-          <NavLink
-            active={pathname === item.path}
-            key={index}
-            href={item.path}
-            leftSection={item.icon}
-            label={item.title}
-            onClick={() => item.path === "#" && handleSignOut()}
-          ></NavLink>
+          <Link href={item.path} key={item.path}>
+            <NavLink
+              active={pathname === item.path}
+              key={index}
+              leftSection={item.icon}
+              label={item.title}
+            ></NavLink>
+          </Link>
         ))}
       </Stack>
     </>
