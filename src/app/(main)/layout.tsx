@@ -24,106 +24,124 @@ import { eventSearchSpotlight } from "@/components/common/search-spotlight";
 import Notification from "@/components/notification";
 import { useEffect } from "react";
 import { getUserInfoRequest } from "@/api/auth";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/constant/query-key";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [opened, { toggle }] = useDisclosure();
   const { auth, setAuth } = useAuthStore();
 
+  const {
+    data: userInfoData,
+    isSuccess,
+    isLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEY.GET_USER_INFO],
+    queryFn: getUserInfoRequest,
+    retry: 0,
+    enabled: !auth.isAuthenticated,
+  });
+
   useEffect(() => {
-    const fetchUser = async () => {
-      if (auth.isAuthenticated) return;
-      const user = await getUserInfoRequest();
-      setAuth({ isAuthenticated: true, user });
-    };
-    fetchUser();
-  }, []);
+    if (isSuccess) {
+      setAuth({ isAuthenticated: true, user: userInfoData });
+    }
+  }, [isSuccess, setAuth, userInfoData]);
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
-      padding="md"
-    >
-      <AppShell.Header>
-        <Flex h="100%" justify="space-between" align="center">
-          <Group h="100%" px="md">
-            <Burger
-              opened={opened}
-              onClick={toggle}
-              hiddenFrom="sm"
-              size="sm"
-            />
-            <Group
-              className="hover:cursor-pointer"
-              onClick={() => router.push(ROUTER.HOME)}
-            >
-              <Image
-                component={NextImage}
-                src={ConnectXLogo}
-                alt="Connect X Logo"
-                w={48}
-                h={48}
-                priority
-              />
-              <Text>Connect X</Text>
-            </Group>
-          </Group>
-          <SearchSpotlight />
-
-          <Flex gap={4} align="center" px={16}>
-            <ActionIcon
-              variant="subtle"
-              c="gray"
-              size="lg"
-              radius={50}
-              onClick={eventSearchSpotlight.open}
-              hiddenFrom="sm"
-            >
-              <Icons.search className="w-5 h-5" />
-            </ActionIcon>
-            {auth.isAuthenticated && auth.user ? (
-              <Flex gap={4} align="center">
-                <Notification />
-                <UserMenu
-                  user={{
-                    name: auth.user?.fullName,
-                    avatar: auth.user?.avatarUrl,
-                  }}
+    <>
+      {!isLoading && (
+        <AppShell
+          header={{ height: 60 }}
+          navbar={{
+            width: 300,
+            breakpoint: "sm",
+            collapsed: { mobile: !opened },
+          }}
+          padding="md"
+        >
+          <AppShell.Header>
+            <Flex h="100%" justify="space-between" align="center">
+              <Group h="100%" px="md">
+                <Burger
+                  opened={opened}
+                  onClick={toggle}
+                  hiddenFrom="sm"
+                  size="sm"
                 />
-              </Flex>
-            ) : (
-              <Flex gap={8}>
-                <Button
-                  variant="gradient"
-                  gradient={{
-                    from: "rgba(86, 105, 255, 1)",
-                    to: "rgba(191, 86, 255, 1)",
-                    deg: 180,
-                  }}
-                  radius="xl"
-                  onClick={() => router.push(ROUTER.SIGN_IN)}
+                <Group
+                  className="hover:cursor-pointer"
+                  onClick={() => router.push(ROUTER.HOME)}
                 >
-                  Sign-in
-                </Button>
-                <Button
-                  variant="outline"
-                  color="rgba(86, 105, 255, 1)"
-                  radius="xl"
-                  onClick={() => router.push(ROUTER.SIGN_UP)}
-                  visibleFrom="sm"
+                  <Image
+                    component={NextImage}
+                    src={ConnectXLogo}
+                    alt="Connect X Logo"
+                    w={48}
+                    h={48}
+                    priority
+                  />
+                  <Text>Connect X</Text>
+                </Group>
+              </Group>
+              <SearchSpotlight />
+
+              <Flex gap={4} align="center" px={16}>
+                <ActionIcon
+                  variant="subtle"
+                  c="gray"
+                  size="lg"
+                  radius={50}
+                  onClick={eventSearchSpotlight.open}
+                  hiddenFrom="sm"
                 >
-                  Sign-up
-                </Button>
+                  <Icons.search className="w-5 h-5" />
+                </ActionIcon>
+                {auth.isAuthenticated && auth.user ? (
+                  <Flex gap={4} align="center">
+                    <Notification />
+                    <UserMenu
+                      user={{
+                        name: auth.user?.fullName,
+                        avatar: auth.user?.avatarUrl,
+                      }}
+                    />
+                  </Flex>
+                ) : (
+                  <Flex gap={8}>
+                    <Button
+                      variant="gradient"
+                      gradient={{
+                        from: "rgba(86, 105, 255, 1)",
+                        to: "rgba(191, 86, 255, 1)",
+                        deg: 180,
+                      }}
+                      radius="xl"
+                      onClick={() => router.push(ROUTER.SIGN_IN)}
+                    >
+                      Sign-in
+                    </Button>
+                    <Button
+                      variant="outline"
+                      color="rgba(86, 105, 255, 1)"
+                      radius="xl"
+                      onClick={() => router.push(ROUTER.SIGN_UP)}
+                      visibleFrom="sm"
+                    >
+                      Sign-up
+                    </Button>
+                  </Flex>
+                )}
               </Flex>
-            )}
-          </Flex>
-        </Flex>
-      </AppShell.Header>
-      <AppShell.Navbar p="md">
-        <Sidebar />
-      </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
-    </AppShell>
+            </Flex>
+          </AppShell.Header>
+          <AppShell.Navbar p="md">
+            <Sidebar />
+          </AppShell.Navbar>
+          <AppShell.Main>{children}</AppShell.Main>
+        </AppShell>
+      )}
+    </>
   );
 }
