@@ -1,9 +1,7 @@
 "use client";
 
-import { getEventDetailRequest } from "@/api/event";
-import { Icons } from "@/components/icons";
-import { QUERY_KEY } from "@/constant/query-key";
 import {
+  ActionIcon,
   Avatar,
   Box,
   Button,
@@ -20,6 +18,12 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import { useMemo } from "react";
+import { IconBookmark, IconShare } from "@tabler/icons-react";
+
+import { getEventDetailRequest } from "@/api/event";
+import { Icons } from "@/components/icons";
+import { QUERY_KEY } from "@/constant/query-key";
+import { EventShareBtn } from "@/components/event";
 
 dayjs.extend(LocalizedFormat);
 
@@ -48,6 +52,16 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 radius={12}
                 alt={eventDetailData.name}
               />
+              <Flex gap={8} pos="absolute" top={8} right={8}>
+                <ActionIcon
+                  size="lg"
+                  color="rgba(86, 105, 255, 1)"
+                  variant="filled"
+                >
+                  <IconBookmark />
+                </ActionIcon>
+                <EventShareBtn />
+              </Flex>
               <Flex
                 gap={10}
                 align="center"
