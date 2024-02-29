@@ -23,7 +23,7 @@ import { IconBookmark, IconShare } from "@tabler/icons-react";
 import { getEventDetailRequest } from "@/api/event";
 import { Icons } from "@/components/icons";
 import { QUERY_KEY } from "@/constant/query-key";
-import { EventShareBtn } from "@/components/event";
+import { EventInviteBtn, EventShareBtn } from "@/components/event";
 
 dayjs.extend(LocalizedFormat);
 
@@ -55,8 +55,12 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               <Flex gap={8} pos="absolute" top={8} right={8}>
                 <ActionIcon
                   size="lg"
-                  color="rgba(86, 105, 255, 1)"
-                  variant="filled"
+                  variant="gradient"
+                  gradient={{
+                    from: "rgba(86, 105, 255, 1)",
+                    to: "rgba(191, 86, 255, 1)",
+                    deg: 180,
+                  }}
                 >
                   <IconBookmark />
                 </ActionIcon>
@@ -95,21 +99,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                     +20 Going
                   </Text>
                 </Flex>
-                <Button
-                  size="compact-sm"
-                  variant="gradient"
-                  gradient={{
-                    from: "rgba(86, 105, 255, 1)",
-                    to: "rgba(191, 86, 255, 1)",
-                    deg: 180,
-                  }}
-                  px={8}
-                  radius={10}
-                >
-                  <Text fz={10} c="rbga(255, 255, 255, 1)">
-                    Invite
-                  </Text>
-                </Button>
+                <EventInviteBtn />
               </Flex>
             </Box>
 

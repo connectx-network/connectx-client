@@ -80,7 +80,12 @@ const EventCard = (props: EventCardProps) => {
         </Text>
       </Paper>
 
-      <ActionIcon variant="light" size="lg" className={classes.bookmarkIcon}>
+      <ActionIcon
+        variant="light"
+        size="lg"
+        className={classes.bookmarkIcon}
+        onClick={(e) => e.stopPropagation()}
+      >
         <Icons.bookmarkGradient className="h-5 w-5" />
       </ActionIcon>
 

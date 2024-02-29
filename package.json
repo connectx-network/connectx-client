@@ -28,6 +28,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-imask": "^7.4.0",
+    "react-share": "^5.1.0",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
