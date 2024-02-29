@@ -27,6 +27,7 @@ import {
 } from "@/utils";
 import { useMutation } from "@tanstack/react-query";
 import { UpdateUserBody, User } from "@/types/user";
+import { useAuthStore } from "@/store/auth.store";
 
 const INIT_USER_PROFILE = {
   fullName: "",
@@ -91,8 +92,10 @@ export default function EditProfilePage() {
   const capitalizeString = (str: string) =>
     `${str?.charAt(0)?.toUpperCase()}${str?.slice(1)}`;
 
+  const { auth } = useAuthStore();
+
   useEffect(() => {
-    const userId = getToken(TOKEN_KEY.USER_ID);
+    const userId = auth.user?.id || "";
     if (userId) mutationFetchProfile.mutateAsync(userId);
   }, []);
 
