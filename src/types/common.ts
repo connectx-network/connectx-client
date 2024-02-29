@@ -1,6 +1,6 @@
 export type PaginationParam = {
-  page: number;
-  size: number;
+  page?: number;
+  size?: number;
   query?: string;
 };
 

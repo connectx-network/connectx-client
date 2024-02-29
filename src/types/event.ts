@@ -1,6 +1,8 @@
 import { PaginationParam } from "./common";
 
-export type EventListParam = PaginationParam;
+export type EventListParam = PaginationParam & {
+  userId?: string
+};
 
 export type EventListResponse = {
   id: string;

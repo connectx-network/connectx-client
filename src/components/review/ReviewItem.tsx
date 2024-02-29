@@ -21,7 +21,9 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
             <Text c="dimmed">{dayjs(data.date).format("DD MMM")}</Text>
           </Flex>
           <Rating value={data.rate} fractions={2} readOnly />
-          <Text fz={15}>{data.contentReview}</Text>
+          <Text fz={15} ta={"justify"}>
+            {data.contentReview}
+          </Text>
         </div>
       </Flex>
     </>
