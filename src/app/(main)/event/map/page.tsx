@@ -66,8 +66,9 @@ const EventMapPage = () => {
             }}
             mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
           >
-            {eventData.map((event) => (
+            {eventData.map((event, index) => (
               <MapMarker
+                key={index}
                 event={{
                   name: event.name,
                   image: event.image,
