@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 
 const MessagePage = () => {
-  const [connectedUsers, setConnectedUser] = useState([...new Array(5)]);
+  const [connectedUsers, setConnectedUser] = useState([...new Array(20)]);
 
   return (
     <>
@@ -30,7 +30,7 @@ const MessagePage = () => {
         </Flex>
       </Flex>
       <Space h={"xl"} />
-      <Flex gap={16} className="pt-2">
+      <Flex gap={16} className="pt-2 overflow-x-scroll">
         <Stack>
           <Flex
             w={56}
@@ -45,7 +45,7 @@ const MessagePage = () => {
         </Stack>
         {connectedUsers?.map((e, index) => (
           <Stack maw={60} key={index}>
-            <Indicator radius="xl" size={10} color="green" inline>
+            <Indicator radius="xl" size={10} color="green">
               <Image
                 src={"https://picsum.photos/200"}
                 w={56}
