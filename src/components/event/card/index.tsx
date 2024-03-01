@@ -18,6 +18,7 @@ import classes from "./card.module.css";
 import { useMemo } from "react";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import { ROUTER } from "@/constant";
 
 type EventCardProps = {
   id: string;
@@ -43,14 +44,14 @@ const EventCard = (props: EventCardProps) => {
       radius="md"
       withBorder
       className="hover:cursor-pointer hover:opacity-80"
-      onClick={() => router.push(`/event/${id}`)}
+      onClick={() => router.push(`${ROUTER.EVENT}/${id}`)}
     >
       <Card.Section
         style={{
           position: "relative",
         }}
       >
-        <Image radius={8} src={imageUrl} alt={name} h={170} />
+        <Image radius={8} src={imageUrl} alt={name} h={180} />
       </Card.Section>
 
       <Paper className={classes.date}>

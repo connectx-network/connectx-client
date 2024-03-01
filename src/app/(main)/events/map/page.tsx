@@ -1,5 +1,6 @@
 "use client";
 import { MapMarker } from "@/components/map";
+import { useAppShellMainStore } from "@/store/app-shell-main.store";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { useState } from "react";
 const eventData = [
@@ -54,9 +55,11 @@ const eventData = [
   },
 ];
 const EventMapPage = () => {
+  const { size } = useAppShellMainStore();
+
   return (
     <>
-      <div style={{ height: "70vh", width: "100%" }}>
+      <div style={{ height: `${size.height}px`, width: "100%" }}>
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map
             defaultZoom={13}

@@ -1,11 +1,23 @@
 "use client";
 import { useMemo } from "react";
-import { Flex, Group, Image, Stack, Text, Title } from "@mantine/core";
+import {
+  AspectRatio,
+  Flex,
+  Group,
+  Image,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 
 import { Icons } from "@/components/icons";
 import classes from "./card-horizontal.module.css";
 import { useRouter } from "next/navigation";
+import { ROUTER } from "@/constant";
+
+dayjs.extend(LocalizedFormat);
 
 type CardEventHorizontalProps = {
   event: {
@@ -22,28 +34,28 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
   const router = useRouter();
   const eventDate = useMemo(() => {
     if (!event.date) return "";
-    return dayjs(event.date).format("DD/MM/YYYY");
+    return dayjs(event.date).format("LT - DD/MM/YYYY");
   }, [event.date]);
   return (
-    <Group
+    <Flex
       className={classes.wrapper}
-      wrap="nowrap"
       gap={4}
       style={{
         borderRadius: "8px",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
         background: "white",
       }}
-      onClick={() => router.push(`/event/${event.id}`)}
+      onClick={() => router.push(`${ROUTER.EVENT}/${event.id}`)}
     >
       <Image
         src={event.imageUrl}
         alt={event.name}
-        w={{
-          base: "40%",
-        }}
-        h="100%"
+        w="40%"
+        h="180px"
         radius={8}
+        style={{
+          flex: "0 1 auto",
+        }}
       />
       <Flex
         direction="column"
@@ -68,7 +80,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
           </Text>
         </Flex>
       </Flex>
-    </Group>
+    </Flex>
   );
 };
 

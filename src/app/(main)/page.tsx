@@ -4,6 +4,7 @@ import { EventCard, EventHorizontialCard } from "@/components/event";
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant";
 import { QUERY_KEY } from "@/constant/query-key";
+import { useCheckExistNavbar } from "@/hooks";
 import { useEventListParamStore } from "@/store/event-list.store";
 import {
   Box,
@@ -23,6 +24,8 @@ import { useRouter } from "next/navigation";
 const HomePage = () => {
   const { param } = useEventListParamStore();
   const router = useRouter();
+  const isExistNavbar = useCheckExistNavbar();
+  console.log("😻 ~ HomePage ~ isExistNavbar:", isExistNavbar);
   const { data: eventListData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
@@ -38,7 +41,10 @@ const HomePage = () => {
           <Icons.caretRightFill />
         </UnstyledButton>
       </Flex>
-      <SimpleGrid cols={{ base: 2, sm: 2, md: 3, lg: 4 }} mt={6}>
+      <SimpleGrid
+        cols={{ base: 1, xs: 2, md: 3, lg: isExistNavbar ? 4 : 3 }}
+        mt={6}
+      >
         {eventListData?.data.map((event) => (
           <EventCard
             key={event.id}
@@ -102,7 +108,15 @@ const HomePage = () => {
             <Icons.caretRightFill />
           </UnstyledButton>
         </Flex>
-        <SimpleGrid cols={{ base: 1, xs: 2, sm: 1, md: 2, xl: 3 }}>
+        <SimpleGrid
+          cols={{
+            base: 1,
+            xs: 2,
+            sm: isExistNavbar ? 1 : 2,
+            md: 2,
+            xl: isExistNavbar ? 4 : 2,
+          }}
+        >
           {eventListData?.data.map((event) => (
             <EventHorizontialCard
               key={event.id}

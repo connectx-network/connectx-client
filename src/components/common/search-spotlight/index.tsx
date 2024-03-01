@@ -15,6 +15,7 @@ import { useMemo, useState } from "react";
 import { EventListParam } from "@/types/event";
 import { useRouter } from "next/navigation";
 import classes from "./search-spotlight.module.css";
+import { ROUTER } from "@/constant";
 
 export const [eventSearchStore, eventSearchSpotlight] = createSpotlight();
 
@@ -40,7 +41,7 @@ const SearchSpotlight = () => {
       label: event.name,
       description: event.description,
       onClick: () => {
-        router.push(`/event/${event.id}`);
+        router.push(`${ROUTER.EVENT}/${event.id}`);
       },
       leftSection: (
         <Image

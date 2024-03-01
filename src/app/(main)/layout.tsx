@@ -9,7 +9,7 @@ import {
   Image,
   Text,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useResizeObserver } from "@mantine/hooks";
 import NextImage from "next/image";
 
 import ConnectXLogo from "@images/logo/logo.png";
@@ -22,15 +22,18 @@ import { Icons } from "@/components/icons";
 import UserMenu from "@/components/common/user-menu";
 import { eventSearchSpotlight } from "@/components/common/search-spotlight";
 import Notification from "@/components/notification";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { getUserInfoRequest } from "@/api/auth";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/constant/query-key";
+import { useAppShellMainStore } from "@/store/app-shell-main.store";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [opened, { toggle }] = useDisclosure();
   const { auth, setAuth } = useAuthStore();
+  const [ref, rect] = useResizeObserver();
+  const { size, setSize } = useAppShellMainStore();
 
   const {
     data: userInfoData,
@@ -49,6 +52,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   }, [isSuccess, setAuth, userInfoData]);
 
+  useEffect(() => {
+    setSize({
+      width: rect.width,
+      height: rect.height,
+    });
+  }, [ref, rect, setSize]);
   return (
     <>
       {!isLoading && (
@@ -57,7 +66,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           navbar={{
             width: 300,
             breakpoint: "sm",
-            collapsed: { mobile: !opened },
+            collapsed: {
+              desktop: !auth.isAuthenticated,
+              mobile: !opened,
+            },
           }}
           padding="md"
         >
@@ -136,13 +148,21 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </Flex>
             </Flex>
           </AppShell.Header>
-          {auth.isAuthenticated && (
-            <AppShell.Navbar p="md">
-              <Sidebar />
-            </AppShell.Navbar>
-          )}
 
-          <AppShell.Main>{children}</AppShell.Main>
+          <AppShell.Navbar p="md">
+            <Sidebar />
+          </AppShell.Navbar>
+
+          <AppShell.Main
+            ref={ref}
+            style={{
+              position: "relative",
+              maxWidth: !auth.isAuthenticated ? "960px" : "none",
+              margin: !auth.isAuthenticated ? "0 auto" : "0",
+            }}
+          >
+            {children}
+          </AppShell.Main>
         </AppShell>
       )}
     </>
