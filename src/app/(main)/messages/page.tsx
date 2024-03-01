@@ -43,8 +43,8 @@ const MessagePage = () => {
           </Flex>
           <Text fz={10}>Your story</Text>
         </Stack>
-        {connectedUsers?.map((e) => (
-          <Stack maw={60}>
+        {connectedUsers?.map((e, index) => (
+          <Stack maw={60} key={index}>
             <Indicator radius="xl" size={10} color="green" inline>
               <Image
                 src={"https://picsum.photos/200"}
