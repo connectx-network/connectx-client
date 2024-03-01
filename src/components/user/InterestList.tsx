@@ -43,7 +43,7 @@ export const InterestList = ({
 
   if (!isEditMode)
     return (
-      <>
+      <Flex gap={10} wrap={"wrap"}>
         {interests?.map((interest) => (
           <InterestItem
             key={interest.id}
@@ -51,7 +51,7 @@ export const InterestList = ({
             isEditMode={isEditMode}
           />
         ))}
-      </>
+      </Flex>
     );
   return (
     <Flex direction={"column"} w={"100%"}>
