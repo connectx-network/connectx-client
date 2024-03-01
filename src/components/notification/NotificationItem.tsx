@@ -1,8 +1,10 @@
+import { ROUTER } from "@/constant";
 import { NOTIFICATION_TYPES } from "@/constant/notification";
 import { Notification } from "@/types/notification";
 import { Avatar, Button, Flex, Space, Stack, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
 
 export type NotificationItemProps = {
   notification: Notification;
@@ -13,11 +15,15 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
   return (
     <>
       <Flex gap={8}>
-        <Avatar src={notification.sender.avatarUrl} />
+        <Link href={`${ROUTER.USER}/${notification.senderId}`}>
+          <Avatar src={notification.sender.avatarUrl} />
+        </Link>
         <Flex justify={"space-between"} w={"100%"}>
           <Stack w={"70%"}>
             <Text>
-              {notification.sender.fullName}{" "}
+              <Link href={`${ROUTER.USER}/${notification.senderId}`}>
+                {notification.sender.fullName}
+              </Link>{" "}
               <Text component="span" c="dimmed">
                 {notification.body}
               </Text>

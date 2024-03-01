@@ -291,7 +291,7 @@ export const Icons = {
     >
       <path
         d="M19.25 10.5417C19.2532 11.7515 18.9705 12.9451 18.425 14.025C17.7782 15.3191 16.7839 16.4076 15.5535 17.1685C14.3231 17.9294 12.9051 18.3328 11.4583 18.3333C10.2485 18.3365 9.05494 18.0538 7.975 17.5083L2.75 19.25L4.49167 14.025C3.94619 12.9451 3.66351 11.7515 3.66667 10.5417C3.66723 9.09494 4.07056 7.67694 4.83149 6.4465C5.59242 5.21606 6.6809 4.22177 7.975 3.575C9.05494 3.02952 10.2485 2.74684 11.4583 2.75H11.9167C13.8273 2.8554 15.632 3.66186 16.985 5.01495C18.3381 6.36804 19.1446 8.17268 19.25 10.0833V10.5417Z"
-        stroke="#767676"
+        stroke={props.color || "#767676"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -938,17 +938,22 @@ export const Icons = {
   ),
   home: (props: IconProps) => (
     <svg
-      width="24"
-      height="23"
-      viewBox="0 0 24 23"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-home"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
-      <path
-        d="M13.2 0.9C12.4889 0.366667 11.5111 0.366667 10.8 0.9L0.95 8.2875C0.325342 8.75599 0.656677 9.75 1.4375 9.75C1.88623 9.75 2.25 10.1138 2.25 10.5625V20.75C2.25 21.8546 3.14543 22.75 4.25 22.75H6.75C7.85457 22.75 8.75 21.8546 8.75 20.75V18.25C8.75 17.1454 9.64543 16.25 10.75 16.25H13.25C14.3546 16.25 15.25 17.1454 15.25 18.25V20.75C15.25 21.8546 16.1454 22.75 17.25 22.75H19.75C20.8546 22.75 21.75 21.8546 21.75 20.75V10.4526C21.75 10.0147 22.112 9.66336 22.5498 9.67649C23.3075 9.69922 23.6454 8.73403 23.0389 8.27919L13.2 0.9Z"
-        fill="#767676"
-      />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+      <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
     </svg>
   ),
   copyLink: (props: IconProps) => (
@@ -1330,6 +1335,24 @@ export const Icons = {
           <stop offset="1" stop-color="#B558FF" />
         </linearGradient>
       </defs>
+    </svg>
+  ),
+  check: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-check"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l5 5l10 -10" />
     </svg>
   ),
 };

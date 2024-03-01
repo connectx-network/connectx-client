@@ -15,3 +15,13 @@ export const uploadUserAvatar = async (form: FormData) => {
     const { data } = await axiosInstance.patch("user/avatar", form);
     return data;
 }
+
+export const followUserRequest = async (targetId: string) => {
+    const { data } = await axiosInstance.post(`user-connection/${targetId}`, {});
+    return data;
+}
+
+export const checkFollowedUser = async (targetId: string) => {
+    const { data } = await axiosInstance.get(`user-connection/relation/${targetId}`);
+    return data;
+} 
