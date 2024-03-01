@@ -7,11 +7,11 @@ export interface ReviewListProps {
 export const ReviewList = ({ reviews }: ReviewListProps) => {
   return (
     <>
-      {reviews?.map((review) => (
-        <>
+      {reviews?.map((review, index) => (
+        <div key={index}>
           <ReviewItem data={review} />
           <Space h={"lg"} />
-        </>
+        </div>
       ))}
     </>
   );

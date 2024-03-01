@@ -1,13 +1,18 @@
 "use client";
 
 import { getEventListRequest } from "@/api/event";
-import { getUserRequest } from "@/api/user";
+import {
+  checkFollowedUser,
+  followUserRequest,
+  getUserRequest,
+} from "@/api/user";
 import { EventList } from "@/components/event/EventList";
 import { Icons } from "@/components/icons";
 import { Review } from "@/components/review/ReviewItem";
 import { ReviewList } from "@/components/review/ReviewList";
 import { InterestList } from "@/components/user/InterestList";
 import { COLORS } from "@/constant/color";
+import { USER_CONNECTION_TYPES } from "@/constant/user-connection";
 import { PaginationResponse } from "@/types/common";
 import { EventListResponse } from "@/types/event";
 import { User } from "@/types/user";
@@ -47,9 +52,13 @@ const MOCK_LIST_REVIEW: Review[] = [
 export default function UserDetailPage({ params }: { params: { id: string } }) {
   const [user, setUser] = useState<User>();
   const [joinedEvents, setJoinedEvents] = useState<EventListResponse[]>([]);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    mutationFetchProfile.mutateAsync(params.id);
+    Promise.all([
+      mutationFetchProfile.mutateAsync(params.id),
+      mutationCheckFollowedUser.mutateAsync(params.id),
+    ]);
     mutationFetchListEventJoined.mutateAsync(params.id);
   }, []);
 
@@ -66,7 +75,6 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
       });
     },
   });
-
   const mutationFetchListEventJoined = useMutation({
     mutationFn: async (userId: string) => {
       return await getEventListRequest({
@@ -80,6 +88,25 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
       console.log("Error:", error);
     },
   });
+  const mutationCheckFollowedUser = useMutation({
+    mutationFn: async (targetId: string) => await checkFollowedUser(targetId),
+    onSuccess: (data: any) => {
+      setIsFollowing(
+        data === USER_CONNECTION_TYPES.FOLLOWING ||
+          data === USER_CONNECTION_TYPES.FRIEND
+      );
+    },
+    onError: () => {},
+  });
+  const mutationFollowUser = useMutation({
+    mutationFn: async (targetId: string) => await followUserRequest(targetId),
+    onSuccess: () => setIsFollowing(true),
+    onError: () => {},
+  });
+
+  const handleClickFollowUser = () => {
+    user?.id && mutationFollowUser.mutateAsync(user?.id);
+  };
   return (
     <>
       <Flex justify={"center"} direction={"column"} align={"center"}>
@@ -114,7 +141,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
         <Space h="md" />
         <Flex gap={16} justify={"center"} align={"center"}>
           <Button
-            leftSection={<Icons.userPlus />}
+            leftSection={isFollowing ? <Icons.check /> : <Icons.userPlus />}
             w={154}
             h={50}
             radius={"lg"}
@@ -124,11 +151,12 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               to: "rgba(191, 86, 255, 1)",
               deg: 180,
             }}
+            onClick={handleClickFollowUser}
           >
-            Follow
+            {isFollowing ? "Follwed" : "Follow"}
           </Button>
           <Button
-            leftSection={<Icons.messageCircle />}
+            leftSection={<Icons.messageCircle color={COLORS.PURPLE} />}
             w={154}
             h={50}
             radius={"lg"}

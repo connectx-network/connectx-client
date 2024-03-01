@@ -15,4 +15,5 @@ export enum ROUTER {
   SETTINGS = "/settings",
   HELPS_FAQS = "/helps-and-faqs",
   EVENT = "/event",
+  USER = '/user'
 }

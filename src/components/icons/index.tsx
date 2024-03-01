@@ -291,7 +291,7 @@ export const Icons = {
     >
       <path
         d="M19.25 10.5417C19.2532 11.7515 18.9705 12.9451 18.425 14.025C17.7782 15.3191 16.7839 16.4076 15.5535 17.1685C14.3231 17.9294 12.9051 18.3328 11.4583 18.3333C10.2485 18.3365 9.05494 18.0538 7.975 17.5083L2.75 19.25L4.49167 14.025C3.94619 12.9451 3.66351 11.7515 3.66667 10.5417C3.66723 9.09494 4.07056 7.67694 4.83149 6.4465C5.59242 5.21606 6.6809 4.22177 7.975 3.575C9.05494 3.02952 10.2485 2.74684 11.4583 2.75H11.9167C13.8273 2.8554 15.632 3.66186 16.985 5.01495C18.3381 6.36804 19.1446 8.17268 19.25 10.0833V10.5417Z"
-        stroke="#767676"
+        stroke={props.color || "#767676"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -938,17 +938,22 @@ export const Icons = {
   ),
   home: (props: IconProps) => (
     <svg
-      width="24"
-      height="23"
-      viewBox="0 0 24 23"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-home"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
-      <path
-        d="M13.2 0.9C12.4889 0.366667 11.5111 0.366667 10.8 0.9L0.95 8.2875C0.325342 8.75599 0.656677 9.75 1.4375 9.75C1.88623 9.75 2.25 10.1138 2.25 10.5625V20.75C2.25 21.8546 3.14543 22.75 4.25 22.75H6.75C7.85457 22.75 8.75 21.8546 8.75 20.75V18.25C8.75 17.1454 9.64543 16.25 10.75 16.25H13.25C14.3546 16.25 15.25 17.1454 15.25 18.25V20.75C15.25 21.8546 16.1454 22.75 17.25 22.75H19.75C20.8546 22.75 21.75 21.8546 21.75 20.75V10.4526C21.75 10.0147 22.112 9.66336 22.5498 9.67649C23.3075 9.69922 23.6454 8.73403 23.0389 8.27919L13.2 0.9Z"
-        fill="#767676"
-      />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+      <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
     </svg>
   ),
   copyLink: (props: IconProps) => (
@@ -1182,6 +1187,221 @@ export const Icons = {
           <stop offset="1" stop-color="#6A45BE" stop-opacity="0" />
         </radialGradient>
       </defs>
+    </svg>
+  ),
+  noNotiFound: (props: IconProps) => (
+    <svg
+      width="206"
+      height="240"
+      viewBox="0 0 206 240"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g filter="url(#filter0_d_29_37)">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M86.3113 38.3968C86.3113 29.1799 93.7831 21.7081 103 21.7081C112.217 21.7081 119.689 29.1799 119.689 38.3968V38.8616C139.134 45.7346 153.066 64.2798 153.066 86.079V122.371H153.347C153.347 122.371 153.411 130.708 158.982 130.708C161.081 130.708 163.305 131.56 165.261 132.622C169.218 134.77 171 139.266 171 143.769C171 152.725 163.739 159.986 154.783 159.986H50.8518C42.0971 159.986 35 152.889 35 144.134C35 139.429 37.0048 134.786 41.1664 132.59C43.1504 131.543 45.3125 130.708 47.1626 130.708C50.1586 130.708 51.9695 127.666 52.9338 125.257V86.0789C52.9338 64.2798 66.8657 45.7346 86.3113 38.8616V38.3968ZM102.5 190.208C113.822 190.208 123 185.619 123 179.958C123 174.297 113.822 169.708 102.5 169.708C91.1782 169.708 82 174.297 82 179.958C82 185.619 91.1782 190.208 102.5 190.208Z"
+          fill="white"
+        />
+      </g>
+      <g filter="url(#filter1_d_29_37)">
+        <circle
+          cx="156.6"
+          cy="162.308"
+          r="17.6"
+          fill="url(#paint0_linear_29_37)"
+        />
+      </g>
+      <path
+        d="M156.987 169.284C156.049 169.284 155.239 169.026 154.559 168.51C153.89 167.993 153.374 167.266 153.01 166.327C152.646 165.377 152.464 164.25 152.464 162.948C152.464 161.646 152.646 160.525 153.01 159.586C153.374 158.636 153.89 157.903 154.559 157.386C155.239 156.87 156.049 156.612 156.987 156.612C157.926 156.612 158.736 156.87 159.416 157.386C160.097 157.903 160.619 158.636 160.983 159.586C161.346 160.525 161.528 161.646 161.528 162.948C161.528 164.25 161.346 165.377 160.983 166.327C160.619 167.266 160.097 167.993 159.416 168.51C158.736 169.026 157.926 169.284 156.987 169.284ZM156.987 167.559C157.844 167.559 158.507 167.16 158.976 166.362C159.446 165.553 159.68 164.415 159.68 162.948C159.68 161.481 159.446 160.349 158.976 159.551C158.507 158.742 157.844 158.337 156.987 158.337C156.131 158.337 155.468 158.742 154.999 159.551C154.529 160.349 154.295 161.481 154.295 162.948C154.295 164.415 154.529 165.553 154.999 166.362C155.468 167.16 156.131 167.559 156.987 167.559Z"
+        fill="white"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M88 111.22C88 112.017 88.4749 112.735 89.2232 113.01C91.6316 113.895 97.2269 115.708 102.65 115.708C108.059 115.708 113.468 113.905 115.803 113.017C116.537 112.738 117 112.028 117 111.243C117 109.807 115.508 108.808 114.146 109.264C111.398 110.185 107.016 111.362 102.577 111.362C98.102 111.362 93.6266 110.165 90.8386 109.242C89.4801 108.792 88 109.789 88 111.22Z"
+        fill="#5669FF"
+      />
+      <path
+        opacity="0.2"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M80 93.7444C80 93.1748 80.2223 92.6264 80.6546 92.2556C81.7193 91.3422 83.9231 89.7082 86.0622 89.7082C88.2103 89.7082 90.3583 91.3558 91.3819 92.2669C91.792 92.6319 92 93.1615 92 93.7105C92 95.6611 89.3502 96.7707 87.4779 96.2235C87.0058 96.0855 86.5197 96.0032 86.032 96.0032C85.5172 96.0032 85.0023 96.0949 84.5025 96.247C82.6298 96.8169 80 95.7019 80 93.7444Z"
+        fill="#5669FF"
+      />
+      <path
+        opacity="0.2"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M114 93.7444C114 93.1748 114.222 92.6264 114.655 92.2556C115.719 91.3422 117.923 89.7082 120.062 89.7082C122.21 89.7082 124.358 91.3558 125.382 92.2669C125.792 92.6319 126 93.1615 126 93.7105C126 95.6611 123.35 96.7707 121.478 96.2235C121.006 96.0855 120.52 96.0032 120.032 96.0032C119.517 96.0032 119.002 96.0949 118.503 96.247C116.63 96.8169 114 95.7019 114 93.7444Z"
+        fill="#5669FF"
+      />
+      <path
+        opacity="0.1"
+        d="M34.5532 59.1525C32.6123 48.3835 41.201 35.6478 51.2571 33"
+        stroke="#5669FF"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.1"
+        d="M18.6345 54.8539C16.122 40.9136 27.2399 24.4275 40.2573 21"
+        stroke="#5669FF"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <filter
+          id="filter0_d_29_37"
+          x="0"
+          y="0.708069"
+          width="206"
+          height="238.5"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="14" />
+          <feGaussianBlur stdDeviation="17.5" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.208044 0 0 0 0 0.283314 0 0 0 0 0.429427 0 0 0 0.057 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_29_37"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_29_37"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter1_d_29_37"
+          x="131"
+          y="138.708"
+          width="51.2"
+          height="51.2"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="2" />
+          <feGaussianBlur stdDeviation="4" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.337255 0 0 0 0 0.411765 0 0 0 0 1 0 0 0 0.15 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_29_37"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_29_37"
+            result="shape"
+          />
+        </filter>
+        <linearGradient
+          id="paint0_linear_29_37"
+          x1="156.6"
+          y1="144.708"
+          x2="156.6"
+          y2="179.908"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#5669FF" />
+          <stop offset="1" stop-color="#B558FF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+  check: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-check"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l5 5l10 -10" />
+    </svg>
+  ),
+  newChat: (props: IconProps) => (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M19 10H17V7H14V5H17V2H19V5H22V7H19V10Z"
+        fill={props.color || "#0F1828"}
+      />
+      <path
+        d="M21 12H19V15H8.334C7.90107 14.9988 7.47964 15.1393 7.134 15.4L5 17V5H12V3H5C3.89543 3 3 3.89543 3 5V21L7.8 17.4C8.14582 17.1396 8.56713 16.9992 9 17H19C20.1046 17 21 16.1046 21 15V12Z"
+        fill="#0F1828"
+      />
+    </svg>
+  ),
+  menuChatMarked: (props: IconProps) => (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M15 19.411L12.3 16.711L13.714 15.295L15 16.583L20.008 11.583L21.419 13L15 19.41V19.411ZM11 17H2V15H11V17ZM15 13H2V11H15V13ZM15 9H2V7H15V9Z"
+        fill={props.color || "#0F1828"}
+      />
+    </svg>
+  ),
+  plus: (props: IconProps) => (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M13 13V19H11V13H5V11H11V5H13V11H19V13H13Z"
+        fill={props.color || "#0F1828"}
+      />
     </svg>
   ),
 };
