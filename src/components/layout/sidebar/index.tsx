@@ -13,7 +13,7 @@ const sidebarList = [
     path: ROUTER.HOME,
   },
   {
-    title: "Message",
+    title: "Messages",
     icon: <Icons.messageCircle />,
     path: ROUTER.MESSAGE,
   },
