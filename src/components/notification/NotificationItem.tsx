@@ -1,3 +1,4 @@
+import { NOTIFICATION_TYPES } from "@/constant/notification";
 import { Notification } from "@/types/notification";
 import { Avatar, Button, Flex, Space, Stack, Text } from "@mantine/core";
 import dayjs from "dayjs";
@@ -12,16 +13,17 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
   return (
     <>
       <Flex gap={8}>
-        <Avatar src={notification.userAvatarCreated} />
+        <Avatar src={notification.sender.avatarUrl} />
         <Flex justify={"space-between"} w={"100%"}>
           <Stack w={"70%"}>
             <Text>
-              {notification.userFullnameCreated}{" "}
+              {notification.sender.fullName}{" "}
               <Text component="span" c="dimmed">
-                {notification.content}
+                {notification.body}
               </Text>
             </Text>
-            {notification.isInvite && (
+            {notification.notificationType ===
+              NOTIFICATION_TYPES.EVENT_INVITATION && (
               <Flex justify={"space-evenly"}>
                 <Button radius={"md"} variant="outline" color="gray">
                   Reject
@@ -41,7 +43,7 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
             )}
           </Stack>
           <Text c="dimmed" fz={12}>
-            {dayjs(notification.createdDate).fromNow()}
+            {dayjs(notification.createdAt).fromNow()}
           </Text>
         </Flex>
       </Flex>
