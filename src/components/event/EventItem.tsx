@@ -22,7 +22,7 @@ export const EventItem: React.FC<EventItemProps> = ({ event }) => {
         <Flex direction={"column"} justify={"space-between"}>
           <div>
             <Text fz={12} c={COLORS.PURPLE}>
-              {dayjs(event.eventDate).format("HH:mm DD MMM YYYY")}
+              {dayjs(event.eventDate).format("HH:mm A - DD MMM YYYY")}
             </Text>
             <Text fz={18}>{event.name}</Text>
           </div>
