@@ -125,14 +125,14 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
         </Title>
         <Flex gap={16}>
           <Flex align={"center"} justify={"center"} direction={"column"}>
-            <Text>{user?.follwing || 0}</Text>
+            <Text>{user?.following || 0}</Text>
             <Text c="dimmed" fz={14}>
               Following
             </Text>
           </Flex>
           <Divider orientation="vertical" />
           <Flex align={"center"} justify={"center"} direction={"column"}>
-            <Text>{user?.follwers || 0}</Text>
+            <Text>{user?.followers || 0}</Text>
             <Text c="dimmed" fz={14}>
               Followers
             </Text>

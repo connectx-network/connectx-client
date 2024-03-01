@@ -15,8 +15,8 @@ export type User = {
   activated: boolean;
   userRole: ROLE;
   userInterests: UserInterest[];
-  follwers?: number;
-  follwing?: number;
+  followers?: number;
+  following?: number;
 };
 export type UpdateUserBody = {
   fullName: string;
