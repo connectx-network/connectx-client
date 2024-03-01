@@ -12,6 +12,7 @@ export type NotificationItemProps = {
 export const NotificationItem = ({ notification }: NotificationItemProps) => {
   dayjs.extend(relativeTime);
 
+  const handleAcceptEvent = () => {};
   return (
     <>
       <Flex gap={8}>
@@ -34,17 +35,20 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
                 <Button radius={"md"} variant="outline" color="gray">
                   Reject
                 </Button>
-                <Button
-                  radius={"md"}
-                  variant="gradient"
-                  gradient={{
-                    from: "rgba(86, 105, 255, 1)",
-                    to: "rgba(191, 86, 255, 1)",
-                    deg: 180,
-                  }}
-                >
-                  Accept
-                </Button>
+                <Link href={`${ROUTER.EVENT}/${notification.objectId}`}>
+                  <Button
+                    radius={"md"}
+                    variant="gradient"
+                    gradient={{
+                      from: "rgba(86, 105, 255, 1)",
+                      to: "rgba(191, 86, 255, 1)",
+                      deg: 180,
+                    }}
+                    onClick={handleAcceptEvent}
+                  >
+                    Accept
+                  </Button>
+                </Link>
               </Flex>
             )}
           </Stack>
