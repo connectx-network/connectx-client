@@ -151,9 +151,18 @@ export default function ProfilePage() {
           <Icons.camera />
         </Avatar>
 
-        <Title order={2} c="dark" fz={24} className="my-4" my={20}>
+        <Title order={2} c="dark" fz={24} mt={20}>
           {userProfile?.fullName}
         </Title>
+        {userProfile?.company && (
+          <Flex my={8}>
+            <Icons.workplace />
+            <Title order={4} c="dark">
+              {userProfile?.company}
+            </Title>
+          </Flex>
+        )}
+
         <Flex gap={16}>
           <Flex align={"center"} justify={"center"} direction={"column"}>
             <Text>{userProfile?.following || 0}</Text>
