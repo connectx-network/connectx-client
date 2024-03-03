@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const sidebarList = [
   {
     title: "Home",
-    icon: <Icons.home />,
+    icon: <Icons.home color="#767676" />,
     path: ROUTER.HOME,
   },
   {
