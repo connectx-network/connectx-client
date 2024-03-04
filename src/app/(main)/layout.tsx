@@ -27,6 +27,7 @@ import { getUserInfoRequest } from "@/api/auth";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/constant/query-key";
 import { useAppShellMainStore } from "@/store/app-shell-main.store";
+import { showErrorNotification, showSuccessNotification } from "@/utils";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -95,6 +96,26 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     priority
                   />
                   <Text>Connect X</Text>
+                  <Button
+                    onClick={() =>
+                      showSuccessNotification({
+                        message: "asdh adhud w8if",
+                        title: "dasbndu 332n 38h",
+                      })
+                    }
+                  >
+                    show
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      showErrorNotification({
+                        message: "asdh adhud w8if",
+                        title: "dasbndu 332n 38h",
+                      })
+                    }
+                  >
+                    show err
+                  </Button>
                 </Group>
               </Group>
               <SearchSpotlight />

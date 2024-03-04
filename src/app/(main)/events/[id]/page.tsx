@@ -39,7 +39,6 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
-
   const dateTimeEvent = useMemo(() => {
     if (!eventDetailData) return {};
     return {
@@ -134,7 +133,9 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             </Box>
 
             <Space h={40}></Space>
-            <Title order={2}>{eventDetailData.name}</Title>
+            <Title order={2} c="rgb(37, 0, 97)">
+              {eventDetailData.name}
+            </Title>
             <Flex align="center" gap={8}>
               <Icons.calenderFill />
               <Stack gap={4}>
@@ -179,6 +180,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 loading="lazy"
                 style={{
                   border: 0,
+                  borderRadius: "12px",
                   width: "100%",
                   height: "250px",
                   pointerEvents: "none",
