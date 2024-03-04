@@ -1,7 +1,12 @@
 import { PaginationParam } from "./common";
+import { User } from "./user";
 
 export type EventListParam = PaginationParam & {
-  userId?: string
+  userId?: string;
+};
+
+export type JoinedUserEventParam = PaginationParam & {
+  eventId: string;
 };
 
 export type EventListResponse = {
@@ -18,6 +23,9 @@ export type EventListResponse = {
   eventCategoryId: string;
   eventAssets: EventAsset[];
   eventHosts: EventHost[];
+  joinedEventUsers: JoinedEventUser[];
+  eventLocationDetail: EventLocationDetail;
+  _count: EventCount;
 };
 
 export type EventDetail = {
@@ -26,6 +34,7 @@ export type EventDetail = {
   tiketPrice: any;
   createdAt: string;
   eventDate: string;
+  eventEndDate: string;
   location: string;
   description: string;
   sponsors: any;
@@ -35,6 +44,8 @@ export type EventDetail = {
   eventCategory: EventCategory;
   eventAssets: EventAsset[];
   eventHosts: EventHost[];
+  joinedEventUsers: JoinedEventUser[];
+  _count: EventCount;
 };
 
 export type EventCategory = {
@@ -54,4 +65,31 @@ export type EventHost = {
   title: string;
   url: string;
   eventId: string;
+};
+
+export type EventLocationDetail = {
+  id: string;
+  latitude: string;
+  longitude: string;
+  eventId: string;
+};
+
+export type JoinedEventUser = {
+  id: string;
+  eventId: string;
+  userId: string;
+  joinDate: string;
+  checkInDate: any;
+  checkedIn: boolean;
+  user: Pick<User, "id" | "fullName" | "nickname" | "avatarUrl">;
+};
+
+export type EventCount = {
+  joinedEventUsers: number;
+  eventHosts: number;
+  eventAssets: number;
+};
+
+export type CheckJoinedEventResponse = {
+  joined: boolean;
 };

@@ -24,7 +24,6 @@ export const showSuccessNotification = ({
     icon: <Icons.greenBubble style={{ borderRadius: "0 0 0 12px" }} />,
     title,
     message,
-    autoClose: false,
     classNames: successClasses,
   });
 

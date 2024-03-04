@@ -96,26 +96,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     priority
                   />
                   <Text>Connect X</Text>
-                  <Button
-                    onClick={() =>
-                      showSuccessNotification({
-                        message: "asdh adhud w8if",
-                        title: "dasbndu 332n 38h",
-                      })
-                    }
-                  >
-                    show
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      showErrorNotification({
-                        message: "asdh adhud w8if",
-                        title: "dasbndu 332n 38h",
-                      })
-                    }
-                  >
-                    show err
-                  </Button>
                 </Group>
               </Group>
               <SearchSpotlight />

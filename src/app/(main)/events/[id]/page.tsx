@@ -9,41 +9,110 @@ import {
   Divider,
   Flex,
   Image,
+  Modal,
   Space,
   Spoiler,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import { useMemo } from "react";
 import { IconBookmark } from "@tabler/icons-react";
 import confetti from "canvas-confetti";
+import Link from "next/link";
+import { QRCodeSVG } from "qrcode.react";
+import { IconCircleCheck } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
 
-import { getEventDetailRequest } from "@/api/event";
+import {
+  checkJoinedEventRequest,
+  getEventDetailRequest,
+  joinEventRequest,
+} from "@/api/event";
 import { Icons } from "@/components/icons";
 import { QUERY_KEY } from "@/constant/query-key";
 import { EventInviteBtn, EventShareBtn } from "@/components/event";
-import Link from "next/link";
 import { useAuthStore } from "@/store/auth.store";
+import { showErrorNotification, showSuccessNotification } from "@/utils";
 
 dayjs.extend(LocalizedFormat);
 const MAP_MODE = "search";
+const MAX_USER_DISPLAY = 3;
 
 const EventDetail = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const { auth } = useAuthStore();
+  const queryClient = useQueryClient();
+  const [openedQRCode, { open: openQRCode, close: closeQRCode }] =
+    useDisclosure(false);
+
   const { data: eventDetailData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
+
+  const { data: checkJoinedEvent, refetch: checkJoinedEventRefetch } = useQuery(
+    {
+      queryKey: [QUERY_KEY.GET_CHECK_JOINED_EVENT, id],
+      queryFn: () => checkJoinedEventRequest(id),
+      retry: 0,
+    }
+  );
+
+  const joinEventMutation = useMutation({
+    mutationFn: async () => {
+      await joinEventRequest(id);
+    },
+    onSuccess: async () => {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+      showSuccessNotification({
+        title: "Success",
+        message: "Joined event successfully",
+      });
+      await checkJoinedEventRefetch();
+      await queryClient.refetchQueries({
+        queryKey: [QUERY_KEY.GET_JOINED_USER_EVENT_LIST],
+      });
+    },
+    onError: (error) => {
+      showErrorNotification({
+        title: "Failed",
+        message: "Failed to join event",
+      });
+    },
+  });
+
   const dateTimeEvent = useMemo(() => {
     if (!eventDetailData) return {};
+    let text = "";
+    if (
+      dayjs(eventDetailData.eventDate).format("DD/MM/YYYY") ===
+      dayjs(eventDetailData.eventEndDate).format("DD/MM/YYYY")
+    ) {
+      const time = `${dayjs(eventDetailData.eventDate).format(
+        "HH:mm"
+      )} - ${dayjs(eventDetailData.eventEndDate).format("HH:mm")}`;
+      const date = dayjs(eventDetailData.eventDate).format(
+        "dddd, MMMM D, YYYY"
+      );
+      text = `${time} ${date}`;
+    } else {
+      text = `${dayjs(eventDetailData.eventDate).format(
+        "HH:mm dddd, MMMM D, YYYY"
+      )} - ${dayjs(eventDetailData.eventEndDate).format(
+        "HH:mm dddd, MMMM D, YYYY"
+      )}`;
+    }
     return {
       title: dayjs(eventDetailData.eventDate).format("DD/MM/YYYY"),
-      text: dayjs(eventDetailData.eventDate).format("llll"),
+      text: text,
     };
   }, [eventDetailData]);
   const eventLocationUrl = useMemo(() => {
@@ -63,13 +132,14 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
       embed,
     };
   }, [eventDetailData?.location]);
-  const handleJoinEvent = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
+  const handleProcessEvent = (isJoinedEvent: boolean) => {
+    if (isJoinedEvent) {
+      openQRCode();
+    } else {
+      joinEventMutation.mutateAsync();
+    }
   };
+
   return (
     <div>
       {eventDetailData && (
@@ -111,24 +181,32 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               >
                 <Flex gap={10} align="center">
                   <Avatar.Group>
-                    <Avatar
-                      size="sm"
-                      src="https://www.shutterstock.com/image-vector/cute-cartoon-rubber-duck-vector-600nw-2276837591.jpg"
-                    />
-                    <Avatar
-                      size="sm"
-                      src="https://duck-world.com/cdn/shop/collections/Share_a_picture_of_your_duck_in_its_new_home_and_Tag_duck.world.uk_on_Instagram_for_your_chance_to_win_one_of_our_collectibles_36.png?v=1685291022"
-                    />
-                    <Avatar
-                      size="sm"
-                      src="https://curatingcambridge.co.uk/cdn/shop/products/CambridgeDuckMarch2023.jpg?v=1679478515"
-                    />
+                    {eventDetailData.joinedEventUsers.map((joinUser, index) => {
+                      if (index > MAX_USER_DISPLAY) return;
+                      return (
+                        <Avatar
+                          key={joinUser.user.id}
+                          size="sm"
+                          src={joinUser.user.avatarUrl}
+                        />
+                      );
+                    })}
                   </Avatar.Group>
-                  <Text c="rgba(63, 56, 221, 1)" fz={12}>
-                    +20 Going
-                  </Text>
+                  {eventDetailData._count.joinedEventUsers >
+                  MAX_USER_DISPLAY ? (
+                    <Text c="rgba(63, 56, 221, 1)" fz={12}>
+                      +
+                      {eventDetailData._count.joinedEventUsers -
+                        MAX_USER_DISPLAY}{" "}
+                      Going
+                    </Text>
+                  ) : (
+                    <Text c="rgba(63, 56, 221, 1)" fz={12}>
+                      {eventDetailData._count.joinedEventUsers} Joined
+                    </Text>
+                  )}
                 </Flex>
-                <EventInviteBtn />
+                <EventInviteBtn eventId={id} />
               </Flex>
             </Box>
 
@@ -136,6 +214,14 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             <Title order={2} c="rgb(37, 0, 97)">
               {eventDetailData.name}
             </Title>
+            {checkJoinedEvent?.joined && (
+              <Flex align="center" gap={4}>
+                <IconCircleCheck color="rgb(54, 162, 96)" size={16} />
+                <Text c="rgb(54, 162, 96)" fz={12}>
+                  You have joined the event
+                </Text>
+              </Flex>
+            )}
             <Flex align="center" gap={8}>
               <Icons.calenderFill />
               <Stack gap={4}>
@@ -198,7 +284,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   href={host?.url || ""}
                   className="hover:underline hover:text-purple-700"
                 >
-                  {`${host.title}${index < originArr.length - 1 && ","}`}
+                  {`${host.title}${index < originArr.length - 1 ? "," : ""}`}
                 </Link>
               ))}
             </Flex>
@@ -226,11 +312,20 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             left: "50%",
             transform: "translateX(-50%)",
           }}
-          onClick={handleJoinEvent}
+          onClick={() => handleProcessEvent(!!checkJoinedEvent?.joined)}
         >
-          Join
+          {checkJoinedEvent?.joined ? "Show QR code" : "Join"}
         </Button>
       )}
+      <Modal
+        opened={openedQRCode}
+        onClose={closeQRCode}
+        withCloseButton={false}
+        centered
+        size="auto"
+      >
+        <QRCodeSVG value="https://reactjs.org/" size={300} />
+      </Modal>
     </div>
   );
 };

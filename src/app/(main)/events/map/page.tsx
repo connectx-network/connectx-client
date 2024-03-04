@@ -1,65 +1,60 @@
 "use client";
+import { getEventListRequest } from "@/api/event";
 import { MapMarker } from "@/components/map";
+import { QUERY_KEY } from "@/constant/query-key";
 import { useAppShellMainStore } from "@/store/app-shell-main.store";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { useEventListParamStore } from "@/store/event-list.store";
+import { useQuery } from "@tanstack/react-query";
+import {
+  APIProvider,
+  Map,
+  MapCameraChangedEvent,
+} from "@vis.gl/react-google-maps";
 import { useState } from "react";
-const eventData = [
-  {
-    name: "Moscow Welcomes Blockchain As CRYPTO EXPO MOSCOW",
-    image:
-      "https://i0.wp.com/coinsutra.com/wp-content/uploads/2022/06/4.-Crypto-Events-2022-Metaweek.webp?resize=1200%2C686&ssl=1",
-    date: "12/03/2024",
-    position: {
-      lat: 21.019510273651107,
-      lng: 105.82781240085498,
-    },
-  },
-  {
-    name: "Thailand to Host Southeast Asia's Largest Cryptocurrency Expo",
-    image:
-      "https://image.cnbcfm.com/api/v1/image/107042891-16492696702022-04-06t182428z_1844520444_rc2nht9efd1n_rtrmadp_0_usa-bitcoin-conference.jpeg?v=1668545712",
-    date: "12/03/2024",
-    position: {
-      lat: 21.029904242320267,
-      lng: 105.85464768004076,
-    },
-  },
-  {
-    name: "Crypto Expo to Go Global in 2023 - UNLOCK Blockchain",
-    image: "https://bitcoinist.com/wp-content/uploads/2022/08/crypto.com-.jpg",
-    date: "12/03/2024",
-    position: {
-      lat: 21.024689540337583,
-      lng: 105.8453555378917,
-    },
-  },
-  {
-    name: "Crypto Business World (CBW) is a quality fintech media ",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF4bMy93yldEEgmspbQ6gkNVqNVbABlKwUmQ&usqp=CAU",
-    date: "12/03/2024",
-    position: {
-      lat: 21.018704368053246,
-      lng: 105.84813151333155,
-    },
-  },
-  {
-    name: "TOKEN2049 DUBAI 2024: The Premier Crypto Event Comes to the UAE",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6xnZd-VmpWyOwZK5C6Rp8mTUkgQMKrtgn_w&usqp=CAU",
-    date: "12/03/2024",
-    position: {
-      lat: 21.01549524739749,
-      lng: 105.8442252537391,
-    },
-  },
-];
+import { Carousel } from "@mantine/carousel";
+import { Flex, Image, Stack, Text, Title } from "@mantine/core";
+import { Icons } from "@/components/icons";
+import dayjs from "dayjs";
+
 const EventMapPage = () => {
   const { size } = useAppShellMainStore();
+  const { param } = useEventListParamStore();
+  const [location, setLocation] = useState({
+    lat: 21.0278,
+    lng: 105.8342,
+    zoom: 13,
+  });
+
+  const { data: eventListData } = useQuery({
+    queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
+    queryFn: () => getEventListRequest(param),
+  });
+
+  const handleCenterChanged = (e: MapCameraChangedEvent) => {
+    setLocation({
+      lat: Number(e.map.getCenter()?.lat()),
+      lng: Number(e.map.getCenter()?.lng()),
+      zoom: 13,
+    });
+  };
+
+  const handleEventSlideChange = (index: number) => {
+    setLocation({
+      lat: Number(eventListData?.data[index].eventLocationDetail.latitude),
+      lng: Number(eventListData?.data[index].eventLocationDetail.longitude),
+      zoom: 13,
+    });
+  };
 
   return (
     <>
-      <div style={{ height: `${size.height}px`, width: "100%" }}>
+      <div
+        style={{
+          height: `${size.height}px`,
+          width: "100%",
+          position: "relative",
+        }}
+      >
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map
             defaultZoom={13}
@@ -68,20 +63,93 @@ const EventMapPage = () => {
               lng: 105.8342,
             }}
             mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
+            center={location}
+            onCenterChanged={handleCenterChanged}
+            mapTypeControl={false}
+            zoomControl={false}
+            fullscreenControl={false}
+            keyboardShortcuts={false}
           >
-            {eventData.map((event, index) => (
+            {eventListData?.data.map((event, index) => (
               <MapMarker
                 key={index}
                 event={{
                   name: event.name,
-                  image: event.image,
-                  date: event.date,
+                  image: event.eventAssets?.[0]?.url,
                 }}
-                position={event.position}
+                position={{
+                  lat: Number(event.eventLocationDetail.latitude),
+                  lng: Number(event.eventLocationDetail.longitude),
+                  zoom: 13,
+                }}
               />
             ))}
           </Map>
         </APIProvider>
+        {eventListData && (
+          <Carousel
+            slideSize="90%"
+            height={150}
+            slideGap="lg"
+            loop
+            withControls={false}
+            withIndicators
+            style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+            onSlideChange={handleEventSlideChange}
+          >
+            {eventListData?.data?.map((event, index) => (
+              <Carousel.Slide
+                key={index}
+                style={{
+                  width: "100%",
+                  height: "100px",
+                }}
+              >
+                <Flex
+                  align="center"
+                  style={{
+                    borderRadius: "16px",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <Image
+                    src={event.eventAssets?.[0]?.url}
+                    alt={event.name}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      borderRadius: "12px",
+                      marginLeft: "8px",
+                    }}
+                  />
+                  <Flex
+                    direction="column"
+                    justify="space-between"
+                    align="flex-start"
+                    gap={20}
+                    p={8}
+                  >
+                    <Stack gap={4}>
+                      <Text fz={12}>
+                        {dayjs(event.eventDate).format("LT - DD/MM/YYYY")}
+                      </Text>
+                      <Title order={6} lineClamp={2}>
+                        {event.name}
+                      </Title>
+                    </Stack>
+                    <Flex gap={8} align="center">
+                      <Icons.location />
+                      <Text c="gray" fz={12} lineClamp={1}>
+                        {event.location}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+        )}
       </div>
     </>
   );

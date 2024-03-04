@@ -53,6 +53,8 @@ const HomePage = () => {
             imageUrl={event.eventAssets?.[0].url}
             eventDate={event.eventDate}
             location={event.location}
+            joinedUser={event.joinedEventUsers}
+            count={event._count}
           />
         ))}
       </SimpleGrid>
