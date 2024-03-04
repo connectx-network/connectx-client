@@ -10,7 +10,7 @@ export const PersonChatItem = () => {
         gap={16}
         className="cursor-pointer w-full hover:bg-slate-100 rounded-lg p-2"
       >
-        <Indicator radius="xl" size={10} color="green" inline>
+        <Indicator radius="xl" size={10} color="green" className="z-0">
           <Image
             src={"https://picsum.photos/200"}
             w={64}

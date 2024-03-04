@@ -1005,8 +1005,8 @@ export const Icons = {
           y2="40"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#5BD066" />
-          <stop offset="1" stop-color="#27B43E" />
+          <stop stopColor="#5BD066" />
+          <stop offset="1" stopColor="#27B43E" />
         </linearGradient>
       </defs>
     </svg>
@@ -1034,8 +1034,8 @@ export const Icons = {
           y2="39.8814"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#18ACFE" />
-          <stop offset="1" stop-color="#0163E0" />
+          <stop stopColor="#18ACFE" />
+          <stop offset="1" stopColor="#0163E0" />
         </linearGradient>
       </defs>
     </svg>
@@ -1051,7 +1051,7 @@ export const Icons = {
     >
       <rect width="40" height="40" rx="12" fill="url(#paint0_linear_3_743)" />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M12.8808 32.3033V28.0342C11.5338 27.0377 10.4369 25.7418 9.67661 24.2487C8.91633 22.7556 8.51353 21.1063 8.5 19.4308C8.5 13.3017 13.825 8.33333 20.3942 8.33333C26.9633 8.33333 32.2875 13.3025 32.2875 19.4308C32.2875 25.5592 26.9625 30.5283 20.3933 30.5283C19.2024 30.5295 18.0171 30.3631 16.8725 30.0342L12.8808 32.3033ZM12.7092 23.1824L19.1259 16.3907L22.2017 19.5374L27.975 16.3907L21.5967 23.1816L18.5467 19.9791L12.7092 23.1824Z"
         fill="white"
@@ -1065,9 +1065,9 @@ export const Icons = {
           y2="39.6354"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FD607A" />
-          <stop offset="0.463542" stop-color="#913BFF" />
-          <stop offset="1" stop-color="#1A7BFF" />
+          <stop stopColor="#FD607A" />
+          <stop offset="0.463542" stopColor="#913BFF" />
+          <stop offset="1" stopColor="#1A7BFF" />
         </linearGradient>
       </defs>
     </svg>
@@ -1083,7 +1083,7 @@ export const Icons = {
     >
       <rect width="40" height="40" rx="12" fill="url(#paint0_linear_3_761)" />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M15.8542 8.16327C17.0674 8.16327 18.2052 8.46715 19.1863 8.99844C19.5145 8.9667 19.8472 8.95046 20.1837 8.95046C25.8354 8.95046 30.4169 13.532 30.4169 19.1837C30.4169 19.6885 30.3804 20.1848 30.3098 20.67C30.8776 21.6159 31.2041 22.7232 31.2041 23.9068C31.2041 27.3847 28.3847 30.2041 24.9068 30.2041C23.7232 30.2041 22.6159 29.8776 21.67 29.3098C21.1848 29.3804 20.6885 29.4169 20.1837 29.4169C14.532 29.4169 9.95046 24.8354 9.95046 19.1837C9.95046 18.6539 9.99071 18.1335 10.0683 17.6254C9.49289 16.6956 9.16327 15.6143 9.16327 14.4606C9.16327 10.9827 12.1589 8.16327 15.8542 8.16327ZM23.5651 15.5103C24.1196 14.4607 21.9015 13.6735 20.2379 13.6735C18.5743 13.6735 16.3561 14.7231 16.3561 16.5598C16.3561 18.3966 17.7424 19.0525 19.1288 19.7085C19.4061 19.8397 19.718 19.9545 20.0299 20.0693C20.9657 20.4137 21.9015 20.7581 21.9015 21.5453C21.9015 22.5948 20.7924 22.8572 19.6833 22.8572C19.2864 22.8572 18.8292 22.669 18.3763 22.4827C17.5638 22.1483 16.7656 21.8198 16.3561 22.5948C15.8016 23.6444 17.448 24.6939 19.6833 24.6939C22.1787 24.6939 24.1196 23.6444 24.1196 21.5453C24.1196 19.5778 21.9275 18.7629 20.511 18.2363C20.4162 18.2011 20.3249 18.1671 20.2379 18.1342C18.8515 17.6094 18.5743 17.0846 18.5743 16.5598C18.5743 16.035 19.1288 15.5103 20.2379 15.5103C20.6076 15.5103 21.0163 15.6697 21.425 15.8291C22.2424 16.1478 23.0598 16.4666 23.5651 15.5103Z"
         fill="white"
@@ -1097,8 +1097,8 @@ export const Icons = {
           y2="32.7778"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#58D3EE" />
-          <stop offset="1" stop-color="#0B66D1" />
+          <stop stopColor="#58D3EE" />
+          <stop offset="1" stopColor="#0B66D1" />
         </linearGradient>
       </defs>
     </svg>
@@ -1126,8 +1126,8 @@ export const Icons = {
           y2="32.7778"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3A6EFF" />
-          <stop offset="1" stop-color="#06ADFF" />
+          <stop stopColor="#3A6EFF" />
+          <stop offset="1" stopColor="#06ADFF" />
         </linearGradient>
       </defs>
     </svg>
@@ -1157,9 +1157,9 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.2857 30) rotate(-55.3758) scale(36.4566)"
         >
-          <stop stop-color="#B13589" />
-          <stop offset="0.79309" stop-color="#C62F94" />
-          <stop offset="1" stop-color="#8A3AC8" />
+          <stop stopColor="#B13589" />
+          <stop offset="0.79309" stopColor="#C62F94" />
+          <stop offset="1" stopColor="#8A3AC8" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_3_749"
@@ -1169,10 +1169,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(12.8571 41.4286) rotate(-65.1363) scale(32.2775)"
         >
-          <stop stop-color="#E0E8B7" />
-          <stop offset="0.444662" stop-color="#FB8A2E" />
-          <stop offset="0.71474" stop-color="#E2425C" />
-          <stop offset="1" stop-color="#E2425C" stop-opacity="0" />
+          <stop stopColor="#E0E8B7" />
+          <stop offset="0.444662" stopColor="#FB8A2E" />
+          <stop offset="0.71474" stopColor="#E2425C" />
+          <stop offset="1" stopColor="#E2425C" stop-opacity="0" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_3_749"
@@ -1182,9 +1182,9 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-2.14285 1.42857) rotate(-8.1301) scale(55.5584 11.8834)"
         >
-          <stop offset="0.156701" stop-color="#406ADC" />
-          <stop offset="0.467799" stop-color="#6A45BE" />
-          <stop offset="1" stop-color="#6A45BE" stop-opacity="0" />
+          <stop offset="0.156701" stopColor="#406ADC" />
+          <stop offset="0.467799" stopColor="#6A45BE" />
+          <stop offset="1" stopColor="#6A45BE" stop-opacity="0" />
         </radialGradient>
       </defs>
     </svg>
@@ -1200,7 +1200,7 @@ export const Icons = {
     >
       <g filter="url(#filter0_d_29_37)">
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           clip-rule="evenodd"
           d="M86.3113 38.3968C86.3113 29.1799 93.7831 21.7081 103 21.7081C112.217 21.7081 119.689 29.1799 119.689 38.3968V38.8616C139.134 45.7346 153.066 64.2798 153.066 86.079V122.371H153.347C153.347 122.371 153.411 130.708 158.982 130.708C161.081 130.708 163.305 131.56 165.261 132.622C169.218 134.77 171 139.266 171 143.769C171 152.725 163.739 159.986 154.783 159.986H50.8518C42.0971 159.986 35 152.889 35 144.134C35 139.429 37.0048 134.786 41.1664 132.59C43.1504 131.543 45.3125 130.708 47.1626 130.708C50.1586 130.708 51.9695 127.666 52.9338 125.257V86.0789C52.9338 64.2798 66.8657 45.7346 86.3113 38.8616V38.3968ZM102.5 190.208C113.822 190.208 123 185.619 123 179.958C123 174.297 113.822 169.708 102.5 169.708C91.1782 169.708 82 174.297 82 179.958C82 185.619 91.1782 190.208 102.5 190.208Z"
           fill="white"
@@ -1219,21 +1219,21 @@ export const Icons = {
         fill="white"
       />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M88 111.22C88 112.017 88.4749 112.735 89.2232 113.01C91.6316 113.895 97.2269 115.708 102.65 115.708C108.059 115.708 113.468 113.905 115.803 113.017C116.537 112.738 117 112.028 117 111.243C117 109.807 115.508 108.808 114.146 109.264C111.398 110.185 107.016 111.362 102.577 111.362C98.102 111.362 93.6266 110.165 90.8386 109.242C89.4801 108.792 88 109.789 88 111.22Z"
         fill="#5669FF"
       />
       <path
         opacity="0.2"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M80 93.7444C80 93.1748 80.2223 92.6264 80.6546 92.2556C81.7193 91.3422 83.9231 89.7082 86.0622 89.7082C88.2103 89.7082 90.3583 91.3558 91.3819 92.2669C91.792 92.6319 92 93.1615 92 93.7105C92 95.6611 89.3502 96.7707 87.4779 96.2235C87.0058 96.0855 86.5197 96.0032 86.032 96.0032C85.5172 96.0032 85.0023 96.0949 84.5025 96.247C82.6298 96.8169 80 95.7019 80 93.7444Z"
         fill="#5669FF"
       />
       <path
         opacity="0.2"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M114 93.7444C114 93.1748 114.222 92.6264 114.655 92.2556C115.719 91.3422 117.923 89.7082 120.062 89.7082C122.21 89.7082 124.358 91.3558 125.382 92.2669C125.792 92.6319 126 93.1615 126 93.7105C126 95.6611 123.35 96.7707 121.478 96.2235C121.006 96.0855 120.52 96.0032 120.032 96.0032C119.517 96.0032 119.002 96.0949 118.503 96.247C116.63 96.8169 114 95.7019 114 93.7444Z"
         fill="#5669FF"
@@ -1331,8 +1331,8 @@ export const Icons = {
           y2="179.908"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#5669FF" />
-          <stop offset="1" stop-color="#B558FF" />
+          <stop stopColor="#5669FF" />
+          <stop offset="1" stopColor="#B558FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -1402,6 +1402,34 @@ export const Icons = {
         d="M13 13V19H11V13H5V11H11V5H13V11H19V13H13Z"
         fill={props.color || "#0F1828"}
       />
+    </svg>
+  ),
+  sendMessage: (props: IconProps) => (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M20.7825 3.21745C20.6813 3.1167 20.5534 3.04695 20.4139 3.01639C20.2744 2.98584 20.1291 2.99574 19.995 3.04495L3.495 9.04495C3.3527 9.09892 3.23019 9.19491 3.14374 9.32016C3.05729 9.44542 3.01099 9.59401 3.01099 9.7462C3.01099 9.89839 3.05729 10.047 3.14374 10.1722C3.23019 10.2975 3.3527 10.3935 3.495 10.4474L9.9375 13.0199L14.6925 8.24995L15.75 9.30745L10.9725 14.0849L13.5525 20.5275C13.6081 20.667 13.7043 20.7866 13.8286 20.8709C13.953 20.9551 14.0998 21.0001 14.25 20.9999C14.4016 20.9968 14.5486 20.9479 14.6718 20.8595C14.795 20.7711 14.8885 20.6475 14.94 20.5049L20.94 4.00495C20.9911 3.87226 21.0034 3.72777 20.9755 3.58834C20.9477 3.44891 20.8807 3.32028 20.7825 3.21745Z"
+        fill="url(#paint0_linear_716_226)"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_716_226"
+          x1="12.0005"
+          y1="2.99902"
+          x2="12.0005"
+          y2="20.9999"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#6465FF" />
+          <stop offset="1" stopColor="#985CFF" />
+        </linearGradient>
+      </defs>
     </svg>
   ),
 };

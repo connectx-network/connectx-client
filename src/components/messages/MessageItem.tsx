@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/auth.store";
-import { Text } from "@mantine/core";
+import { Avatar, Flex, Group, Text } from "@mantine/core";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { useMemo } from "react";
@@ -13,18 +13,26 @@ export const MessageItem = ({ message }: any) => {
     [auth?.user?.id, message.senderId]
   );
   return (
-    <div
-      className={clsx(
-        " p-2 rounded-[16px] w-fit rounded-bl-none text-white",
-        isMyMessage &&
-          "rounded-br-none rounded-bl-[16px] self-end bg-[#6465FF] ",
-        !isMyMessage && "bg-[#166FF6]"
-      )}
+    <Flex
+      align={"flex-end"}
+      gap={4}
+      className={clsx(isMyMessage && "self-end")}
     >
-      {message.content}
-      <Text fz={10} className={clsx(isMyMessage && "text-right")}>
-        {dayjs(message.timestamp).format("hh:mm A")}
-      </Text>
-    </div>
+      {!isMyMessage && (
+        <Avatar src={"https://picsum.photos/200"} alt="Avatar" size={"sm"} />
+      )}
+      <div
+        className={clsx([
+          " p-2 rounded-t-[16px] w-fit text-white",
+          isMyMessage && "rounded-bl-[16px] rounded-br-[0] bg-[#6465FF]",
+          !isMyMessage && "rounded-bl-[0] rounded-br-[16px] bg-[#8798af]",
+        ])}
+      >
+        {message.content}
+        <Text fz={10} className={clsx(isMyMessage && "text-right")}>
+          {dayjs(message.timestamp).format("hh:mm A")}
+        </Text>
+      </div>
+    </Flex>
   );
 };
