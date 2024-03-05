@@ -116,7 +116,7 @@ const HomePage = () => {
             xs: 2,
             sm: isExistNavbar ? 1 : 2,
             md: 2,
-            xl: isExistNavbar ? 4 : 2,
+            xl: isExistNavbar ? 3 : 2,
           }}
         >
           {eventListData?.data.map((event) => (
