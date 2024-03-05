@@ -1,7 +1,11 @@
 "use client";
 
+import { getJoinedUserEventRequest } from "@/api/event";
 import { Icons } from "@/components/icons";
+import { ROUTER } from "@/constant";
 import { QUERY_KEY } from "@/constant/query-key";
+import { useAuthStore } from "@/store/auth.store";
+import { JoinedUserEventParam } from "@/types/event";
 import {
   ActionIcon,
   Avatar,
@@ -18,105 +22,29 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconArrowRight, IconSearch } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export interface Root {
-  results: Result[];
-  info: Info;
-}
+export type EventInviteProps = {
+  eventId: string;
+};
 
-export interface Result {
-  gender: string;
-  name: Name;
-  location: Location;
-  email: string;
-  login: Login;
-  dob: Dob;
-  registered: Registered;
-  phone: string;
-  cell: string;
-  id: Id;
-  picture: Picture;
-  nat: string;
-}
-
-export interface Name {
-  title: string;
-  first: string;
-  last: string;
-}
-
-export interface Location {
-  street: Street;
-  city: string;
-  state: string;
-  country: string;
-  postcode: any;
-  coordinates: Coordinates;
-  timezone: Timezone;
-}
-
-export interface Street {
-  number: number;
-  name: string;
-}
-
-export interface Coordinates {
-  latitude: string;
-  longitude: string;
-}
-
-export interface Timezone {
-  offset: string;
-  description: string;
-}
-
-export interface Login {
-  uuid: string;
-  username: string;
-  password: string;
-  salt: string;
-  md5: string;
-  sha1: string;
-  sha256: string;
-}
-
-export interface Dob {
-  date: string;
-  age: number;
-}
-
-export interface Registered {
-  date: string;
-  age: number;
-}
-
-export interface Id {
-  name: string;
-  value?: string;
-}
-
-export interface Picture {
-  large: string;
-  medium: string;
-  thumbnail: string;
-}
-
-export interface Info {
-  seed: string;
-  results: number;
-  page: number;
-  version: string;
-}
-
-const EventInvite = () => {
+const EventInvite = (props: EventInviteProps) => {
+  const { eventId } = props;
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: friendListData } = useQuery({
-    queryKey: [QUERY_KEY.GET_FRIEND_LIST],
-    queryFn: () => {
-      return fetch("https://randomuser.me/api/?results=30")
-        .then((res) => res.json())
-        .then((res) => res.results as Result[]);
-    },
+  const router = useRouter();
+  const { auth } = useAuthStore();
+  const [userList, setUserList] = useState<string[]>([]);
+  const [joinedUserParam, setJoinedUserParam] = useState<JoinedUserEventParam>({
+    page: 1,
+    size: 10,
+    eventId,
+  });
+
+  const { data: joinedEventUserData } = useQuery({
+    queryKey: [QUERY_KEY.GET_JOINED_USER_EVENT_LIST, joinedUserParam],
+    queryFn: () => getJoinedUserEventRequest(joinedUserParam),
   });
 
   return (
@@ -168,38 +96,53 @@ const EventInvite = () => {
             height: "calc(100% - 70px)",
           }}
         >
-          <Stack gap={16} p={20}>
-            {friendListData?.map((friend, index) => (
-              <Flex key={index} justify="space-between" align="center">
-                <Flex gap={12} align="center">
-                  <Avatar
-                    src={friend.picture.thumbnail}
-                    alt={friend.name.first + " " + friend.name.last}
-                    size={45}
-                    radius="xl"
-                  />
-                  <Stack gap={2}>
-                    <Text fz={14}>
-                      {friend.name.first + " " + friend.name.last}
-                    </Text>
-                    <Text fz={13} c="gray">
-                      {friend.location.street.number} Followers
-                    </Text>
-                  </Stack>
-                </Flex>
-                <Checkbox
-                  defaultChecked
-                  color="rgba(86, 105, 255, 1)"
-                  size="md"
-                  styles={{
-                    input: {
-                      borderRadius: 50,
-                    },
-                  }}
-                />
-              </Flex>
-            ))}
-          </Stack>
+          <Checkbox.Group value={userList} onChange={setUserList}>
+            <Stack gap={16} p={20}>
+              {joinedEventUserData?.data
+                .filter((item) => item.user.id !== auth?.user?.id)
+                .map((user) => (
+                  <Flex
+                    key={user.user.id}
+                    justify="space-between"
+                    align="center"
+                  >
+                    <Flex gap={12} align="center">
+                      <Avatar
+                        className="hover:cursor-pointer"
+                        src={user.user.avatarUrl}
+                        alt={user.user.fullName}
+                        size={45}
+                        radius="xl"
+                        onClick={() =>
+                          router.push(`${ROUTER.USER}/${user.user.id}`)
+                        }
+                      />
+                      <Stack gap={2}>
+                        <Link href={`${ROUTER.USER}/${user.user.id}`}>
+                          {user.user.fullName}
+                        </Link>
+                        <Text fz={13} c="gray">
+                          {user.user._count.followers || 0}{" "}
+                          {user.user._count.followers === 1
+                            ? "Follower"
+                            : "Followers"}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                    <Checkbox
+                      value={user.user.id}
+                      color="rgba(86, 105, 255, 1)"
+                      size="md"
+                      styles={{
+                        input: {
+                          borderRadius: 50,
+                        },
+                      }}
+                    />
+                  </Flex>
+                ))}
+            </Stack>
+          </Checkbox.Group>
         </ScrollArea>
         <Button
           type="submit"

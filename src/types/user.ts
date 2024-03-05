@@ -19,6 +19,7 @@ export type User = {
   following?: number;
   company?: string;
 };
+
 export type UpdateUserBody = {
   fullName: string;
   nickname: string;
@@ -27,7 +28,23 @@ export type UpdateUserBody = {
   address: string;
   gender: string;
 };
+
 export type UserInterest = {
   id?: string;
   name: string;
+};
+
+export type UserJoinedEvent = User & {
+  _count: UserCount;
+};
+
+export type UserCount = {
+  userImages: number;
+  userInterests: number;
+  following: number;
+  followers: number;
+  joinedEventUsers: number;
+  userTokens: number;
+  sentNotifications: number;
+  receivedNotifications: number;
 };
