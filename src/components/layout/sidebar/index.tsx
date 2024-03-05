@@ -12,26 +12,26 @@ const sidebarList = [
     icon: <Icons.home />,
     path: ROUTER.HOME,
   },
-  {
-    title: "Message",
-    icon: <Icons.messageCircle />,
-    path: ROUTER.MESSAGE,
-  },
-  {
-    title: "Calender",
-    icon: <Icons.calender />,
-    path: ROUTER.CALENDAR,
-  },
-  {
-    title: "Bookmark",
-    icon: <Icons.bookmark />,
-    path: ROUTER.BOOKMARK,
-  },
-  {
-    title: "Contact Us",
-    icon: <Icons.mail />,
-    path: ROUTER.CONTACT_US,
-  },
+  // {
+  //   title: "Message",
+  //   icon: <Icons.messageCircle />,
+  //   path: ROUTER.MESSAGE,
+  // },
+  // {
+  //   title: "Calender",
+  //   icon: <Icons.calender />,
+  //   path: ROUTER.CALENDAR,
+  // },
+  // {
+  //   title: "Bookmark",
+  //   icon: <Icons.bookmark />,
+  //   path: ROUTER.BOOKMARK,
+  // },
+  // {
+  //   title: "Contact Us",
+  //   icon: <Icons.mail />,
+  //   path: ROUTER.CONTACT_US,
+  // },
   {
     title: "Settings",
     icon: <Icons.setting />,
