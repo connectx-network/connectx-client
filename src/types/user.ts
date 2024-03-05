@@ -17,6 +17,7 @@ export type User = {
   userInterests: UserInterest[];
   followers?: number;
   following?: number;
+  company?: string;
 };
 export type UpdateUserBody = {
   fullName: string;
