@@ -15,6 +15,7 @@ import {
   Stack,
   Text,
   Title,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -37,6 +38,7 @@ import { QUERY_KEY } from "@/constant/query-key";
 import { EventInviteBtn, EventShareBtn } from "@/components/event";
 import { useAuthStore } from "@/store/auth.store";
 import { showErrorNotification, showSuccessNotification } from "@/utils";
+import { COLORS } from "@/constant/color";
 
 dayjs.extend(LocalizedFormat);
 const MAP_MODE = "search";
@@ -53,6 +55,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
+  const computedColorScheme = useComputedColorScheme();
 
   const { data: checkJoinedEvent, refetch: checkJoinedEventRefetch } = useQuery(
     {
@@ -283,7 +286,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   className="hover:underline hover:text-purple-700"
                   target="_blank"
                 >
-                  <Text fz={16} fw={500} c="white">{`${host.title}${
+                  <Text fz={16} fw={500} c={COLORS.PURPLE}>{`${host.title}${
                     index < originArr.length - 1 ? "," : ""
                   }`}</Text>
                 </Link>

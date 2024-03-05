@@ -2,14 +2,15 @@
 
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant";
-import { Stack, NavLink } from "@mantine/core";
+import { Stack, NavLink, Text, useComputedColorScheme } from "@mantine/core";
+import { IconHelpCircle, IconHome, IconSettings } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const sidebarList = [
   {
     title: "Home",
-    icon: <Icons.home />,
+    icon: <IconHome color="#74c0fc" />,
     path: ROUTER.HOME,
   },
   // {
@@ -34,18 +35,19 @@ const sidebarList = [
   // },
   {
     title: "Settings",
-    icon: <Icons.setting />,
+    icon: <IconSettings color="#74c0fc" />,
     path: ROUTER.SETTINGS,
   },
   {
     title: "Helps & FAQs",
-    icon: <Icons.questionMarkCircle />,
+    icon: <IconHelpCircle color="#74c0fc" />,
     path: ROUTER.HELPS_FAQS,
   },
 ];
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const computedColorScheme = useComputedColorScheme();
 
   return (
     <>
@@ -56,7 +58,11 @@ const Sidebar = () => {
               active={pathname === item.path}
               key={index}
               leftSection={item.icon}
-              label={item.title}
+              label={
+                <Text c={computedColorScheme === "dark" ? "white" : "black"}>
+                  {item.title}
+                </Text>
+              }
             ></NavLink>
           </Link>
         ))}

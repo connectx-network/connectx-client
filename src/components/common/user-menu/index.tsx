@@ -4,6 +4,7 @@ import { ROUTER, TOKEN_KEY } from "@/constant";
 import { useAuthStore } from "@/store/auth.store";
 import { clearToken } from "@/utils";
 import { Avatar, Group, Menu } from "@mantine/core";
+import { IconLogout, IconUser } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 
 type UserMenuProps = {
@@ -42,7 +43,7 @@ const UserMenu = (props: UserMenuProps) => {
             size={32}
             variant="transparent"
           >
-            <Icons.userCirleOutline className="w-7 h-7" />
+            <IconUser className="w-7 h-7" color="#74c0fc" />
           </Avatar>
         </Group>
       </Menu.Target>
@@ -50,13 +51,13 @@ const UserMenu = (props: UserMenuProps) => {
       <Menu.Dropdown>
         <Menu.Label>Setting</Menu.Label>
         <Menu.Item
-          leftSection={<Icons.user />}
+          leftSection={<IconUser color="#74c0fc" />}
           onClick={() => router.push(ROUTER.PROFILE)}
         >
           My Profile
         </Menu.Item>
         <Menu.Item
-          leftSection={<Icons.signout />}
+          leftSection={<IconLogout color="#74c0fc" />}
           onClick={() => handleSignOut()}
         >
           Logout
