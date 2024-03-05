@@ -2,7 +2,7 @@
   position: absolute;
   top: 16px;
   left: 16px;
-  padding: 8px 12px;
+  padding: 4px 8px;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
   border-radius: 10px;

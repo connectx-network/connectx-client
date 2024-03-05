@@ -66,13 +66,14 @@ const EventCard = (props: EventCardProps) => {
             to: "rgba(174, 88, 255, 1)",
             deg: 180,
           }}
-          fz={24}
+          fz={16}
           fw={800}
           ta="center"
         >
           {eventDateFormat.day}
         </Text>
         <Text
+          fz={12}
           variant="gradient"
           gradient={{
             from: "rgba(47, 92, 252, 1)",
