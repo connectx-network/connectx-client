@@ -22,7 +22,6 @@ const EventMapPage = () => {
   const [location, setLocation] = useState({
     lat: 21.0278,
     lng: 105.8342,
-    zoom: 13,
   });
 
   const { data: eventListData } = useQuery({
@@ -34,7 +33,6 @@ const EventMapPage = () => {
     setLocation({
       lat: Number(e.map.getCenter()?.lat()),
       lng: Number(e.map.getCenter()?.lng()),
-      zoom: 13,
     });
   };
 
@@ -42,7 +40,6 @@ const EventMapPage = () => {
     setLocation({
       lat: Number(eventListData?.data[index].eventLocationDetail.latitude),
       lng: Number(eventListData?.data[index].eventLocationDetail.longitude),
-      zoom: 13,
     });
   };
 
@@ -80,7 +77,6 @@ const EventMapPage = () => {
                 position={{
                   lat: Number(event.eventLocationDetail.latitude),
                   lng: Number(event.eventLocationDetail.longitude),
-                  zoom: 13,
                 }}
               />
             ))}
