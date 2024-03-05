@@ -169,7 +169,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 gap={10}
                 align="center"
                 style={{
-                  padding: "4px 12px",
+                  padding: "8px 16px",
                   position: "absolute",
                   bottom: 0,
                   left: "50%",
@@ -194,7 +194,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   </Avatar.Group>
                   {eventDetailData._count.joinedEventUsers >
                   MAX_USER_DISPLAY ? (
-                    <Text c="rgba(63, 56, 221, 1)" fz={12}>
+                    <Text c="rgba(63, 56, 221, 1)" fz={12} w="max-content">
                       +
                       {eventDetailData._count.joinedEventUsers -
                         MAX_USER_DISPLAY}{" "}
