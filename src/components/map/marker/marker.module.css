@@ -13,6 +13,7 @@
   box-shadow: rgba(51, 48, 228, 0.16) 0px 10px 36px 0px,
     rgba(16, 194, 31, 0.06) 0px 0px 0px 1px;
 }
+
 .container::after {
   border-left: 9px solid transparent;
   border-right: 9px solid transparent;
@@ -26,4 +27,8 @@
   transition: all 0.3s ease-out;
   width: 0;
   z-index: 1;
+}
+
+.active {
+  outline: 3px solid #5669ff;
 }

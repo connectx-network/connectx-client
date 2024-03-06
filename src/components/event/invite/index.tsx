@@ -19,6 +19,7 @@ import {
   Text,
   TextInput,
   rem,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconArrowRight, IconSearch } from "@tabler/icons-react";
@@ -36,6 +37,8 @@ const EventInvite = (props: EventInviteProps) => {
   const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
   const { auth } = useAuthStore();
+  const computedColor = useComputedColorScheme();
+  const isDarkMode = computedColor === "dark";
   const [userList, setUserList] = useState<string[]>([]);
   /**
    * TODO
@@ -105,52 +108,77 @@ const EventInvite = (props: EventInviteProps) => {
             height: "calc(100% - 70px)",
           }}
         >
-          <Checkbox.Group value={userList} onChange={setUserList}>
-            <Stack gap={16} p={20}>
-              {joinedEventUserData?.data
-                .filter(
-                  (item) =>
-                    item.user.id !== auth?.user?.id &&
-                    (!searchInput ||
-                      (searchInput &&
-                        item.user.fullName
-                          ?.toLowerCase()
-                          ?.includes(searchInput?.trim()?.toLowerCase())))
-                )
-                .map((user) => (
-                  <Flex
-                    key={user.user.id}
-                    justify="space-between"
-                    align="center"
-                  >
-                    <Flex gap={12} align="center">
-                      <Avatar
-                        className="hover:cursor-pointer"
-                        src={user.user.avatarUrl}
-                        alt={user.user.fullName}
-                        size={45}
-                        radius="xl"
-                        onClick={() =>
-                          router.push(`${ROUTER.USER}/${user.user.id}`)
-                        }
-                      />
-                      <Stack gap={2}>
-                        <Link href={`${ROUTER.USER}/${user.user.id}`}>
-                          <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
-                        </Link>
-                        <Text fz={13} c="gray">
-                          {user.user._count.followers || 0}{" "}
-                          {user.user._count.followers === 1
-                            ? "Follower"
-                            : "Followers"}
-                        </Text>
-                      </Stack>
-                    </Flex>
+          {/* <Checkbox.Group value={userList} onChange={setUserList}> */}
+          <Stack gap={16} p={20}>
+            {joinedEventUserData?.data
+              .filter(
+                (item) =>
+                  item.user.id !== auth?.user?.id &&
+                  (!searchInput ||
+                    (searchInput &&
+                      item.user.fullName
+                        ?.toLowerCase()
+                        ?.includes(searchInput?.trim()?.toLowerCase())))
+              )
+              .map((user) => (
+                <Flex key={user.user.id} justify="space-between" align="center">
+                  <Flex gap={12} align="center">
+                    <Avatar
+                      className="hover:cursor-pointer"
+                      src={user.user.avatarUrl}
+                      alt={user.user.fullName}
+                      size={45}
+                      radius="xl"
+                      onClick={() =>
+                        router.push(`${ROUTER.USER}/${user.user.id}`)
+                      }
+                    />
+                    <Stack gap={2}>
+                      <Link href={`${ROUTER.USER}/${user.user.id}`}>
+                        <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
+                      </Link>
+                      <Text fz={13} c="gray">
+                        {user.user._count.followers || 0}{" "}
+                        {user.user._count.followers === 1
+                          ? "Follower"
+                          : "Followers"}
+                      </Text>
+                    </Stack>
                   </Flex>
-                ))}
-            </Stack>
-          </Checkbox.Group>
+                </Flex>
+              ))}
+          </Stack>
+          {/* </Checkbox.Group> */}
         </ScrollArea>
+        {/* <Button
+          type="submit"
+          h={58}
+          w="50%"
+          radius={12}
+          mt={12}
+          variant="gradient"
+          gradient={{
+            from: "rgba(86, 105, 255, 1)",
+            to: "rgba(191, 86, 255, 1)",
+            deg: 180,
+          }}
+          justify="space-between"
+          leftSection={<span />}
+          rightSection={<Icons.rightArrow />}
+          styles={{
+            label: {
+              fontSize: "16px",
+            },
+          }}
+          style={{
+            position: "absolute",
+            bottom: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          INVITE
+        </Button> */}
       </Drawer>
 
       <Button

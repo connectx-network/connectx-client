@@ -1,6 +1,6 @@
 "use client";
 import { getEventListRequest } from "@/api/event";
-import { MapMarker } from "@/components/map";
+import { CurrentLocationMark, MapMarker } from "@/components/map";
 import { QUERY_KEY } from "@/constant/query-key";
 import { useAppShellMainStore } from "@/store/app-shell-main.store";
 import { useEventListParamStore } from "@/store/event-list.store";
@@ -9,39 +9,105 @@ import {
   APIProvider,
   Map,
   MapCameraChangedEvent,
+  MapCameraProps,
 } from "@vis.gl/react-google-maps";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Carousel } from "@mantine/carousel";
-import { Flex, Image, Stack, Text, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Flex,
+  Image,
+  Stack,
+  Text,
+  Title,
+  UnstyledButton,
+  useComputedColorScheme,
+} from "@mantine/core";
 import { Icons } from "@/components/icons";
 import dayjs from "dayjs";
+import { Easing, Tween, update } from "@tweenjs/tween.js";
+import { showErrorNotification } from "@/utils";
+import { IconCurrentLocation } from "@tabler/icons-react";
+
+const INITIAL_CAMERA = {
+  center: { lat: 21.0278, lng: 105.8342 },
+  zoom: 13,
+};
 
 const EventMapPage = () => {
   const { size } = useAppShellMainStore();
   const { param } = useEventListParamStore();
-  const [location, setLocation] = useState({
-    lat: 21.0278,
-    lng: 105.8342,
-  });
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = computedColorScheme === "dark";
+  const [cameraProps, setCameraProps] =
+    useState<MapCameraProps>(INITIAL_CAMERA);
+  const [currentLocation, setCurrentLocation] = useState<MapCameraProps | null>(
+    null
+  );
+  const handleCameraChange = useCallback((ev: MapCameraChangedEvent) => {
+    setCameraProps(ev.detail);
+  }, []);
 
-  const { data: eventListData } = useQuery({
+  const [activeMarker, setActiveMarker] = useState("");
+
+  const { data: eventListData, isFetchedAfterMount } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
   });
 
-  const handleCenterChanged = (e: MapCameraChangedEvent) => {
-    setLocation({
-      lat: Number(e.map.getCenter()?.lat()),
-      lng: Number(e.map.getCenter()?.lng()),
-    });
+  const handleEventSlideChange = useCallback(
+    (index: number) => {
+      setActiveMarker(String(eventListData?.data[index].id));
+      setCameraProps((prev) => ({
+        ...prev,
+        center: {
+          lat: Number(eventListData?.data[index].eventLocationDetail.latitude),
+          lng: Number(eventListData?.data[index].eventLocationDetail.longitude),
+        },
+        zoom: 15,
+      }));
+    },
+    [eventListData]
+  );
+
+  const handleGetCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          const center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setCameraProps((prev) => ({
+            ...prev,
+            center,
+          }));
+          setCurrentLocation({
+            center,
+            zoom: 13,
+          });
+        },
+        () => {
+          showErrorNotification({
+            title: "Location",
+            message: "User denied the request for Geolocation.",
+          });
+        }
+      );
+    } else {
+      showErrorNotification({
+        title: "Location",
+        message: "Geolocation is not supported by this browser.",
+      });
+    }
   };
 
-  const handleEventSlideChange = (index: number) => {
-    setLocation({
-      lat: Number(eventListData?.data[index].eventLocationDetail.latitude),
-      lng: Number(eventListData?.data[index].eventLocationDetail.longitude),
-    });
-  };
+  useEffect(() => {
+    if (isFetchedAfterMount && eventListData) {
+      setActiveMarker(eventListData?.data[0].id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetchedAfterMount]);
 
   return (
     <>
@@ -54,18 +120,13 @@ const EventMapPage = () => {
       >
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map
-            defaultZoom={13}
-            defaultCenter={{
-              lat: 21.0278,
-              lng: 105.8342,
-            }}
             mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
-            center={location}
-            onCenterChanged={handleCenterChanged}
             mapTypeControl={false}
             zoomControl={false}
             fullscreenControl={false}
             keyboardShortcuts={false}
+            {...cameraProps}
+            onCameraChanged={handleCameraChange}
           >
             {eventListData?.data.map((event, index) => (
               <MapMarker
@@ -78,13 +139,42 @@ const EventMapPage = () => {
                   lat: Number(event.eventLocationDetail.latitude),
                   lng: Number(event.eventLocationDetail.longitude),
                 }}
+                active={event.id === activeMarker}
               />
             ))}
+            {currentLocation && (
+              <CurrentLocationMark
+                position={{
+                  lat: currentLocation.center.lat,
+                  lng: currentLocation.center.lng,
+                }}
+              />
+            )}
           </Map>
+          <ActionIcon
+            variant="fill"
+            onClick={handleGetCurrentLocation}
+            radius={50}
+            p={4}
+            style={{
+              position: "absolute",
+              bottom: "25%",
+              right: "16px",
+            }}
+          >
+            <IconCurrentLocation />
+          </ActionIcon>
         </APIProvider>
         {eventListData && (
           <Carousel
-            slideSize="90%"
+            slideSize={{
+              base: "90%",
+              xs: "90%",
+              sm: "80%",
+              md: "50%",
+              lg: "40%",
+              xl: "30%",
+            }}
             height={150}
             slideGap="lg"
             loop
@@ -93,7 +183,7 @@ const EventMapPage = () => {
             style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
             onSlideChange={handleEventSlideChange}
           >
-            {eventListData?.data?.map((event, index) => (
+            {eventListData?.data.map((event, index) => (
               <Carousel.Slide
                 key={index}
                 style={{
@@ -102,10 +192,13 @@ const EventMapPage = () => {
                 }}
               >
                 <Flex
+                  pos="relative"
                   align="center"
                   style={{
                     borderRadius: "16px",
-                    backgroundColor: "white",
+                    backgroundColor: isDarkMode ? "#29313E" : "white",
+                    border:
+                      activeMarker === event.id ? `4px solid #40E0D0` : "none",
                   }}
                 >
                   <Image
@@ -128,9 +221,9 @@ const EventMapPage = () => {
                   >
                     <Stack gap={4}>
                       <Text fz={12}>
-                        {dayjs(event.eventDate).format("LT - DD/MM/YYYY")}
+                        {dayjs(event.eventDate).format("DD/MM/YYYY")}
                       </Text>
-                      <Title order={6} lineClamp={2}>
+                      <Title order={6} lineClamp={2} h={42}>
                         {event.name}
                       </Title>
                     </Stack>
@@ -141,6 +234,13 @@ const EventMapPage = () => {
                       </Text>
                     </Flex>
                   </Flex>
+                  {/* <UnstyledButton
+                    style={{ position: "absolute", top: 8, right: 12 }}
+                  >
+                    <Text fz={10} c={"grape"} td="underline">
+                      Go to location
+                    </Text>
+                  </UnstyledButton> */}
                 </Flex>
               </Carousel.Slide>
             ))}

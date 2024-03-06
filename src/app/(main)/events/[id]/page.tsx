@@ -172,7 +172,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 gap={10}
                 align="center"
                 style={{
-                  padding: "4px 12px",
+                  padding: "8px 16px",
                   position: "absolute",
                   bottom: 0,
                   left: "50%",
@@ -197,7 +197,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   </Avatar.Group>
                   {eventDetailData._count.joinedEventUsers >
                   MAX_USER_DISPLAY ? (
-                    <Text c="rgba(63, 56, 221, 1)" fz={12}>
+                    <Text c="rgba(63, 56, 221, 1)" fz={12} w="max-content">
                       +
                       {eventDetailData._count.joinedEventUsers -
                         MAX_USER_DISPLAY}{" "}
@@ -327,8 +327,37 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
         withCloseButton={false}
         centered
         size="auto"
+        styles={{
+          body: {
+            padding: 0,
+            backgroundColor: "transparent",
+          },
+          content: {
+            backgroundColor: "transparent",
+          },
+        }}
       >
-        <QRCodeSVG value="https://reactjs.org/" size={300} />
+        <Flex
+          direction="column"
+          gap={8}
+          style={{ backgroundColor: "transparent" }}
+        >
+          <QRCodeSVG
+            value={`${eventDetailData?.id};${auth.user?.id}`}
+            size={300}
+          />
+          <Button
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={closeQRCode}
+          >
+            Close
+          </Button>
+        </Flex>
       </Modal>
     </div>
   );
