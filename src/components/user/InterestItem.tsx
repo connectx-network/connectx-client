@@ -14,6 +14,7 @@ export const InterestItem = ({ interest, isEditMode }: InterestItemProps) => {
       color={getColorByName(interest.name)}
       radius={"xl"}
       size="sm"
+      w={"auto"}
       //   leftSection={isEditMode && <Icons.mail />}
     >
       {interest.name}

@@ -46,13 +46,14 @@ const EventCard = (props: EventCardProps) => {
       shadow="sm"
       padding="lg"
       radius="md"
-      withBorder
-      className="hover:cursor-pointer hover:opacity-80"
+      // withBorder
+      className="hover:cursor-pointer hover:opacity-80 card-event-bg-dark"
       onClick={() => router.push(`${ROUTER.EVENT}/${id}`)}
     >
       <Card.Section
         style={{
           position: "relative",
+          backgroundColor: "#29313E",
         }}
       >
         <Image radius={8} src={imageUrl} alt={name} h={180} />
@@ -95,8 +96,8 @@ const EventCard = (props: EventCardProps) => {
         <Icons.bookmarkGradient className="h-5 w-5" />
       </ActionIcon>
 
-      <Stack mt={12} gap={8}>
-        <Title c="dark.9" fz={18} lineClamp={2}>
+      <Stack mt={12} gap={8} className="bg-[#29313E]">
+        <Title c="white" fz={18} lineClamp={2}>
           {name}
         </Title>
         <Flex gap={10} align="center">
@@ -123,8 +124,8 @@ const EventCard = (props: EventCardProps) => {
           )}
         </Flex>
         <Flex gap={8} align="center">
-          <Icons.location />
-          <Text c="gray" truncate="end">
+          <Icons.location className="w-4 h-4" />
+          <Text c="gray" truncate="end" fz={13}>
             {location}
           </Text>
         </Flex>

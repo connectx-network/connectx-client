@@ -210,14 +210,14 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <clipPath
+      <path
         d="M6.5 10.8333H11.375"
         stroke="#5669FF"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <clipPath
+      <path
         d="M8.9375 1.89587C9.15299 1.68039 9.44525 1.55933 9.75 1.55933C9.90089 1.55933 10.0503 1.58905 10.1897 1.64679C10.3291 1.70454 10.4558 1.78918 10.5625 1.89587C10.6692 2.00257 10.7538 2.12924 10.8116 2.26865C10.8693 2.40806 10.899 2.55748 10.899 2.70837C10.899 2.85927 10.8693 3.00869 10.8116 3.1481C10.7538 3.28751 10.6692 3.41418 10.5625 3.52087L3.79167 10.2917L1.625 10.8334L2.16667 8.66671L8.9375 1.89587Z"
         stroke="#5669FF"
         strokeWidth="1.5"
@@ -1402,6 +1402,29 @@ export const Icons = {
         d="M13 13V19H11V13H5V11H11V5H13V11H19V13H13Z"
         fill={props.color || "#0F1828"}
       />
+    </svg>
+  ),
+  workplace: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-building-skyscraper"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M3 21l18 0" />
+      <path d="M5 21v-14l8 -4v18" />
+      <path d="M19 21v-10l-6 -4" />
+      <path d="M9 9l0 .01" />
+      <path d="M9 12l0 .01" />
+      <path d="M9 15l0 .01" />
+      <path d="M9 18l0 .01" />
     </svg>
   ),
   successIcon: (props: IconProps) => (

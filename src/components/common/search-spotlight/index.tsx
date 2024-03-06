@@ -1,5 +1,12 @@
 "use client";
-import { ActionIcon, Flex, Image, Kbd, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Flex,
+  Image,
+  Kbd,
+  Text,
+  useComputedColorScheme,
+} from "@mantine/core";
 import {
   Spotlight,
   SpotlightActionData,
@@ -16,6 +23,7 @@ import { EventListParam } from "@/types/event";
 import { useRouter } from "next/navigation";
 import classes from "./search-spotlight.module.css";
 import { ROUTER } from "@/constant";
+import { IconSearch } from "@tabler/icons-react";
 
 export const [eventSearchStore, eventSearchSpotlight] = createSpotlight();
 
@@ -33,6 +41,8 @@ const SearchSpotlight = () => {
   const handleQueryChange = (query: string) => {
     setSpotlightParam((prev) => ({ ...prev, query }));
   };
+
+  const computedColorScheme = useComputedColorScheme();
 
   const searchResults: SpotlightActionData[] = useMemo(() => {
     if (!data) return [];
@@ -68,7 +78,11 @@ const SearchSpotlight = () => {
         onClick={() => eventSearchSpotlight.open()}
       >
         <Flex gap={8} align="center">
-          <Icons.search className="w-5 h-5 fill-slate-700" />
+          <IconSearch
+            className="w-5 h-5"
+            stroke={1.5}
+            color={computedColorScheme === "light" ? "black" : "#ffffff"}
+          />
           <Text c="gray" fz={14} fw={200}>
             Search event...
           </Text>

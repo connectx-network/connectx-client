@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Button, Flex, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -37,9 +37,12 @@ const VerificationPage = () => {
 
   return (
     <Stack p={12}>
-      <Title order={2} c="dark" fz={24}>
-        Resset Password
-      </Title>
+      <Flex gap={8} align={"center"}>
+        <Title order={2} fz={24}>
+          Reset Password
+        </Title>
+      </Flex>
+
       <Text fw={200}>
         {mutation.isSuccess
           ? "Please check your e-mail account for the verification code we just send you"

@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
   Title,
+  useComputedColorScheme,
 } from "@mantine/core";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -16,6 +17,7 @@ import { Icons } from "@/components/icons";
 import classes from "./card-horizontal.module.css";
 import { useRouter } from "next/navigation";
 import { ROUTER } from "@/constant";
+import { COLORS } from "@/constant/color";
 
 dayjs.extend(LocalizedFormat);
 
@@ -36,6 +38,10 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
     if (!event.date) return "";
     return dayjs(event.date).format("LT - DD/MM/YYYY");
   }, [event.date]);
+
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = computedColorScheme === "dark";
+
   return (
     <Flex
       className={classes.wrapper}
@@ -43,7 +49,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
       style={{
         borderRadius: "8px",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
-        background: "white",
+        background: isDarkMode ? "#29313E" : "white",
       }}
       onClick={() => router.push(`${ROUTER.EVENT}/${event.id}`)}
     >
@@ -68,7 +74,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
         }}
       >
         <Stack gap={4}>
-          <Text>{eventDate}</Text>
+          <Text c={COLORS.PURPLE}>{eventDate}</Text>
           <Title order={5} lineClamp={2}>
             {event.name}
           </Title>

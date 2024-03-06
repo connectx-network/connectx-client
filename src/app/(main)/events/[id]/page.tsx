@@ -15,6 +15,7 @@ import {
   Stack,
   Text,
   Title,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -37,6 +38,7 @@ import { QUERY_KEY } from "@/constant/query-key";
 import { EventInviteBtn, EventShareBtn } from "@/components/event";
 import { useAuthStore } from "@/store/auth.store";
 import { showErrorNotification, showSuccessNotification } from "@/utils";
+import { COLORS } from "@/constant/color";
 
 dayjs.extend(LocalizedFormat);
 const MAP_MODE = "search";
@@ -53,6 +55,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
+  const computedColorScheme = useComputedColorScheme();
 
   const { data: checkJoinedEvent, refetch: checkJoinedEventRefetch } = useQuery(
     {
@@ -211,9 +214,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             </Box>
 
             <Space h={40}></Space>
-            <Title order={2} c="rgb(37, 0, 97)">
-              {eventDetailData.name}
-            </Title>
+            <Title order={2}>{eventDetailData.name}</Title>
             {checkJoinedEvent?.joined && (
               <Flex align="center" gap={4}>
                 <IconCircleCheck color="rgb(54, 162, 96)" size={16} />
@@ -223,8 +224,8 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               </Flex>
             )}
             <Flex align="center" gap={8}>
-              <Icons.calenderFill />
-              <Stack gap={4}>
+              <Icons.calenderFill className="w-[48px] h-[48px]" />
+              <Stack gap={4} w={"80%"}>
                 <Text fz={16}> {dateTimeEvent?.title}</Text>
                 <Text fz={12} c="rgba(116, 118, 136, 1)">
                   {dateTimeEvent?.text}
@@ -233,12 +234,12 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             </Flex>
 
             <Flex align="center" gap={8}>
-              <Icons.locationFill />
-              <Stack gap={4}>
-                <Text fz={16}>Location</Text>
-                <Text fz={12} c="rgba(116, 118, 136, 1)">
-                  {eventDetailData?.location}
-                </Text>
+              <Icons.locationFill className="w-[48px] h-[48px]" />
+              <Stack gap={4} w={"80%"}>
+                <Text fz={16}> {eventDetailData?.location}</Text>
+                {/* <Text fz={12} c="rgba(116, 118, 136, 1)">
+                  Location
+                </Text> */}
               </Stack>
             </Flex>
 
@@ -283,8 +284,11 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   key={host.id}
                   href={host?.url || ""}
                   className="hover:underline hover:text-purple-700"
+                  target="_blank"
                 >
-                  {`${host.title}${index < originArr.length - 1 ? "," : ""}`}
+                  <Text fz={16} fw={500} c={COLORS.PURPLE}>{`${host.title}${
+                    index < originArr.length - 1 ? "," : ""
+                  }`}</Text>
                 </Link>
               ))}
             </Flex>

@@ -38,6 +38,7 @@ const INIT_USER_PROFILE = {
   gender: "",
   address: "",
   country: "",
+  company: "",
 };
 const GENDER_LIST = [
   { value: "MALE", label: "Male" },
@@ -113,6 +114,7 @@ export default function EditProfilePage() {
       country: form.values.country,
       address: form.values.address,
       gender: form.values.gender,
+      company: form.values.company,
     };
     mutationEditProfile.mutateAsync(body);
 
@@ -187,6 +189,14 @@ export default function EditProfilePage() {
             />
             <Space h="md" />
             <TextInput
+              radius={12}
+              size="lg"
+              description="Company"
+              className="w-full"
+              {...form.getInputProps("company")}
+            />
+            <Space h="md" />
+            <TextInput
               type="email"
               radius={12}
               size="lg"
@@ -208,6 +218,7 @@ export default function EditProfilePage() {
                 <Image
                   src={"https://twemoji.maxcdn.com/2/svg/1f1fb-1f1f3.svg"}
                   className="ml-2 mr-1"
+                  alt=""
                 />
               }
               {...form.getInputProps("phoneNumber")}
