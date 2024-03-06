@@ -189,6 +189,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
               showLabel="Read More"
               hideLabel="Hide"
               ta={"justify"}
+              className="whitespace-break-spaces"
             >
               {user?.description}
             </Spoiler>

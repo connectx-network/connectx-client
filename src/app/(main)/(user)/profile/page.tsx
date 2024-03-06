@@ -237,6 +237,7 @@ export default function ProfilePage() {
                   showLabel="Read More"
                   hideLabel="Hide"
                   ta={"justify"}
+                  className="whitespace-break-spaces"
                 >
                   {userProfile?.description}
                 </Spoiler>
