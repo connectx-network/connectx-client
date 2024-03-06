@@ -110,7 +110,7 @@ const VerificationPage = () => {
 
   return (
     <Stack p={12}>
-      <Title order={2} c="dark" fz={24}>
+      <Title order={2} fz={24}>
         Verification
       </Title>
       <Text fw={200}>We’ve send you the verification code on {email}</Text>

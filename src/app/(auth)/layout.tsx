@@ -1,7 +1,7 @@
 "use client";
-import { Image, Title } from "@mantine/core";
+import { Image, Title, useComputedColorScheme } from "@mantine/core";
 import NextImage from "next/image";
-
+import cx from "clsx";
 import ConnectXLogo from "@images/logo/logo.png";
 import { Icons } from "@/components/icons";
 
@@ -10,10 +10,15 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const computedColor = useComputedColorScheme();
+  const isDarkMode = computedColor === "dark";
   return (
     <div className="relative mx-auto max-w-xl h-screen">
       <div
-        className="h-full bg-opacity-80 bg-white"
+        className={cx([
+          "h-screen bg-opacity-80",
+          isDarkMode ? "bg-[#1F1212]" : "bg-white",
+        ])}
         style={{
           backdropFilter: "blur(16px)",
         }}
@@ -28,8 +33,8 @@ export default function AuthLayout({
             style={{ margin: "0 auto" }}
             priority
           />
-          <Title order={1} c="primary.10" fz={30}>
-            ConnectX
+          <Title order={1} fz={30}>
+            Connect X
           </Title>
         </div>
         <div className="">{children}</div>

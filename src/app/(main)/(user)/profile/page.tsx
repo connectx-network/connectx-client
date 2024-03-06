@@ -136,7 +136,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Title order={2} c="dark" fz={24}>
+      <Title order={2} fz={24}>
         Profile
       </Title>
       <div className="flex justify-center items-center flex-col">
@@ -151,15 +151,13 @@ export default function ProfilePage() {
           <Icons.camera />
         </Avatar>
 
-        <Title order={2} c="dark" fz={24} mt={20}>
+        <Title order={2} fz={24} mt={20}>
           {userProfile?.fullName}
         </Title>
         {userProfile?.company && (
           <Flex my={8}>
             <Icons.workplace />
-            <Title order={4} c="dark">
-              {userProfile?.company}
-            </Title>
+            <Title order={4}>{userProfile?.company}</Title>
           </Flex>
         )}
 

@@ -1,7 +1,8 @@
 import { ROUTER } from "@/constant";
+import { COLORS } from "@/constant/color";
 import { NOTIFICATION_TYPES } from "@/constant/notification";
 import { Notification } from "@/types/notification";
-import { Avatar, Button, Flex, Space, Stack, Text } from "@mantine/core";
+import { Avatar, Button, Flex, Space, Stack, Text, Title } from "@mantine/core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
@@ -20,15 +21,13 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
           <Avatar src={notification.sender.avatarUrl} />
         </Link>
         <Flex justify={"space-between"} w={"100%"}>
-          <Stack w={"70%"}>
-            <Text>
-              <Link href={`${ROUTER.USER}/${notification.senderId}`}>
+          <Stack w={"80%"}>
+            <Link href={`${ROUTER.USER}/${notification.senderId}`}>
+              <Text c={COLORS.PURPLE}>
                 {notification.sender.fullName}
-              </Link>{" "}
-              <Text component="span" c="dimmed">
-                {notification.body}
+                <Text c="dimmed">{notification.body}</Text>
               </Text>
-            </Text>
+            </Link>{" "}
             {notification.notificationType ===
               NOTIFICATION_TYPES.EVENT_INVITATION && (
               <Flex justify={"space-evenly"}>

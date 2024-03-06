@@ -6,3 +6,14 @@ a {
     text-decoration: none;
     color: black;
 }
+.card-event-bg-dark {
+    background-color: #29313E !important;
+}
+
+.card-event-bg-light {
+    background-color: #f0f0f0 !important;
+}
+
+.text-purple-important {
+    color: #5669FF !important
+}
