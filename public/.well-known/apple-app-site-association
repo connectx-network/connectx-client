@@ -4,11 +4,16 @@
     "details": [
       {
         "appID": "AX7BFFJV8B.com.twendee.connectx",
-        "paths": ["*", "/events/*"]
+        "paths": [
+          "*",
+          "/events/*"
+        ]
       }
     ]
   },
   "webcredentials": {
-    "apps": ["AX7BFFJV8B.com.twendee.connectx"]
+    "apps": [
+      "AX7BFFJV8B.com.twendee.connectx"
+    ]
   }
 }
