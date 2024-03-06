@@ -1,15 +1,8 @@
 "use client";
 
-import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant";
 import { Stack, NavLink, Text, useComputedColorScheme } from "@mantine/core";
-import {
-  IconCalendar,
-  IconCalendarEvent,
-  IconHelpCircle,
-  IconHome,
-  IconSettings,
-} from "@tabler/icons-react";
+import { IconCalendarEvent, IconHome, IconMapPin } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,6 +15,11 @@ const sidebarList = [
   {
     title: "Events",
     icon: <IconCalendarEvent color="#74c0fc" />,
+    path: ROUTER.EVENT,
+  },
+  {
+    title: "Maps",
+    icon: <IconMapPin color="#74c0fc" />,
     path: ROUTER.EVENT,
   },
   // {
@@ -44,16 +42,16 @@ const sidebarList = [
   //   icon: <Icons.mail />,
   //   path: ROUTER.CONTACT_US,
   // },
-  {
-    title: "Settings",
-    icon: <IconSettings color="#74c0fc" />,
-    path: ROUTER.SETTINGS,
-  },
-  {
-    title: "Helps & FAQs",
-    icon: <IconHelpCircle color="#74c0fc" />,
-    path: ROUTER.HELPS_FAQS,
-  },
+  // {
+  //   title: "Settings",
+  //   icon: <IconSettings color="#74c0fc" />,
+  //   path: ROUTER.SETTINGS,
+  // },
+  // {
+  //   title: "Helps & FAQs",
+  //   icon: <IconHelpCircle color="#74c0fc" />,
+  //   path: ROUTER.HELPS_FAQS,
+  // },
 ];
 
 const Sidebar = () => {
