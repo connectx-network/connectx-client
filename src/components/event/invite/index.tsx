@@ -18,6 +18,7 @@ import {
   Text,
   TextInput,
   rem,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconArrowRight, IconSearch } from "@tabler/icons-react";
@@ -35,6 +36,8 @@ const EventInvite = (props: EventInviteProps) => {
   const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
   const { auth } = useAuthStore();
+  const computedColor = useComputedColorScheme();
+  const isDarkMode = computedColor === "dark";
   const [userList, setUserList] = useState<string[]>([]);
   const [joinedUserParam, setJoinedUserParam] = useState<JoinedUserEventParam>({
     page: 1,
@@ -55,7 +58,7 @@ const EventInvite = (props: EventInviteProps) => {
         position="right"
         title={
           <Text fz={24} fw={500}>
-            Invite Friend
+            List joined event
           </Text>
         }
         styles={{
@@ -96,40 +99,41 @@ const EventInvite = (props: EventInviteProps) => {
             height: "calc(100% - 70px)",
           }}
         >
-          <Checkbox.Group value={userList} onChange={setUserList}>
-            <Stack gap={16} p={20}>
-              {joinedEventUserData?.data
-                .filter((item) => item.user.id !== auth?.user?.id)
-                .map((user) => (
-                  <Flex
-                    key={user.user.id}
-                    justify="space-between"
-                    align="center"
-                  >
-                    <Flex gap={12} align="center">
-                      <Avatar
-                        className="hover:cursor-pointer"
-                        src={user.user.avatarUrl}
-                        alt={user.user.fullName}
-                        size={45}
-                        radius="xl"
-                        onClick={() =>
-                          router.push(`${ROUTER.USER}/${user.user.id}`)
-                        }
-                      />
-                      <Stack gap={2}>
-                        <Link href={`${ROUTER.USER}/${user.user.id}`}>
-                          {user.user.fullName}
-                        </Link>
-                        <Text fz={13} c="gray">
-                          {user.user._count.followers || 0}{" "}
-                          {user.user._count.followers === 1
-                            ? "Follower"
-                            : "Followers"}
-                        </Text>
-                      </Stack>
-                    </Flex>
-                    <Checkbox
+          {/* <Checkbox.Group value={userList} onChange={setUserList}> */}
+          <Stack gap={16} p={20}>
+            {joinedEventUserData?.data
+              .filter((item) => item.user.id !== auth?.user?.id)
+              .map((user) => (
+                <Flex key={user.user.id} justify="space-between" align="center">
+                  <Flex gap={12} align="center">
+                    <Avatar
+                      className="hover:cursor-pointer"
+                      src={user.user.avatarUrl}
+                      alt={user.user.fullName}
+                      size={45}
+                      radius="xl"
+                      onClick={() =>
+                        router.push(`${ROUTER.USER}/${user.user.id}`)
+                      }
+                    />
+                    <Stack gap={2}>
+                      <Link
+                        href={`${ROUTER.USER}/${user.user.id}`}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        }`}
+                      >
+                        {user.user.fullName}
+                      </Link>
+                      <Text fz={13} c="gray">
+                        {user.user._count.followers || 0}{" "}
+                        {user.user._count.followers === 1
+                          ? "Follower"
+                          : "Followers"}
+                      </Text>
+                    </Stack>
+                  </Flex>
+                  {/* <Checkbox
                       value={user.user.id}
                       color="rgba(86, 105, 255, 1)"
                       size="md"
@@ -138,13 +142,13 @@ const EventInvite = (props: EventInviteProps) => {
                           borderRadius: 50,
                         },
                       }}
-                    />
-                  </Flex>
-                ))}
-            </Stack>
-          </Checkbox.Group>
+                    /> */}
+                </Flex>
+              ))}
+          </Stack>
+          {/* </Checkbox.Group> */}
         </ScrollArea>
-        <Button
+        {/* <Button
           type="submit"
           h={58}
           w="50%"
@@ -172,7 +176,7 @@ const EventInvite = (props: EventInviteProps) => {
           }}
         >
           INVITE
-        </Button>
+        </Button> */}
       </Drawer>
 
       <Button
@@ -188,7 +192,7 @@ const EventInvite = (props: EventInviteProps) => {
         onClick={open}
       >
         <Text fz={10} c="rbga(255, 255, 255, 1)">
-          Invite
+          See more
         </Text>
       </Button>
     </>

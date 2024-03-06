@@ -327,8 +327,37 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
         withCloseButton={false}
         centered
         size="auto"
+        styles={{
+          body: {
+            padding: 0,
+            backgroundColor: "transparent",
+          },
+          content: {
+            backgroundColor: "transparent",
+          },
+        }}
       >
-        <QRCodeSVG value="https://reactjs.org/" size={300} />
+        <Flex
+          direction="column"
+          gap={8}
+          style={{ backgroundColor: "transparent" }}
+        >
+          <QRCodeSVG
+            value={`${eventDetailData?.id};${auth.user?.id}`}
+            size={300}
+          />
+          <Button
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            onClick={closeQRCode}
+          >
+            Close
+          </Button>
+        </Flex>
       </Modal>
     </div>
   );
