@@ -5,6 +5,7 @@ import {
   checkFollowedUser,
   followUserRequest,
   getUserRequest,
+  unfollowUserRequest,
 } from "@/api/user";
 import { EventList } from "@/components/event/EventList";
 import { Icons } from "@/components/icons";
@@ -103,9 +104,15 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
     onSuccess: () => setIsFollowing(true),
     onError: () => {},
   });
-
+  const mutationUnfollowUser = useMutation({
+    mutationFn: async (targetId: string) => await unfollowUserRequest(targetId),
+    onSuccess: () => setIsFollowing(false),
+    onError: () => {},
+  });
   const handleClickFollowUser = () => {
-    user?.id && mutationFollowUser.mutateAsync(user?.id);
+    if (isFollowing) {
+      user?.id && mutationUnfollowUser.mutateAsync(user.id);
+    } else user?.id && mutationFollowUser.mutateAsync(user.id);
   };
   return (
     <>
