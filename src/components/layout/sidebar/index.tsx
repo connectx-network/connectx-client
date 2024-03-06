@@ -3,7 +3,13 @@
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant";
 import { Stack, NavLink, Text, useComputedColorScheme } from "@mantine/core";
-import { IconHelpCircle, IconHome, IconSettings } from "@tabler/icons-react";
+import {
+  IconCalendar,
+  IconCalendarEvent,
+  IconHelpCircle,
+  IconHome,
+  IconSettings,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,6 +18,11 @@ const sidebarList = [
     title: "Home",
     icon: <IconHome color="#74c0fc" />,
     path: ROUTER.HOME,
+  },
+  {
+    title: "Events",
+    icon: <IconCalendarEvent color="#74c0fc" />,
+    path: ROUTER.EVENT,
   },
   // {
   //   title: "Message",

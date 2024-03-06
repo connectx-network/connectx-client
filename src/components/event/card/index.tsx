@@ -3,11 +3,8 @@ import { Icons } from "@/components/icons";
 import {
   ActionIcon,
   Avatar,
-  Badge,
-  Button,
   Card,
   Flex,
-  Group,
   Image,
   Paper,
   Stack,
@@ -125,7 +122,7 @@ const EventCard = (props: EventCardProps) => {
         </Flex>
         <Flex gap={8} align="center">
           <Icons.location className="w-4 h-4" />
-          <Text c="gray" truncate="end" fz={13}>
+          <Text c="gray" truncate="end" fz={13} w={"90%"}>
             {location}
           </Text>
         </Flex>

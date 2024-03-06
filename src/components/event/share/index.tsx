@@ -1,14 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/icons";
-import {
-  ActionIcon,
-  Dialog,
-  Flex,
-  Modal,
-  SimpleGrid,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Flex, Modal, SimpleGrid, Text } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconShare } from "@tabler/icons-react";
@@ -109,7 +102,7 @@ const ShareEvent = () => {
           {shareEventSocialList.map((item, index) => (
             <Flex key={index} direction="column" gap={4} align="center">
               {item.icon}
-              <Text c="rgba(60, 62, 86, 1)">{item.label}</Text>
+              <Text>{item.label}</Text>
             </Flex>
           ))}
         </SimpleGrid>

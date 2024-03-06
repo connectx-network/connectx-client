@@ -62,7 +62,7 @@ const EventInvite = (props: EventInviteProps) => {
         position="right"
         title={
           <Text fz={24} fw={500}>
-            Attendees
+            List joined event
           </Text>
         }
         styles={{
@@ -84,9 +84,7 @@ const EventInvite = (props: EventInviteProps) => {
             />
           }
           value={searchInput}
-          onChange={(event) =>
-            setSearchInput(event.currentTarget.value.trim()?.toLowerCase())
-          }
+          onChange={(event) => setSearchInput(event.currentTarget.value)}
           rightSection={
             <ActionIcon
               size={32}
@@ -117,7 +115,7 @@ const EventInvite = (props: EventInviteProps) => {
                       (searchInput &&
                         item.user.fullName
                           ?.toLowerCase()
-                          ?.includes(searchInput)))
+                          ?.includes(searchInput?.trim()?.toLowerCase())))
                 )
                 .map((user) => (
                   <Flex
@@ -148,50 +146,11 @@ const EventInvite = (props: EventInviteProps) => {
                         </Text>
                       </Stack>
                     </Flex>
-                    {/* <Checkbox
-                      value={user.user.id}
-                      color="rgba(86, 105, 255, 1)"
-                      size="md"
-                      styles={{
-                        input: {
-                          borderRadius: 50,
-                        },
-                      }}
-                    /> */}
                   </Flex>
                 ))}
             </Stack>
           </Checkbox.Group>
         </ScrollArea>
-        {/* <Button
-          type="submit"
-          h={58}
-          w="50%"
-          radius={12}
-          mt={12}
-          variant="gradient"
-          gradient={{
-            from: "rgba(86, 105, 255, 1)",
-            to: "rgba(191, 86, 255, 1)",
-            deg: 180,
-          }}
-          justify="space-between"
-          leftSection={<span />}
-          rightSection={<Icons.rightArrow />}
-          styles={{
-            label: {
-              fontSize: "16px",
-            },
-          }}
-          style={{
-            position: "absolute",
-            bottom: 10,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          INVITE
-        </Button> */}
       </Drawer>
 
       <Button
@@ -207,7 +166,7 @@ const EventInvite = (props: EventInviteProps) => {
         onClick={open}
       >
         <Text fz={10} c="rbga(255, 255, 255, 1)">
-          View all
+          See more
         </Text>
       </Button>
     </>

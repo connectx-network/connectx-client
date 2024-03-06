@@ -81,7 +81,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
         </Stack>
         <Flex gap={8} align="center">
           <Icons.location />
-          <Text c="gray" fz={12} lineClamp={1}>
+          <Text c="gray" fz={12} lineClamp={1} w={"90%"}>
             {event.location}
           </Text>
         </Flex>
