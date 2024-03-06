@@ -1,16 +1,31 @@
 import { EventListResponse } from "@/types/event";
-import { Card, Flex, Image, Text } from "@mantine/core";
+import { Card, Flex, Image, Text, useComputedColorScheme } from "@mantine/core";
 import dayjs from "dayjs";
 import { Icons } from "../icons";
 import { COLORS } from "@/constant/color";
-
+import cx from "clsx";
+import Link from "next/link";
+import { ROUTER } from "@/constant";
 export interface EventItemProps {
   event: EventListResponse;
 }
 
 export const EventItem: React.FC<EventItemProps> = ({ event }) => {
+  const computedColorScheme = useComputedColorScheme();
+
   return (
-    <Card withBorder shadow="sm" radius={"lg"} key={event.eventCategoryId}>
+    <Card
+      // withBorder
+      shadow="sm"
+      radius={"lg"}
+      style={{
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+      }}
+      key={event.eventCategoryId}
+      className={cx([
+        computedColorScheme === "dark" ? "card-event-bg-dark" : "bg-white",
+      ])}
+    >
       <Flex gap={16}>
         <Image
           radius={"lg"}
@@ -21,10 +36,18 @@ export const EventItem: React.FC<EventItemProps> = ({ event }) => {
         />
         <Flex direction={"column"} justify={"space-between"}>
           <div>
-            <Text fz={12} c={COLORS.PURPLE}>
+            <Text fz={12} c="blue">
               {dayjs(event.eventDate).format("HH:mm A - DD MMM YYYY")}
             </Text>
-            <Text fz={18}>{event.name}</Text>
+            <Link href={`${ROUTER.EVENT}/${event.id}`}>
+              <Text
+                c={computedColorScheme === "dark" ? "white" : "black"}
+                fz={18}
+                lineClamp={2}
+              >
+                {event.name}
+              </Text>
+            </Link>
           </div>
           <Flex gap={8} align="center">
             <Icons.location />

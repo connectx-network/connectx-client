@@ -16,7 +16,7 @@ const EventPage = () => {
   return (
     <div>
       <Flex justify="space-between">
-        <Text fz={24}>Event</Text>
+        <Text fz={24}>Events</Text>
         <EventFilter />
       </Flex>
       <Space h={20} />

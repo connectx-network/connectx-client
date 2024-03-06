@@ -1,20 +1,11 @@
 "use client";
-import {
-  ActionIcon,
-  Flex,
-  Image,
-  Kbd,
-  Text,
-  useComputedColorScheme,
-} from "@mantine/core";
+import { Flex, Image, Kbd, Text, useComputedColorScheme } from "@mantine/core";
 import {
   Spotlight,
   SpotlightActionData,
   createSpotlight,
-  spotlight,
 } from "@mantine/spotlight";
 
-import { Icons } from "@/components/icons";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/constant/query-key";
 import { getEventListRequest } from "@/api/event";

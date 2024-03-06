@@ -25,3 +25,8 @@ export const checkFollowedUser = async (targetId: string) => {
     const { data } = await axiosInstance.get(`user-connection/relation/${targetId}`);
     return data;
 } 
+
+export const unfollowUserRequest = async (targetId: string) => {
+    const { data } = await axiosInstance.delete(`user-connection`, { data: { targetId } });
+    return data;
+}
