@@ -141,7 +141,7 @@ const SignUpPage = () => {
   return (
     <>
       <Stack p={12}>
-        <Title order={2} c="dark" fz={24}>
+        <Title order={2} fz={24}>
           Sign up
         </Title>
         <form onSubmit={signUpForm.onSubmit((data) => handleRegister(data))}>
@@ -215,9 +215,9 @@ const SignUpPage = () => {
           leftSection={<Icons.google />}
           onClick={handleGoogleSignUp}
         >
-          <Text c="dark">Sign-up with Google</Text>
+          <Text>Sign-up with Google</Text>
         </Button>
-        <Button
+        {/* <Button
           h={58}
           radius={12}
           autoContrast
@@ -225,8 +225,8 @@ const SignUpPage = () => {
           variant="subtle"
           leftSection={<Icons.facebook />}
         >
-          <Text c="dark">Sign-up with Facebook</Text>
-        </Button>
+          <Text>Sign-up with Facebook</Text>
+        </Button> */}
         <Flex gap={8} justify="center" align="center">
           <Text>Already have an account?</Text>
           <Text

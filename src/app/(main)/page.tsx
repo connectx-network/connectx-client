@@ -4,6 +4,7 @@ import { EventCard, EventHorizontialCard } from "@/components/event";
 import { Icons } from "@/components/icons";
 import { ROUTER } from "@/constant";
 import { QUERY_KEY } from "@/constant/query-key";
+import { useCheckExistNavbar } from "@/hooks";
 import { useEventListParamStore } from "@/store/event-list.store";
 import {
   Box,
@@ -19,10 +20,13 @@ import {
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import NextImage from "next/image";
 
 const HomePage = () => {
   const { param } = useEventListParamStore();
   const router = useRouter();
+  const isExistNavbar = useCheckExistNavbar();
+  console.log("😻 ~ HomePage ~ isExistNavbar:", isExistNavbar);
   const { data: eventListData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
@@ -38,7 +42,10 @@ const HomePage = () => {
           <Icons.caretRightFill />
         </UnstyledButton>
       </Flex>
-      <SimpleGrid cols={{ base: 2, sm: 2, md: 3, lg: 4 }} mt={6}>
+      <SimpleGrid
+        cols={{ base: 1, xs: 2, md: 3, lg: isExistNavbar ? 4 : 3 }}
+        mt={6}
+      >
         {eventListData?.data.map((event) => (
           <EventCard
             key={event.id}
@@ -47,16 +54,22 @@ const HomePage = () => {
             imageUrl={event.eventAssets?.[0].url}
             eventDate={event.eventDate}
             location={event.location}
+            joinedUser={event.joinedEventUsers}
+            count={event._count}
           />
         ))}
       </SimpleGrid>
       <Space h={40} />
-      <Box pos="relative" maw={500}>
+      <Box pos="relative" maw={500} h={230}>
         <Image
+          component={NextImage}
           src="https://cryptoevents.global/wp-content/uploads/Crypto-Fest-2022.jpg"
           alt="Banner ads"
-          maw={500}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           radius={10}
+          quality={60}
         />
         <Flex
           direction="column"
@@ -94,7 +107,7 @@ const HomePage = () => {
 
       <Stack>
         <Flex gap={40}>
-          <Text fz={18}>Upcoming Events</Text>
+          <Text fz={18}>Nearby you</Text>
           <UnstyledButton>
             <Text c="gray" display="inline-block" mr={4}>
               See all
@@ -102,7 +115,15 @@ const HomePage = () => {
             <Icons.caretRightFill />
           </UnstyledButton>
         </Flex>
-        <SimpleGrid cols={{ base: 1, xs: 2, sm: 1, md: 2, xl: 3 }}>
+        <SimpleGrid
+          cols={{
+            base: 1,
+            xs: 2,
+            sm: isExistNavbar ? 1 : 2,
+            md: 2,
+            xl: isExistNavbar ? 3 : 2,
+          }}
+        >
           {eventListData?.data.map((event) => (
             <EventHorizontialCard
               key={event.id}

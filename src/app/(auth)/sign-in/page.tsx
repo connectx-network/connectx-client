@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   Title,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
@@ -32,6 +33,8 @@ import { useAuthStore } from "@/store/auth.store";
 const SignInPage = () => {
   const router = useRouter();
   const { setAuth } = useAuthStore();
+  const computedColorScheme = useComputedColorScheme();
+
   const signInForm = useForm({
     initialValues: {
       email: "",
@@ -100,7 +103,7 @@ const SignInPage = () => {
   return (
     <>
       <Stack p={12}>
-        <Title order={2} c="dark" fz={24}>
+        <Title order={2} fz={24}>
           Sign in
         </Title>
         <form onSubmit={signInForm.onSubmit((data) => handleSignin(data))}>
@@ -130,9 +133,14 @@ const SignInPage = () => {
               />
               <Link
                 href={ROUTER.RESET_PASSWORD}
-                className="font-extralight text-gray-800 no-underline hover:underline"
+                // className="font-extralight  no-underline hover:underline"
               >
-                Forgot Password?
+                <Text
+                  fw={200}
+                  c={computedColorScheme === "dark" ? "white" : "dark"}
+                >
+                  Forgot Password?
+                </Text>
               </Link>
             </Flex>
             <Button
@@ -165,9 +173,9 @@ const SignInPage = () => {
           leftSection={<Icons.google />}
           onClick={handleGoogleSignIn}
         >
-          <Text c="dark">Login with Google</Text>
+          <Text>Login with Google</Text>
         </Button>
-        <Button
+        {/* <Button
           h={58}
           radius={12}
           autoContrast
@@ -175,8 +183,8 @@ const SignInPage = () => {
           variant="subtle"
           leftSection={<Icons.facebook />}
         >
-          <Text c="dark">Login with Facebook</Text>
-        </Button>
+          <Text>Login with Facebook</Text>
+        </Button> */}
         <Flex gap={4} justify="center" align="center">
           <Text>Don’t have an account?</Text>
           <Text

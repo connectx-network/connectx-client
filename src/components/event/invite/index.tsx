@@ -1,7 +1,12 @@
 "use client";
 
+import { getJoinedUserEventRequest } from "@/api/event";
 import { Icons } from "@/components/icons";
+import { ROUTER } from "@/constant";
+import { COLORS } from "@/constant/color";
 import { QUERY_KEY } from "@/constant/query-key";
+import { useAuthStore } from "@/store/auth.store";
+import { JoinedUserEventParam } from "@/types/event";
 import {
   ActionIcon,
   Avatar,
@@ -14,110 +19,43 @@ import {
   Text,
   TextInput,
   rem,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconArrowRight, IconSearch } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export interface Root {
-  results: Result[];
-  info: Info;
-}
+export type EventInviteProps = {
+  eventId: string;
+};
 
-export interface Result {
-  gender: string;
-  name: Name;
-  location: Location;
-  email: string;
-  login: Login;
-  dob: Dob;
-  registered: Registered;
-  phone: string;
-  cell: string;
-  id: Id;
-  picture: Picture;
-  nat: string;
-}
-
-export interface Name {
-  title: string;
-  first: string;
-  last: string;
-}
-
-export interface Location {
-  street: Street;
-  city: string;
-  state: string;
-  country: string;
-  postcode: any;
-  coordinates: Coordinates;
-  timezone: Timezone;
-}
-
-export interface Street {
-  number: number;
-  name: string;
-}
-
-export interface Coordinates {
-  latitude: string;
-  longitude: string;
-}
-
-export interface Timezone {
-  offset: string;
-  description: string;
-}
-
-export interface Login {
-  uuid: string;
-  username: string;
-  password: string;
-  salt: string;
-  md5: string;
-  sha1: string;
-  sha256: string;
-}
-
-export interface Dob {
-  date: string;
-  age: number;
-}
-
-export interface Registered {
-  date: string;
-  age: number;
-}
-
-export interface Id {
-  name: string;
-  value?: string;
-}
-
-export interface Picture {
-  large: string;
-  medium: string;
-  thumbnail: string;
-}
-
-export interface Info {
-  seed: string;
-  results: number;
-  page: number;
-  version: string;
-}
-
-const EventInvite = () => {
+const EventInvite = (props: EventInviteProps) => {
+  const { eventId } = props;
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: friendListData } = useQuery({
-    queryKey: [QUERY_KEY.GET_FRIEND_LIST],
-    queryFn: () => {
-      return fetch("https://randomuser.me/api/?results=30")
-        .then((res) => res.json())
-        .then((res) => res.results as Result[]);
-    },
+  const router = useRouter();
+  const { auth } = useAuthStore();
+  const computedColor = useComputedColorScheme();
+  const isDarkMode = computedColor === "dark";
+  const [userList, setUserList] = useState<string[]>([]);
+  /**
+   * TODO
+   * Change size to 10 and handle load more later
+   */
+  const [joinedUserParam, setJoinedUserParam] = useState<JoinedUserEventParam>({
+    page: 1,
+    size: 1000,
+    eventId,
   });
+
+  const { data: joinedEventUserData } = useQuery({
+    queryKey: [QUERY_KEY.GET_JOINED_USER_EVENT_LIST, joinedUserParam],
+    queryFn: () => getJoinedUserEventRequest(joinedUserParam),
+  });
+
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <>
@@ -127,7 +65,7 @@ const EventInvite = () => {
         position="right"
         title={
           <Text fz={24} fw={500}>
-            Invite Friend
+            List joined event
           </Text>
         }
         styles={{
@@ -148,6 +86,8 @@ const EventInvite = () => {
               stroke={1.5}
             />
           }
+          value={searchInput}
+          onChange={(event) => setSearchInput(event.currentTarget.value)}
           rightSection={
             <ActionIcon
               size={32}
@@ -168,40 +108,49 @@ const EventInvite = () => {
             height: "calc(100% - 70px)",
           }}
         >
+          {/* <Checkbox.Group value={userList} onChange={setUserList}> */}
           <Stack gap={16} p={20}>
-            {friendListData?.map((friend, index) => (
-              <Flex key={index} justify="space-between" align="center">
-                <Flex gap={12} align="center">
-                  <Avatar
-                    src={friend.picture.thumbnail}
-                    alt={friend.name.first + " " + friend.name.last}
-                    size={45}
-                    radius="xl"
-                  />
-                  <Stack gap={2}>
-                    <Text fz={14}>
-                      {friend.name.first + " " + friend.name.last}
-                    </Text>
-                    <Text fz={13} c="gray">
-                      {friend.location.street.number} Followers
-                    </Text>
-                  </Stack>
+            {joinedEventUserData?.data
+              .filter(
+                (item) =>
+                  item.user.id !== auth?.user?.id &&
+                  (!searchInput ||
+                    (searchInput &&
+                      item.user.fullName
+                        ?.toLowerCase()
+                        ?.includes(searchInput?.trim()?.toLowerCase())))
+              )
+              .map((user) => (
+                <Flex key={user.user.id} justify="space-between" align="center">
+                  <Flex gap={12} align="center">
+                    <Avatar
+                      className="hover:cursor-pointer"
+                      src={user.user.avatarUrl}
+                      alt={user.user.fullName}
+                      size={45}
+                      radius="xl"
+                      onClick={() =>
+                        router.push(`${ROUTER.USER}/${user.user.id}`)
+                      }
+                    />
+                    <Stack gap={2}>
+                      <Link href={`${ROUTER.USER}/${user.user.id}`}>
+                        <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
+                      </Link>
+                      <Text fz={13} c="gray">
+                        {user.user._count.followers || 0}{" "}
+                        {user.user._count.followers === 1
+                          ? "Follower"
+                          : "Followers"}
+                      </Text>
+                    </Stack>
+                  </Flex>
                 </Flex>
-                <Checkbox
-                  defaultChecked
-                  color="rgba(86, 105, 255, 1)"
-                  size="md"
-                  styles={{
-                    input: {
-                      borderRadius: 50,
-                    },
-                  }}
-                />
-              </Flex>
-            ))}
+              ))}
           </Stack>
+          {/* </Checkbox.Group> */}
         </ScrollArea>
-        <Button
+        {/* <Button
           type="submit"
           h={58}
           w="50%"
@@ -229,7 +178,7 @@ const EventInvite = () => {
           }}
         >
           INVITE
-        </Button>
+        </Button> */}
       </Drawer>
 
       <Button
@@ -245,7 +194,7 @@ const EventInvite = () => {
         onClick={open}
       >
         <Text fz={10} c="rbga(255, 255, 255, 1)">
-          Invite
+          See more
         </Text>
       </Button>
     </>

@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "AX7BFFJV8B.com.twendee.connectx",
+        "paths": [
+          "*",
+          "/events/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "AX7BFFJV8B.com.twendee.connectx"
+    ]
+  }
+}

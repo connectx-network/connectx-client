@@ -28,6 +28,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { UpdateUserBody, User } from "@/types/user";
 import { useAuthStore } from "@/store/auth.store";
+import NextImage from "next/image";
 
 const INIT_USER_PROFILE = {
   fullName: "",
@@ -38,6 +39,7 @@ const INIT_USER_PROFILE = {
   gender: "",
   address: "",
   country: "",
+  company: "",
 };
 const GENDER_LIST = [
   { value: "MALE", label: "Male" },
@@ -113,6 +115,7 @@ export default function EditProfilePage() {
       country: form.values.country,
       address: form.values.address,
       gender: form.values.gender,
+      company: form.values.company,
     };
     mutationEditProfile.mutateAsync(body);
 
@@ -187,6 +190,14 @@ export default function EditProfilePage() {
             />
             <Space h="md" />
             <TextInput
+              radius={12}
+              size="lg"
+              description="Company"
+              className="w-full"
+              {...form.getInputProps("company")}
+            />
+            <Space h="md" />
+            <TextInput
               type="email"
               radius={12}
               size="lg"
@@ -205,10 +216,16 @@ export default function EditProfilePage() {
               description="Phone number"
               className="w-full"
               leftSection={
-                <Image
-                  src={"https://twemoji.maxcdn.com/2/svg/1f1fb-1f1f3.svg"}
-                  className="ml-2 mr-1"
-                />
+                <div className="relative w-9 h-9">
+                  <Image
+                    component={NextImage}
+                    src={"https://twemoji.maxcdn.com/2/svg/1f1fb-1f1f3.svg"}
+                    className="mr-1"
+                    alt="emoji"
+                    fill
+                    quality={70}
+                  />
+                </div>
               }
               {...form.getInputProps("phoneNumber")}
             />

@@ -14,9 +14,24 @@ const primary: MantineColorsTuple = [
   "#37364a",
 ];
 
+const dark: MantineColorsTuple = [
+  "#ffffff",
+  "#e4e4e6",
+  "#c7c7cd",
+  "#a8a7b6",
+  "#2e2e2e",
+  "#7c7a95",
+  "#2e2e2e",
+  "#1F1212",
+  "#575570",
+  "#4b4964",
+  "#37364a",
+];
+
 export const theme = createTheme({
   fontFamily: "Lexend, sans-serif",
   colors: {
     primary,
+    dark
   },
 });

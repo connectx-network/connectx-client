@@ -11,8 +11,8 @@ const client = new QueryClient();
 function Providers({ children }: React.PropsWithChildren) {
   return (
     <QueryClientProvider client={client}>
-      <MantineProvider theme={theme}>
-        <Notifications />
+      <MantineProvider theme={theme} defaultColorScheme="dark">
+        <Notifications containerWidth={400} />
         {children}
       </MantineProvider>
     </QueryClientProvider>

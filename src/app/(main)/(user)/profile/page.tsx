@@ -18,10 +18,11 @@ import {
   Title,
   Text,
   Divider,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { InterestList } from "@/components/user/InterestList";
 import { useAuthStore } from "@/store/auth.store";
 import { EventList } from "@/components/event/EventList";
@@ -134,9 +135,14 @@ export default function ProfilePage() {
     },
   });
 
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = useMemo(
+    () => computedColorScheme === "dark",
+    [computedColorScheme]
+  );
   return (
     <>
-      <Title order={2} c="dark" fz={24}>
+      <Title order={2} fz={24}>
         Profile
       </Title>
       <div className="flex justify-center items-center flex-col">
@@ -151,9 +157,16 @@ export default function ProfilePage() {
           <Icons.camera />
         </Avatar>
 
-        <Title order={2} c="dark" fz={24} className="my-4" my={20}>
+        <Title order={2} fz={24} mt={20} c={isDarkMode ? "#fff" : "black"}>
           {userProfile?.fullName}
         </Title>
+        {userProfile?.company && (
+          <Flex my={8}>
+            <Icons.workplace />
+            <Title order={4}>{userProfile?.company}</Title>
+          </Flex>
+        )}
+
         <Flex gap={16}>
           <Flex align={"center"} justify={"center"} direction={"column"}>
             <Text>{userProfile?.following || 0}</Text>
@@ -230,13 +243,17 @@ export default function ProfilePage() {
                   showLabel="Read More"
                   hideLabel="Hide"
                   ta={"justify"}
+                  className="whitespace-break-spaces"
                 >
                   {userProfile?.description}
                 </Spoiler>
               )}
 
               <div className="flex justify-between items-center my-4">
-                <Title order={4} c="dark">
+                <Title
+                  order={4}
+                  className={isDarkMode ? "text-white-important" : "black"}
+                >
                   Interest
                 </Title>
                 <Button

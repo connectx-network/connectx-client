@@ -1,4 +1,4 @@
-import { ActionIcon, Drawer } from "@mantine/core";
+import { ActionIcon, Drawer, useComputedColorScheme } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Icons } from "../icons";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getNotifications } from "@/api/notification";
 import { PaginationResponse } from "@/types/common";
 import { NotificationList } from "./NotificationList";
+import { IconBell } from "@tabler/icons-react";
 
 const Notification = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -26,7 +27,9 @@ const Notification = () => {
   useEffect(() => {
     mutationFetchNotis.mutateAsync();
   }, []);
-
+  const computedColorScheme = useComputedColorScheme("light", {
+    getInitialValueInEffect: true,
+  });
   return (
     <>
       <Drawer
@@ -53,7 +56,11 @@ const Notification = () => {
         radius={50}
         onClick={open}
       >
-        <Icons.bell className="w-6 h-6" />
+        {computedColorScheme !== "light" ? (
+          <IconBell className="w-6 h-6" color="white" stroke={1.5} />
+        ) : (
+          <IconBell className="w-6 h-6" color="black" stroke={1.5} />
+        )}
       </ActionIcon>
     </>
   );
