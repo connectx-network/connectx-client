@@ -37,12 +37,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { auth, setAuth } = useAuthStore();
   const [ref, rect] = useResizeObserver();
   const { size, setSize } = useAppShellMainStore();
-  console.log("😻 ~ AppLayout ~ size:", size);
   const { setColorScheme } = useMantineColorScheme();
   const os = useOs();
-  const isMobile = useMemo(() => os === "ios" || os === "android", [os]);
-  const isEventMapPath = useMemo(() => pathname === ROUTER.MAP, [pathname]);
-  console.log("😻 ~ AppLayout ~ isEventMapPath:", isEventMapPath);
+  // const isMobile = os === "ios" || os === "android";
+  // const isEventMapPath = pathname === ROUTER.MAP;
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
@@ -194,7 +192,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               position: "relative",
               maxWidth: !auth.isAuthenticated ? "960px" : "none",
               margin: !auth.isAuthenticated ? "0 auto" : "0",
-              padding: isMobile && isEventMapPath ? "60px 0 0" : "none",
+              // padding: isMobile && isEventMapPath ? "60px 0 0" : "none",
             }}
           >
             {children}

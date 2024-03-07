@@ -11,18 +11,15 @@ import {
   MapCameraChangedEvent,
   MapCameraProps,
 } from "@vis.gl/react-google-maps";
-import { use, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import {
   ActionIcon,
   Autocomplete,
   AutocompleteProps,
-  Avatar,
   CloseButton,
   Flex,
-  Group,
   Image,
-  Input,
   Stack,
   Text,
   Title,
@@ -32,6 +29,7 @@ import { Icons } from "@/components/icons";
 import dayjs from "dayjs";
 import { showErrorNotification } from "@/utils";
 import { IconCurrentLocation } from "@tabler/icons-react";
+import { MAIN_LAYOUT } from "@/constant";
 
 const INITIAL_CAMERA = {
   center: { lat: 21.0278, lng: 105.8342 },
@@ -42,6 +40,7 @@ const EventMapPage = () => {
   const { size } = useAppShellMainStore();
   const { param } = useEventListParamStore();
   const computedColorScheme = useComputedColorScheme();
+  const [searchEvent, setSearchEvent] = useState("");
   const isDarkMode = computedColorScheme === "dark";
   const [cameraProps, setCameraProps] =
     useState<MapCameraProps>(INITIAL_CAMERA);
@@ -174,7 +173,9 @@ const EventMapPage = () => {
     <>
       <div
         style={{
-          height: `${size.height}px`,
+          height: `calc(100vh - ${MAIN_LAYOUT.HEADER_HEIGHT} - ${
+            MAIN_LAYOUT.PADDING * 2
+          }px)`,
           width: "100%",
           position: "relative",
         }}
@@ -211,8 +212,10 @@ const EventMapPage = () => {
                 }}
               />
             )}
-            <div className="px-8">
+            <div className="px-8 flex justify-center">
               <Autocomplete
+                max={330}
+                miw={330}
                 size="lg"
                 data={dataEventAutocomplete}
                 renderOption={renderAutocompleteOption}
@@ -221,6 +224,15 @@ const EventMapPage = () => {
                 placeholder="Find event"
                 onOptionSubmit={handleSelectEvent}
                 comboboxProps={{ shadow: "md" }}
+                value={searchEvent}
+                onChange={setSearchEvent}
+                rightSection={
+                  <CloseButton
+                    aria-label="Clear input"
+                    onClick={() => setSearchEvent("")}
+                    style={{ display: searchEvent ? undefined : "none" }}
+                  />
+                }
                 styles={{
                   input: {
                     backgroundColor: isDarkMode ? "#29313E" : "#fff",
