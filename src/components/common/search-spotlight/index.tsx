@@ -57,30 +57,6 @@ const SearchSpotlight = () => {
   }, [data, router]);
   return (
     <>
-      <Flex
-        style={{
-          border: "1px solid #ccc",
-          padding: "4px 12px",
-          borderRadius: "50px",
-        }}
-        gap={50}
-        align="center"
-        visibleFrom="sm"
-        onClick={() => eventSearchSpotlight.open()}
-        className="md:w-[200px]"
-      >
-        <Flex gap={8} align="center">
-          <IconSearch
-            className="w-5 h-5"
-            stroke={1.5}
-            color={computedColorScheme === "light" ? "black" : "#ffffff"}
-          />
-          <Text c="gray" fz={14} fw={200} size="xl">
-            Search event...
-          </Text>
-        </Flex>
-      </Flex>
-
       <Spotlight
         actions={searchResults}
         store={eventSearchStore}

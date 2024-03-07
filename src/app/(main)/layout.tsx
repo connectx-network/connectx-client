@@ -133,7 +133,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   size="lg"
                   radius={50}
                   onClick={eventSearchSpotlight.open}
-                  hiddenFrom="sm"
                 >
                   <IconSearch
                     className="w-5 h-5"

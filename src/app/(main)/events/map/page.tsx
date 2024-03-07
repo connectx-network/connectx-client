@@ -30,7 +30,7 @@ import dayjs from "dayjs";
 import { showErrorNotification } from "@/utils";
 import { IconCurrentLocation } from "@tabler/icons-react";
 import { MAIN_LAYOUT } from "@/constant";
-
+import NextImage from "next/image";
 const INITIAL_CAMERA = {
   center: { lat: 21.0278, lng: 105.8342 },
   zoom: 13,
@@ -112,13 +112,16 @@ const EventMapPage = () => {
     option,
   }) => (
     <Flex gap="sm">
-      <Image
-        src={dataEventOptions[option.value].image}
-        alt={dataEventOptions[option.value].name}
-        w={56}
-        h={56}
-        radius={4}
-      />
+      <div className="w-14 h-14">
+        <Image
+          component={NextImage}
+          src={dataEventOptions[option.value].image}
+          alt={dataEventOptions[option.value].name}
+          fill
+          quality={70}
+          radius={4}
+        />
+      </div>
       <div>
         <Text size="sm" lineClamp={1}>
           {dataEventOptions[option.value].name}

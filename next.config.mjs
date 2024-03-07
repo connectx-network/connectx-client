@@ -11,6 +11,13 @@ const nextConfig = {
       ];
     },
   },
+  images: {
+    domains: [
+      "storage.googleapis.com",
+      "cryptoevents.global",
+      "twemoji.maxcdn.com",
+    ],
+  },
 };
 
 export default nextConfig;

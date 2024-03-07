@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import NextImage from "next/image";
 
 import { Icons } from "@/components/icons";
 import classes from "./card-horizontal.module.css";
@@ -43,9 +44,8 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
   const isDarkMode = computedColorScheme === "dark";
 
   return (
-    <Flex
-      className={classes.wrapper}
-      gap={4}
+    <div
+      className={`${classes.wrapper} grid grid-cols-5`}
       style={{
         borderRadius: "8px",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
@@ -53,17 +53,19 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
       }}
       onClick={() => router.push(`${ROUTER.EVENT}/${event.id}`)}
     >
-      <Image
-        src={event.imageUrl}
-        alt={event.name}
-        w="40%"
-        h="180px"
-        radius={8}
-        style={{
-          flex: "0 1 auto",
-        }}
-      />
+      <div className="relative h-[180px] col-span-2 ">
+        <Image
+          component={NextImage}
+          src={event.imageUrl}
+          alt={event.name}
+          fill
+          quality={70}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          radius={8}
+        />
+      </div>
       <Flex
+        className="col-span-3"
         direction="column"
         justify="space-between"
         align="flex-start"
@@ -86,7 +88,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
           </Text>
         </Flex>
       </Flex>
-    </Flex>
+    </div>
   );
 };
 

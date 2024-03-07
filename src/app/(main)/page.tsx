@@ -20,6 +20,7 @@ import {
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import NextImage from "next/image";
 
 const HomePage = () => {
   const { param } = useEventListParamStore();
@@ -59,12 +60,16 @@ const HomePage = () => {
         ))}
       </SimpleGrid>
       <Space h={40} />
-      <Box pos="relative" maw={500}>
+      <Box pos="relative" maw={500} h={230}>
         <Image
+          component={NextImage}
           src="https://cryptoevents.global/wp-content/uploads/Crypto-Fest-2022.jpg"
           alt="Banner ads"
-          maw={500}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           radius={10}
+          quality={60}
         />
         <Flex
           direction="column"

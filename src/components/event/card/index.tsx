@@ -15,6 +15,7 @@ import classes from "./card.module.css";
 import { useMemo } from "react";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import NextImage from "next/image";
 import { ROUTER } from "@/constant";
 import { EventCount, JoinedEventUser } from "@/types/event";
 
@@ -51,9 +52,19 @@ const EventCard = (props: EventCardProps) => {
         style={{
           position: "relative",
           backgroundColor: "#29313E",
+          height: 180,
         }}
       >
-        <Image radius={8} src={imageUrl} alt={name} h={180} />
+        <Image
+          component={NextImage}
+          radius={8}
+          src={imageUrl}
+          alt={name}
+          fill
+          quality={70}
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </Card.Section>
 
       <Paper className={classes.date}>
