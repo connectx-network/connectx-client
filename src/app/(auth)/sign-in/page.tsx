@@ -175,7 +175,7 @@ const SignInPage = () => {
         >
           <Text>Login with Google</Text>
         </Button>
-        <Button
+        {/* <Button
           h={58}
           radius={12}
           autoContrast
@@ -184,7 +184,7 @@ const SignInPage = () => {
           leftSection={<Icons.facebook />}
         >
           <Text>Login with Facebook</Text>
-        </Button>
+        </Button> */}
         <Flex gap={4} justify="center" align="center">
           <Text>Don’t have an account?</Text>
           <Text
