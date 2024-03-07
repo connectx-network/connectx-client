@@ -7,4 +7,6 @@ export enum BREAKPOINTS {
 }
 export enum MAIN_LAYOUT {
   PADDING_LEFT = "316px",
+  HEADER_HEIGHT = "60px",
+  PADDING = 16,
 }

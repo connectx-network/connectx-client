@@ -11,10 +11,13 @@ import {
   MapCameraChangedEvent,
   MapCameraProps,
 } from "@vis.gl/react-google-maps";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import {
   ActionIcon,
+  Autocomplete,
+  AutocompleteProps,
+  CloseButton,
   Flex,
   Image,
   Stack,
@@ -26,6 +29,7 @@ import { Icons } from "@/components/icons";
 import dayjs from "dayjs";
 import { showErrorNotification } from "@/utils";
 import { IconCurrentLocation } from "@tabler/icons-react";
+import { MAIN_LAYOUT } from "@/constant";
 
 const INITIAL_CAMERA = {
   center: { lat: 21.0278, lng: 105.8342 },
@@ -36,6 +40,7 @@ const EventMapPage = () => {
   const { size } = useAppShellMainStore();
   const { param } = useEventListParamStore();
   const computedColorScheme = useComputedColorScheme();
+  const [searchEvent, setSearchEvent] = useState("");
   const isDarkMode = computedColorScheme === "dark";
   const [cameraProps, setCameraProps] =
     useState<MapCameraProps>(INITIAL_CAMERA);
@@ -66,6 +71,63 @@ const EventMapPage = () => {
       }));
     },
     [eventListData]
+  );
+
+  const handleSelectEvent = (value: string) => {
+    const event = eventListData?.data.find((event) => event.name === value);
+    if (event) {
+      setActiveMarker(event.id);
+      setCameraProps((prev) => ({
+        ...prev,
+        center: {
+          lat: Number(event.eventLocationDetail.latitude),
+          lng: Number(event.eventLocationDetail.longitude),
+        },
+        zoom: 15,
+      }));
+    }
+  };
+
+  const dataEventAutocomplete = useMemo(() => {
+    if (!eventListData) return [];
+    return eventListData.data.map((event) => event.name);
+  }, [eventListData]);
+
+  const dataEventOptions: Record<
+    string,
+    { image: string; name: string; location: string }
+  > = useMemo(() => {
+    if (!eventListData) return {};
+    return eventListData.data.reduce((acc, event) => {
+      acc[event.name] = {
+        image: event.eventAssets?.[0]?.url || "",
+        name: event.name || "",
+        location: event.location || "",
+      };
+      return acc;
+    }, {} as Record<string, { image: string; name: string; location: string }>);
+  }, [eventListData]);
+
+  const renderAutocompleteOption: AutocompleteProps["renderOption"] = ({
+    option,
+  }) => (
+    <Flex gap="sm">
+      <Image
+        src={dataEventOptions[option.value].image}
+        alt={dataEventOptions[option.value].name}
+        w={56}
+        h={56}
+        radius={4}
+      />
+      <div>
+        <Text size="sm" lineClamp={1}>
+          {dataEventOptions[option.value].name}
+        </Text>
+        <Text size="xs" opacity={0.5} lineClamp={1}>
+          {dataEventOptions[option.value].location}
+        </Text>
+      </div>
+    </Flex>
   );
 
   const handleGetCurrentLocation = () => {
@@ -111,7 +173,9 @@ const EventMapPage = () => {
     <>
       <div
         style={{
-          height: `${size.height}px`,
+          height: `calc(100vh - ${MAIN_LAYOUT.HEADER_HEIGHT} - ${
+            MAIN_LAYOUT.PADDING * 2
+          }px)`,
           width: "100%",
           position: "relative",
         }}
@@ -148,6 +212,34 @@ const EventMapPage = () => {
                 }}
               />
             )}
+            <div className="px-8 flex justify-center">
+              <Autocomplete
+                max={330}
+                miw={330}
+                size="lg"
+                data={dataEventAutocomplete}
+                renderOption={renderAutocompleteOption}
+                maxDropdownHeight={300}
+                label="Find event"
+                placeholder="Find event"
+                onOptionSubmit={handleSelectEvent}
+                comboboxProps={{ shadow: "md" }}
+                value={searchEvent}
+                onChange={setSearchEvent}
+                rightSection={
+                  <CloseButton
+                    aria-label="Clear input"
+                    onClick={() => setSearchEvent("")}
+                    style={{ display: searchEvent ? undefined : "none" }}
+                  />
+                }
+                styles={{
+                  input: {
+                    backgroundColor: isDarkMode ? "#29313E" : "#fff",
+                  },
+                }}
+              />
+            </div>
           </Map>
           <ActionIcon
             variant="fill"
