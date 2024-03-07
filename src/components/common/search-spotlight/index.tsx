@@ -67,6 +67,7 @@ const SearchSpotlight = () => {
         align="center"
         visibleFrom="sm"
         onClick={() => eventSearchSpotlight.open()}
+        className="md:w-[200px]"
       >
         <Flex gap={8} align="center">
           <IconSearch
@@ -74,12 +75,9 @@ const SearchSpotlight = () => {
             stroke={1.5}
             color={computedColorScheme === "light" ? "black" : "#ffffff"}
           />
-          <Text c="gray" fz={14} fw={200}>
+          <Text c="gray" fz={14} fw={200} size="xl">
             Search event...
           </Text>
-        </Flex>
-        <Flex gap={4} align="center">
-          <Kbd size="xs">⌘</Kbd> + <Kbd size="xs">K</Kbd>
         </Flex>
       </Flex>
 

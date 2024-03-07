@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root[data-mantine-color-scheme='dark'] {
+    --mantine-color-dark-text: '#ffffff' !important
+}
 a {
     text-decoration: none;
     color: black;
@@ -16,4 +19,7 @@ a {
 
 .text-purple-important {
     color: #5669FF !important
+}
+.text-white-important {
+    color: #ffffff !important;
 }

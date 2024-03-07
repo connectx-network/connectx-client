@@ -18,10 +18,11 @@ import {
   Title,
   Text,
   Divider,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { InterestList } from "@/components/user/InterestList";
 import { useAuthStore } from "@/store/auth.store";
 import { EventList } from "@/components/event/EventList";
@@ -134,6 +135,11 @@ export default function ProfilePage() {
     },
   });
 
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = useMemo(
+    () => computedColorScheme === "dark",
+    [computedColorScheme]
+  );
   return (
     <>
       <Title order={2} fz={24}>
@@ -151,7 +157,7 @@ export default function ProfilePage() {
           <Icons.camera />
         </Avatar>
 
-        <Title order={2} fz={24} mt={20}>
+        <Title order={2} fz={24} mt={20} c={isDarkMode ? "#fff" : "black"}>
           {userProfile?.fullName}
         </Title>
         {userProfile?.company && (
@@ -244,7 +250,10 @@ export default function ProfilePage() {
               )}
 
               <div className="flex justify-between items-center my-4">
-                <Title order={4} c="dark">
+                <Title
+                  order={4}
+                  className={isDarkMode ? "text-white-important" : "black"}
+                >
                   Interest
                 </Title>
                 <Button
