@@ -11,7 +11,7 @@ import {
   MapCameraChangedEvent,
   MapCameraProps,
 } from "@vis.gl/react-google-maps";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import {
   ActionIcon,
@@ -20,12 +20,10 @@ import {
   Stack,
   Text,
   Title,
-  UnstyledButton,
   useComputedColorScheme,
 } from "@mantine/core";
 import { Icons } from "@/components/icons";
 import dayjs from "dayjs";
-import { Easing, Tween, update } from "@tweenjs/tween.js";
 import { showErrorNotification } from "@/utils";
 import { IconCurrentLocation } from "@tabler/icons-react";
 
@@ -153,6 +151,7 @@ const EventMapPage = () => {
           </Map>
           <ActionIcon
             variant="fill"
+            size="xl"
             onClick={handleGetCurrentLocation}
             radius={50}
             p={4}
@@ -160,16 +159,17 @@ const EventMapPage = () => {
               position: "absolute",
               bottom: "25%",
               right: "16px",
+              backgroundColor: "#fff",
             }}
           >
-            <IconCurrentLocation />
+            <IconCurrentLocation className="text-[#5669ff]" />
           </ActionIcon>
         </APIProvider>
         {eventListData && (
           <Carousel
             slideSize={{
-              base: "90%",
-              xs: "90%",
+              base: "80%",
+              xs: "80%",
               sm: "80%",
               md: "50%",
               lg: "40%",
@@ -196,9 +196,9 @@ const EventMapPage = () => {
                   align="center"
                   style={{
                     borderRadius: "16px",
-                    backgroundColor: isDarkMode ? "#29313E" : "white",
+                    backgroundColor: "#29313E",
                     border:
-                      activeMarker === event.id ? `4px solid #40E0D0` : "none",
+                      activeMarker === event.id ? `1px solid #5669ff` : "none",
                   }}
                 >
                   <Image
@@ -220,10 +220,15 @@ const EventMapPage = () => {
                     p={8}
                   >
                     <Stack gap={4}>
-                      <Text fz={12}>
+                      <Text fz={12} c="rgba(255, 255, 255, 1)">
                         {dayjs(event.eventDate).format("DD/MM/YYYY")}
                       </Text>
-                      <Title order={6} lineClamp={2} h={42}>
+                      <Title
+                        order={6}
+                        lineClamp={2}
+                        h={42}
+                        c="rgba(255, 255, 255, 1)"
+                      >
                         {event.name}
                       </Title>
                     </Stack>

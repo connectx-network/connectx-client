@@ -342,10 +342,12 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
           gap={8}
           style={{ backgroundColor: "transparent" }}
         >
-          <QRCodeSVG
-            value={`${eventDetailData?.id};${auth.user?.id}`}
-            size={300}
-          />
+          <div className="p-4 bg-white rounded-sm">
+            <QRCodeSVG
+              value={`${eventDetailData?.id};${auth.user?.id}`}
+              size={300}
+            />
+          </div>
           <Button
             variant="gradient"
             gradient={{

@@ -11,7 +11,7 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import { useDisclosure, useResizeObserver } from "@mantine/hooks";
+import { useDisclosure, useResizeObserver, useOs } from "@mantine/hooks";
 import NextImage from "next/image";
 
 import ConnectXLogo from "@images/logo/logo.png";
@@ -20,7 +20,6 @@ import { useRouter } from "next/navigation";
 import { ROUTER } from "@/constant";
 import { SearchSpotlight } from "@/components/common";
 import { useAuthStore } from "@/store/auth.store";
-import { Icons } from "@/components/icons";
 import UserMenu from "@/components/common/user-menu";
 import { eventSearchSpotlight } from "@/components/common/search-spotlight";
 import Notification from "@/components/notification";
@@ -29,9 +28,7 @@ import { getUserInfoRequest } from "@/api/auth";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/constant/query-key";
 import { useAppShellMainStore } from "@/store/app-shell-main.store";
-import { showErrorNotification, showSuccessNotification } from "@/utils";
 import { IconMoon, IconSearch, IconSun } from "@tabler/icons-react";
-import cx from "clsx";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -40,6 +37,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [ref, rect] = useResizeObserver();
   const { size, setSize } = useAppShellMainStore();
   const { setColorScheme } = useMantineColorScheme();
+  const os = useOs();
+  const isMobile = useMemo(() => os === "ios" || os === "android", [os]);
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
@@ -191,6 +190,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               position: "relative",
               maxWidth: !auth.isAuthenticated ? "960px" : "none",
               margin: !auth.isAuthenticated ? "0 auto" : "0",
+              padding: isMobile ? "60px 0 0" : "none",
             }}
           >
             {children}
