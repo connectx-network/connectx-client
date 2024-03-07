@@ -128,6 +128,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   )}
                 </ActionIcon>
                 <ActionIcon
+                  aria-label="Search event"
                   variant="subtle"
                   c="gray"
                   size="lg"

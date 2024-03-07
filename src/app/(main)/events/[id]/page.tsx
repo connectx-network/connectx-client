@@ -156,6 +156,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               />
               <Flex gap={8} pos="absolute" top={8} right={8}>
                 <ActionIcon
+                  aria-label="Bookmark event"
                   size="lg"
                   variant="gradient"
                   gradient={{
@@ -191,6 +192,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                           key={joinUser.user.id}
                           size="sm"
                           src={joinUser.user.avatarUrl}
+                          alt={joinUser.user.fullName}
                         />
                       );
                     })}

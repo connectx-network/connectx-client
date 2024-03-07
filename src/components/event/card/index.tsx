@@ -96,6 +96,7 @@ const EventCard = (props: EventCardProps) => {
       </Paper>
 
       <ActionIcon
+        aria-label="Bookmark"
         variant="light"
         size="lg"
         className={classes.bookmarkIcon}
@@ -117,6 +118,7 @@ const EventCard = (props: EventCardProps) => {
                   key={joinUser.user.id}
                   size="sm"
                   src={joinUser.user.avatarUrl}
+                  alt={joinUser.user.fullName}
                 />
               );
             })}

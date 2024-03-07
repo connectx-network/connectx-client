@@ -18,7 +18,10 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
     <>
       <Flex gap={8}>
         <Link href={`${ROUTER.USER}/${notification.senderId}`}>
-          <Avatar src={notification.sender.avatarUrl} />
+          <Avatar
+            src={notification.sender.avatarUrl}
+            alt={notification.sender.fullName}
+          />
         </Link>
         <Flex justify={"space-between"} w={"100%"}>
           <Stack w={"80%"}>

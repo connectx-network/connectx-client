@@ -90,6 +90,7 @@ const EventInvite = (props: EventInviteProps) => {
           onChange={(event) => setSearchInput(event.currentTarget.value)}
           rightSection={
             <ActionIcon
+              aria-label="Search"
               size={32}
               radius="xl"
               variant="filled"
