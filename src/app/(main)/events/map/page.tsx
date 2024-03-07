@@ -11,12 +11,18 @@ import {
   MapCameraChangedEvent,
   MapCameraProps,
 } from "@vis.gl/react-google-maps";
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import {
   ActionIcon,
+  Autocomplete,
+  AutocompleteProps,
+  Avatar,
+  CloseButton,
   Flex,
+  Group,
   Image,
+  Input,
   Stack,
   Text,
   Title,
@@ -66,6 +72,63 @@ const EventMapPage = () => {
       }));
     },
     [eventListData]
+  );
+
+  const handleSelectEvent = (value: string) => {
+    const event = eventListData?.data.find((event) => event.name === value);
+    if (event) {
+      setActiveMarker(event.id);
+      setCameraProps((prev) => ({
+        ...prev,
+        center: {
+          lat: Number(event.eventLocationDetail.latitude),
+          lng: Number(event.eventLocationDetail.longitude),
+        },
+        zoom: 15,
+      }));
+    }
+  };
+
+  const dataEventAutocomplete = useMemo(() => {
+    if (!eventListData) return [];
+    return eventListData.data.map((event) => event.name);
+  }, [eventListData]);
+
+  const dataEventOptions: Record<
+    string,
+    { image: string; name: string; location: string }
+  > = useMemo(() => {
+    if (!eventListData) return {};
+    return eventListData.data.reduce((acc, event) => {
+      acc[event.name] = {
+        image: event.eventAssets?.[0]?.url || "",
+        name: event.name || "",
+        location: event.location || "",
+      };
+      return acc;
+    }, {} as Record<string, { image: string; name: string; location: string }>);
+  }, [eventListData]);
+
+  const renderAutocompleteOption: AutocompleteProps["renderOption"] = ({
+    option,
+  }) => (
+    <Flex gap="sm">
+      <Image
+        src={dataEventOptions[option.value].image}
+        alt={dataEventOptions[option.value].name}
+        w={56}
+        h={56}
+        radius={4}
+      />
+      <div>
+        <Text size="sm" lineClamp={1}>
+          {dataEventOptions[option.value].name}
+        </Text>
+        <Text size="xs" opacity={0.5} lineClamp={1}>
+          {dataEventOptions[option.value].location}
+        </Text>
+      </div>
+    </Flex>
   );
 
   const handleGetCurrentLocation = () => {
@@ -148,6 +211,23 @@ const EventMapPage = () => {
                 }}
               />
             )}
+            <div className="px-8">
+              <Autocomplete
+                size="lg"
+                data={dataEventAutocomplete}
+                renderOption={renderAutocompleteOption}
+                maxDropdownHeight={300}
+                label="Find event"
+                placeholder="Find event"
+                onOptionSubmit={handleSelectEvent}
+                comboboxProps={{ shadow: "md" }}
+                styles={{
+                  input: {
+                    backgroundColor: isDarkMode ? "#29313E" : "#fff",
+                  },
+                }}
+              />
+            </div>
           </Map>
           <ActionIcon
             variant="fill"

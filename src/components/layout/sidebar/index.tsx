@@ -2,7 +2,12 @@
 
 import { ROUTER } from "@/constant";
 import { Stack, NavLink, Text, useComputedColorScheme } from "@mantine/core";
-import { IconCalendarEvent, IconHome, IconMapPin } from "@tabler/icons-react";
+import {
+  IconCalendarEvent,
+  IconHome,
+  IconMapPin,
+  IconMail,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -17,11 +22,11 @@ const sidebarList = [
     icon: <IconCalendarEvent color="#74c0fc" />,
     path: ROUTER.EVENT,
   },
-  // {
-  //   title: "Maps",
-  //   icon: <IconMapPin color="#74c0fc" />,
-  //   path: ROUTER.EVENT,
-  // },
+  {
+    title: "Maps",
+    icon: <IconMapPin color="#74c0fc" />,
+    path: ROUTER.MAP,
+  },
   // {
   //   title: "Message",
   //   icon: <Icons.messageCircle />,
@@ -37,11 +42,11 @@ const sidebarList = [
   //   icon: <Icons.bookmark />,
   //   path: ROUTER.BOOKMARK,
   // },
-  // {
-  //   title: "Contact Us",
-  //   icon: <Icons.mail />,
-  //   path: ROUTER.CONTACT_US,
-  // },
+  {
+    title: "Contact Us",
+    icon: <IconMail color="#74c0fc" />,
+    path: ROUTER.CONTACT_US,
+  },
   // {
   //   title: "Settings",
   //   icon: <IconSettings color="#74c0fc" />,
@@ -54,13 +59,19 @@ const sidebarList = [
   // },
 ];
 
-const Sidebar = () => {
+type SidebarProps = {
+  onClose: () => void;
+};
+
+const Sidebar = (props: SidebarProps) => {
+  const { onClose } = props;
   const pathname = usePathname();
   const computedColorScheme = useComputedColorScheme();
   const router = useRouter();
 
   const redirectPage = (target: string) => {
     router.push(target);
+    onClose();
   };
   return (
     <>

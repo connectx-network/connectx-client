@@ -16,7 +16,7 @@ import NextImage from "next/image";
 
 import ConnectXLogo from "@images/logo/logo.png";
 import { Sidebar } from "@/components/layout";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ROUTER } from "@/constant";
 import { SearchSpotlight } from "@/components/common";
 import { useAuthStore } from "@/store/auth.store";
@@ -32,13 +32,17 @@ import { IconMoon, IconSearch, IconSun } from "@tabler/icons-react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [opened, { toggle }] = useDisclosure();
+  const pathname = usePathname();
+  const [opened, { toggle, close }] = useDisclosure();
   const { auth, setAuth } = useAuthStore();
   const [ref, rect] = useResizeObserver();
   const { size, setSize } = useAppShellMainStore();
+  console.log("😻 ~ AppLayout ~ size:", size);
   const { setColorScheme } = useMantineColorScheme();
   const os = useOs();
   const isMobile = useMemo(() => os === "ios" || os === "android", [os]);
+  const isEventMapPath = useMemo(() => pathname === ROUTER.MAP, [pathname]);
+  console.log("😻 ~ AppLayout ~ isEventMapPath:", isEventMapPath);
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
@@ -64,7 +68,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       width: rect.width,
       height: rect.height,
     });
-  }, [ref, rect, setSize]);
+  }, [ref, rect, setSize, pathname]);
   return (
     <>
       {!isLoading && (
@@ -181,7 +185,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </AppShell.Header>
 
           <AppShell.Navbar p="md">
-            <Sidebar />
+            <Sidebar onClose={close} />
           </AppShell.Navbar>
 
           <AppShell.Main
@@ -190,7 +194,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               position: "relative",
               maxWidth: !auth.isAuthenticated ? "960px" : "none",
               margin: !auth.isAuthenticated ? "0 auto" : "0",
-              padding: isMobile ? "60px 0 0" : "none",
+              padding: isMobile && isEventMapPath ? "60px 0 0" : "none",
             }}
           >
             {children}
