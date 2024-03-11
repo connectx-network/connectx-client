@@ -139,10 +139,7 @@ const EventInvite = (props: EventInviteProps) => {
                       <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
                       {/* </Link> */}
                       <Text fz={13} c="gray">
-                        {user.user._count.followers || 0}{" "}
-                        {user.user._count.followers === 1
-                          ? "Follower"
-                          : "Followers"}
+                        {user.user.company || "No company"}
                       </Text>
                     </Stack>
                   </Flex>

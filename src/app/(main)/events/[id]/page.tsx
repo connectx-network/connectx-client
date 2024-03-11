@@ -255,6 +255,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               hideLabel="Hide"
               fz={16}
               fw={200}
+              className="whitespace-break-spaces"
             >
               {eventDetailData.description}
             </Spoiler>
