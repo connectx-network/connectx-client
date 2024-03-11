@@ -107,7 +107,7 @@ const HomePage = () => {
 
       <Stack>
         <Flex gap={40}>
-          <Text fz={18}>Nearby you</Text>
+          <Text fz={18}>Near you</Text>
           <UnstyledButton>
             <Text c="gray" display="inline-block" mr={4}>
               See all

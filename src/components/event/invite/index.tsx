@@ -65,7 +65,7 @@ const EventInvite = (props: EventInviteProps) => {
         position="right"
         title={
           <Text fz={24} fw={500}>
-            List joined event
+            List of participants
           </Text>
         }
         styles={{
@@ -130,14 +130,14 @@ const EventInvite = (props: EventInviteProps) => {
                       alt={user.user.fullName}
                       size={45}
                       radius="xl"
-                      onClick={() =>
-                        router.push(`${ROUTER.USER}/${user.user.id}`)
-                      }
+                      // onClick={() =>
+                      //   router.push(`${ROUTER.USER}/${user.user.id}`)
+                      // }
                     />
                     <Stack gap={2}>
-                      <Link href={`${ROUTER.USER}/${user.user.id}`}>
-                        <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
-                      </Link>
+                      {/* <Link href={`${ROUTER.USER}/${user.user.id}`}> */}
+                      <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
+                      {/* </Link> */}
                       <Text fz={13} c="gray">
                         {user.user._count.followers || 0}{" "}
                         {user.user._count.followers === 1
@@ -149,37 +149,7 @@ const EventInvite = (props: EventInviteProps) => {
                 </Flex>
               ))}
           </Stack>
-          {/* </Checkbox.Group> */}
         </ScrollArea>
-        {/* <Button
-          type="submit"
-          h={58}
-          w="50%"
-          radius={12}
-          mt={12}
-          variant="gradient"
-          gradient={{
-            from: "rgba(86, 105, 255, 1)",
-            to: "rgba(191, 86, 255, 1)",
-            deg: 180,
-          }}
-          justify="space-between"
-          leftSection={<span />}
-          rightSection={<Icons.rightArrow />}
-          styles={{
-            label: {
-              fontSize: "16px",
-            },
-          }}
-          style={{
-            position: "absolute",
-            bottom: 10,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          INVITE
-        </Button> */}
       </Drawer>
 
       <Button
