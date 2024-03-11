@@ -6,7 +6,8 @@
         "appID": "AX7BFFJV8B.com.twendee.connectx",
         "paths": [
           "*",
-          "/events/*"
+          "/events/*",
+          "/user/*"
         ]
       }
     ]
