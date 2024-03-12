@@ -18,6 +18,7 @@ export type User = {
   followers?: number;
   following?: number;
   company?: string;
+  checkedIn?: boolean;
 };
 
 export type UpdateUserBody = {

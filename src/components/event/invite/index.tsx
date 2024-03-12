@@ -134,10 +134,15 @@ const EventInvite = (props: EventInviteProps) => {
                       //   router.push(`${ROUTER.USER}/${user.user.id}`)
                       // }
                     />
-                    <Stack gap={2}>
-                      {/* <Link href={`${ROUTER.USER}/${user.user.id}`}> */}
-                      <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
-                      {/* </Link> */}
+                    <Stack gap={2} className="w-[250px] lg:w-[300px]">
+                      <Flex align={"center"} justify={"space-between"}>
+                        <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
+                        {!user.user.checkedIn && (
+                          <Text c="rgb(54, 162, 96)" fz={12}>
+                            Checked in
+                          </Text>
+                        )}
+                      </Flex>
                       <Text fz={13} c="gray">
                         {user.user.company || "No company"}
                       </Text>
