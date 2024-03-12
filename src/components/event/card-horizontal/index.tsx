@@ -52,7 +52,7 @@ const CardEventHorizontal = (props: CardEventHorizontalProps) => {
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
         background: isDarkMode ? "#29313E" : "white",
       }}
-      onClick={() => router.push(`${ROUTER.EVENT}/${event.id}`)}
+      onClick={() => router.push(`${ROUTER.EVENT}/${event.shortId}`)}
     >
       <div className="relative h-[180px] col-span-2 ">
         <Image
