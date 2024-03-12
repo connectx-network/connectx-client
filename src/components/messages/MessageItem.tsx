@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/auth.store";
-import { Avatar, Flex, Group, Text } from "@mantine/core";
+import { Avatar, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { useMemo } from "react";

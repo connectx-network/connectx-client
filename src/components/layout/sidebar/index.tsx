@@ -14,6 +14,7 @@ import {
   IconHome,
   IconMapPin,
   IconMail,
+  IconMessages,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,11 +35,11 @@ const sidebarList = [
     icon: <IconMapPin color="#74c0fc" />,
     path: ROUTER.MAP,
   },
-  // {
-  //   title: "Message",
-  //   icon: <Icons.messageCircle />,
-  //   path: ROUTER.MESSAGE,
-  // },
+  {
+    title: "Messages",
+    icon: <IconMessages color="#74c0fc" />,
+    path: ROUTER.MESSAGE,
+  },
   // {
   //   title: "Calender",
   //   icon: <Icons.calender />,

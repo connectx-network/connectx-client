@@ -1,3 +1,5 @@
+"use client";
+
 import { MessageItem } from "@/components/messages/MessageItem";
 import {
   Avatar,
@@ -9,14 +11,48 @@ import {
   TextInput,
   Space,
   ActionIcon,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { MESSAGES } from "../mock";
 import { Icons } from "@/components/icons";
+import { IconArrowLeft } from "@tabler/icons-react";
+import Link from "next/link";
+import { ROUTER } from "@/constant";
+import cx from "clsx";
+import { useMemo } from "react";
 
 const PersonalChatPage = () => {
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = useMemo(
+    () => computedColorScheme === "dark",
+    [computedColorScheme]
+  );
   return (
-    <div className="bg-slate-50">
-      <Flex gap={8} className="sticky top-[60px] bg-white z-[1] pt-1">
+    <div>
+      <Flex
+        gap={8}
+        className={cx([
+          "sticky top-[60px] z-[1] pt-1",
+          isDarkMode ? "bg-[#1f1212]" : "bg-white",
+        ])}
+        align={"center"}
+      >
+        <Link href={ROUTER.MESSAGE}>
+          <ActionIcon
+            aria-label="Search event"
+            variant="subtle"
+            c="gray"
+            size="lg"
+            radius={50}
+          >
+            <IconArrowLeft
+              className="w-5 h-5"
+              stroke={1.5}
+              color={computedColorScheme === "light" ? "black" : "#ffffff"}
+            />
+          </ActionIcon>
+        </Link>
+
         <Avatar src={"https://picsum.photos/200"} w={48} h={48} />
         <div>
           <Title order={2} c="dark" fz={24}>

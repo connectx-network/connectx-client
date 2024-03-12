@@ -1,15 +1,14 @@
 import { ROUTER } from "@/constant";
-import { Flex, Image, Indicator, Text } from "@mantine/core";
+import { Flex, Image, Indicator, Text, Title } from "@mantine/core";
 import Link from "next/link";
 
-export const PersonChatItem = () => {
+export type PersonChatItemProps = {
+  isDarkMode?: boolean;
+};
+export const PersonChatItem = ({ isDarkMode }: PersonChatItemProps) => {
   return (
     <Link href={`${ROUTER.MESSAGE}/dass`}>
-      <Flex
-        my={16}
-        gap={16}
-        className="cursor-pointer w-full hover:bg-slate-100 rounded-lg p-2"
-      >
+      <Flex my={16} gap={16} className="cursor-pointer w-ful rounded-lg p-2">
         <Indicator radius="xl" size={10} color="green" className="z-0">
           <Image
             src={"https://picsum.photos/200"}
@@ -19,7 +18,9 @@ export const PersonChatItem = () => {
           />
         </Indicator>
         <div className="w-full">
-          <Text fw={"bold"}>Tony Stark</Text>
+          <Title order={5} c={isDarkMode ? "white" : "black"}>
+            Tony Stark
+          </Title>
           <Text c="gray" lineClamp={1}>
             Hey! Join Avenger? Call me babe!
           </Text>

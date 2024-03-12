@@ -6,29 +6,51 @@ import {
   Text,
   Title,
   Stack,
-  Avatar,
   Image,
   Space,
   Divider,
   TextInput,
   Indicator,
+  ActionIcon,
+  useComputedColorScheme,
 } from "@mantine/core";
-import { useState } from "react";
-import { PersonChatItem } from "./PersonChatItem";
+import { useMemo, useState } from "react";
+import { PersonChatItem } from "../../../components/messages/PersonChatItem";
+import cx from "clsx";
+import { IconMessagePlus, IconNews, IconSearch } from "@tabler/icons-react";
 
 const MessagePage = () => {
   const [connectedUsers, setConnectedUser] = useState([...new Array(5)]);
-
+  const computedColorScheme = useComputedColorScheme();
+  const isDarkMode = useMemo(
+    () => computedColorScheme === "dark",
+    [computedColorScheme]
+  );
   return (
     <>
-      <div className="sticky top-[60px] z-[1] bg-white">
+      <div
+        className={cx([
+          "sticky top-[60px] z-[1]",
+          isDarkMode ? "bg-[#1f1212]" : "bg-white",
+        ])}
+      >
         <Flex justify={"space-between"}>
           <Title order={2} c="dark" fz={24}>
             Chats
           </Title>
           <Flex gap={8}>
-            <Icons.newChat className="cursor-pointer" />
-            {/* <Icons.menuChatMarked className="cursor-pointer" /> */}
+            <ActionIcon
+              aria-label="New chat"
+              variant="subtle"
+              c="gray"
+              size="lg"
+              radius={50}
+            >
+              <IconMessagePlus
+                className="cursor-pointer"
+                color={isDarkMode ? "#f0f0f0" : "black"}
+              />
+            </ActionIcon>
           </Flex>
         </Flex>
         <Space h={"xl"} />
@@ -70,13 +92,13 @@ const MessagePage = () => {
           radius={"md"}
           placeholder="Search..."
           size="lg"
-          leftSection={<Icons.search className="w-4 h-4 fill-slate-700" />}
+          leftSection={<IconSearch className="w-5 h-5" />}
         />
       </div>
 
       <div className="min-h-[70vh] ">
         {[...new Array(15)].map((e, index) => (
-          <PersonChatItem key={index} />
+          <PersonChatItem key={index} isDarkMode={isDarkMode} />
         ))}
       </div>
     </>
