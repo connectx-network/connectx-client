@@ -166,7 +166,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 >
                   <IconBookmark />
                 </ActionIcon>
-                <EventShareBtn />
+                <EventShareBtn id={id} />
               </Flex>
               <Flex
                 gap={10}

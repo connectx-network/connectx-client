@@ -14,10 +14,15 @@ import {
   RedditIcon,
 } from "react-share";
 
-const ShareEvent = () => {
+type ShareEventProps = {
+  id: string;
+};
+
+const ShareEvent = (props: ShareEventProps) => {
+  const { id } = props;
   const [opened, { open, close }] = useDisclosure(false);
   const clipboard = useClipboard();
-  const url = window.location.href;
+  const url = `${window.origin}/e/${id}`;
   const handleShare = () => {
     navigator.share({
       url,
