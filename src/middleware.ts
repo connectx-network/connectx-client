@@ -5,7 +5,6 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
 
   const id = url.pathname.slice(3); // remove /e/ from the url
-  console.log("😻 ~ middleware ~ id:", id);
 
   try {
     const eventResponse = await fetch(
