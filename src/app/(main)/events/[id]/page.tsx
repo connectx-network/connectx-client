@@ -55,7 +55,6 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
-  const computedColorScheme = useComputedColorScheme();
 
   const { data: checkJoinedEvent, refetch: checkJoinedEventRefetch } = useQuery(
     {
@@ -156,6 +155,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               />
               <Flex gap={8} pos="absolute" top={8} right={8}>
                 <ActionIcon
+                  aria-label="Bookmark event"
                   size="lg"
                   variant="gradient"
                   gradient={{
@@ -191,6 +191,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                           key={joinUser.user.id}
                           size="sm"
                           src={joinUser.user.avatarUrl}
+                          alt={joinUser.user.fullName}
                         />
                       );
                     })}
@@ -209,7 +210,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                     </Text>
                   )}
                 </Flex>
-                <EventInviteBtn eventId={id} />
+                <EventInviteBtn eventId={eventDetailData?.id} />
               </Flex>
             </Box>
 
@@ -253,6 +254,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               hideLabel="Hide"
               fz={16}
               fw={200}
+              className="whitespace-break-spaces"
             >
               {eventDetailData.description}
             </Spoiler>

@@ -30,6 +30,7 @@ import { ReviewList } from "@/components/review/ReviewList";
 import { getEventListRequest } from "@/api/event";
 import { PaginationResponse } from "@/types/common";
 import { EventListResponse } from "@/types/event";
+import QRCode, { QRCodeSVG } from "qrcode.react";
 
 export default function ProfilePage() {
   const [userProfile, setUserProfile] = useState<User>();
@@ -276,6 +277,15 @@ export default function ProfilePage() {
                   updateNameInterest={handleChangeNameInterest}
                   addNewInterest={handleAddNewInterest}
                   removeInterest={handleRemoveInterest}
+                />
+              </Flex>
+              <Title order={4} c="dark" my={16}>
+                Connect with me
+              </Title>
+              <Flex>
+                <QRCodeSVG
+                  value={`https://connectx.network/user/${auth.user?.id}`}
+                  size={200}
                 />
               </Flex>
             </div>

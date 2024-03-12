@@ -26,6 +26,7 @@ export type EventListResponse = {
   joinedEventUsers: JoinedEventUser[];
   eventLocationDetail: EventLocationDetail;
   _count: EventCount;
+  shortId: string;
 };
 
 export type EventDetail = {

@@ -26,6 +26,7 @@ const EventPage = () => {
             key={event.id}
             event={{
               id: event.id,
+              shortId: event.shortId,
               name: event.name,
               date: event.eventDate,
               imageUrl: event.eventAssets?.[0]?.url,

@@ -22,6 +22,7 @@ const ShareEvent = () => {
     {
       icon: (
         <ActionIcon
+          aria-label="Copy Link"
           size="lg"
           color="rgba(239, 233, 233, 1)"
           variant="filled"
@@ -108,6 +109,7 @@ const ShareEvent = () => {
         </SimpleGrid>
       </Modal>
       <ActionIcon
+        aria-label="Share event"
         size="lg"
         variant="gradient"
         gradient={{

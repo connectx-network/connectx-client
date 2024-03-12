@@ -50,6 +50,7 @@ const Notification = () => {
       </Drawer>
 
       <ActionIcon
+        aria-label="Notification"
         variant="subtle"
         c="gray"
         size="lg"
