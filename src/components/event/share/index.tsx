@@ -18,6 +18,11 @@ const ShareEvent = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const clipboard = useClipboard();
   const url = window.location.href;
+  const handleShare = () => {
+    navigator.share({
+      url,
+    });
+  };
   const shareEventSocialList = [
     {
       icon: (
@@ -58,27 +63,19 @@ const ShareEvent = () => {
       label: "Facebook",
     },
     {
-      icon: (
-        <FacebookMessengerShareButton url={url} appId="">
-          <Icons.messenger />
-        </FacebookMessengerShareButton>
-      ),
+      icon: <Icons.messenger onClick={handleShare} />,
       label: "Messenger",
     },
     {
-      icon: (
-        <TwitterShareButton url={url}>
-          <Icons.twitter />
-        </TwitterShareButton>
-      ),
+      icon: <Icons.twitter onClick={handleShare} />,
       label: "Twitter",
     },
     {
-      icon: <Icons.instagram />,
+      icon: <Icons.instagram onClick={handleShare} />,
       label: "Instagram",
     },
     {
-      icon: <Icons.skype />,
+      icon: <Icons.skype onClick={handleShare} />,
       label: "Skype",
     },
 
