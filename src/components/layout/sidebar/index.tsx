@@ -1,14 +1,21 @@
 "use client";
 
 import { ROUTER } from "@/constant";
-import { Stack, NavLink, Text, useComputedColorScheme } from "@mantine/core";
+import {
+  Stack,
+  NavLink,
+  Text,
+  useComputedColorScheme,
+  Flex,
+  Title,
+} from "@mantine/core";
 import {
   IconCalendarEvent,
   IconHome,
   IconMapPin,
   IconMail,
 } from "@tabler/icons-react";
-import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 const sidebarList = [
@@ -74,10 +81,9 @@ const Sidebar = (props: SidebarProps) => {
     onClose();
   };
   return (
-    <>
+    <Stack justify="space-between" className="h-screen">
       <Stack gap={4}>
         {sidebarList.map((item, index) => (
-          // <Link href={item.path} key={item.path}>
           <NavLink
             onClick={() => redirectPage(item.path)}
             active={pathname === item.path}
@@ -89,10 +95,36 @@ const Sidebar = (props: SidebarProps) => {
               </Text>
             }
           ></NavLink>
-          // </Link>
         ))}
       </Stack>
-    </>
+      <div className="block md:hidden">
+        <Flex gap={2}>
+          <Title order={4} w={"50%"} className="flex-1">
+            ConnectX App is available now
+          </Title>
+          <div className="flex-1">
+            <a href="https://play.google.com/store/apps/details?id=com.twendee.connectx&pcampaignid=web_share">
+              <Image
+                alt="Download ConnectX from Google Play Store"
+                width={200}
+                height={50}
+                src={"/images/download-google.png"}
+                className="object-cover rounded-xl cursor-pointer"
+              />
+            </a>
+            <a href="https://apps.apple.com/vn/app/connectx-network/id6478659561?l=vi">
+              <Image
+                alt="Download ConnectX from AppStore"
+                width={200}
+                height={50}
+                src={"/images/download-apple.png"}
+                className="object-cover rounded-xl cursor-pointer"
+              />
+            </a>
+          </div>
+        </Flex>
+      </div>
+    </Stack>
   );
 };
 
