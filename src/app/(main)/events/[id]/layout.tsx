@@ -1,15 +1,11 @@
 import { EventDetail } from "@/types/event";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
-type Props = {
+export async function generateMetadata({
+  params,
+}: {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+}): Promise<Metadata> {
   // read route params
   const id = params.id;
   const BASE_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
