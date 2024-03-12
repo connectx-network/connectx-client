@@ -27,6 +27,7 @@ type EventCardProps = {
   eventDate: string;
   joinedUser: JoinedEventUser[];
   count: EventCount;
+  shortId: string;
 };
 const MAX_USER_DISPLAY = 3;
 

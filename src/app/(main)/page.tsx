@@ -49,13 +49,14 @@ const HomePage = () => {
         {eventListData?.data.map((event) => (
           <EventCard
             key={event.id}
-            id={event.id}
+            id={event.shortId}
             name={event.name}
             imageUrl={event.eventAssets?.[0].url}
             eventDate={event.eventDate}
             location={event.location}
             joinedUser={event.joinedEventUsers}
             count={event._count}
+            shortId={event.shortId}
           />
         ))}
       </SimpleGrid>
@@ -128,11 +129,12 @@ const HomePage = () => {
             <EventHorizontialCard
               key={event.id}
               event={{
-                id: event.id,
+                id: event.shortId,
                 name: event.name,
                 date: event.eventDate,
                 imageUrl: event.eventAssets?.[0]?.url,
                 location: event.location,
+                shortId: event.shortId,
               }}
             />
           ))}

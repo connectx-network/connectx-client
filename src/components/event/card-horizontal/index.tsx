@@ -29,6 +29,7 @@ type CardEventHorizontalProps = {
     date: string;
     imageUrl: string;
     location: string;
+    shortId: string;
   };
 };
 

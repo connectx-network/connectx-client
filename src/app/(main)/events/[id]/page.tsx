@@ -55,7 +55,6 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
     queryFn: () => getEventDetailRequest(id),
   });
-  const computedColorScheme = useComputedColorScheme();
 
   const { data: checkJoinedEvent, refetch: checkJoinedEventRefetch } = useQuery(
     {
@@ -211,7 +210,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                     </Text>
                   )}
                 </Flex>
-                <EventInviteBtn eventId={id} />
+                <EventInviteBtn eventId={eventDetailData?.id} />
               </Flex>
             </Box>
 
