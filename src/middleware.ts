@@ -4,7 +4,7 @@ import { ROUTER } from "./constant";
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
 
-  const id = url.pathname.slice(3); // remove /e/ from the url
+  const id = url.pathname.slice(1); // remove /e/ from the url
 
   try {
     const eventResponse = await fetch(
@@ -24,5 +24,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/e/:id*",
+  matcher: "/:id*",
 };
