@@ -22,7 +22,8 @@ const ShareEvent = (props: ShareEventProps) => {
   const { id } = props;
   const [opened, { open, close }] = useDisclosure(false);
   const clipboard = useClipboard();
-  const url = `${window.location.host}/e/${id}`;
+  const url = `${window.origin}/e/${id}`;
+  const copylink = `${window.location.host}/e/${id}`;
   const handleShare = () => {
     navigator.share({
       url,
@@ -40,7 +41,7 @@ const ShareEvent = (props: ShareEventProps) => {
           h={44}
           radius={12}
           onClick={() => {
-            clipboard.copy(url);
+            clipboard.copy(copylink);
             notifications.show({
               message: "Link copied to clipboard",
             });
