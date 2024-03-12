@@ -22,7 +22,7 @@ const ShareEvent = (props: ShareEventProps) => {
   const { id } = props;
   const [opened, { open, close }] = useDisclosure(false);
   const clipboard = useClipboard();
-  const url = `${window.origin}/e/${id}`;
+  const url = `${window.location.host}/e/${id}`;
   const handleShare = () => {
     navigator.share({
       url,
