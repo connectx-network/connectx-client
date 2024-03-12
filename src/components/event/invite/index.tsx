@@ -137,7 +137,7 @@ const EventInvite = (props: EventInviteProps) => {
                     <Stack gap={2} className="w-[250px] lg:w-[300px]">
                       <Flex align={"center"} justify={"space-between"}>
                         <Text c={COLORS.PURPLE}>{user.user.fullName}</Text>
-                        {!user.user.checkedIn && (
+                        {user.user.checkedIn && (
                           <Text c="rgb(54, 162, 96)" fz={12}>
                             Checked in
                           </Text>
