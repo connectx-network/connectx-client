@@ -6,9 +6,11 @@ import { EventFilter, EventHorizontialCard } from "@/components/event";
 import { QUERY_KEY } from "@/constant/query-key";
 import { useEventListParamStore } from "@/store/event-list.store";
 import { getEventListRequest } from "@/api/event";
+import { useCheckExistNavbar } from "@/hooks";
 
 const EventPage = () => {
   const { param } = useEventListParamStore();
+  const isExistNavbar = useCheckExistNavbar();
   const { data: eventListData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
@@ -20,7 +22,15 @@ const EventPage = () => {
         <EventFilter />
       </Flex>
       <Space h={20} />
-      <SimpleGrid cols={{ base: 1, xs: 2, sm: 1, md: 2, xl: 3 }}>
+      <SimpleGrid
+        cols={{
+          base: 1,
+          xs: 2,
+          sm: isExistNavbar ? 1 : 2,
+          md: 2,
+          xl: isExistNavbar ? 3 : 2,
+        }}
+      >
         {eventListData?.data.map((event) => (
           <EventHorizontialCard
             key={event.id}
