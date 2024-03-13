@@ -6,8 +6,8 @@ export async function middleware(request: NextRequest) {
 
   const id = url.pathname.slice(1); // remove /e/ from the url
 
-  if (id) {
-    try {
+  try {
+    if (id) {
       const eventResponse = await fetch(
         `https://connectx.twendeesoft.com/event/${id}`
       );
@@ -17,11 +17,11 @@ export async function middleware(request: NextRequest) {
         const redirectUrl = new URL(`${url.origin}${ROUTER.EVENT}/${id}`);
         return NextResponse.redirect(redirectUrl);
       }
-      return NextResponse.next();
-    } catch (error) {
-      console.error(`Error fetching event:`, error);
-      return NextResponse.next();
     }
+    return NextResponse.next();
+  } catch (error) {
+    console.error(`Error fetching event:`, error);
+    return NextResponse.next();
   }
 }
 
