@@ -2,7 +2,7 @@ import { ActionIcon, Drawer, useComputedColorScheme } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Icons } from "../icons";
 import { useEffect, useState } from "react";
-import { Notification } from "@/types/notification";
+import { Notification as NotificationType } from "@/types/notification";
 import { NotificationItem } from "./NotificationItem";
 import { useMutation } from "@tanstack/react-query";
 import { getNotifications } from "@/api/notification";
@@ -13,11 +13,11 @@ import { IconBell } from "@tabler/icons-react";
 const Notification = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const isMobile = useMediaQuery("(max-width: 440px)");
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
   const mutationFetchNotis = useMutation({
     mutationFn: () => getNotifications(),
-    onSuccess: (data: PaginationResponse<Notification>) => {
+    onSuccess: (data: PaginationResponse<NotificationType>) => {
       setNotifications(data.data);
     },
     onError: () => {

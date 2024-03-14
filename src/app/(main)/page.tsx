@@ -26,7 +26,6 @@ const HomePage = () => {
   const { param } = useEventListParamStore();
   const router = useRouter();
   const isExistNavbar = useCheckExistNavbar();
-  console.log("😻 ~ HomePage ~ isExistNavbar:", isExistNavbar);
   const { data: eventListData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_LIST, param],
     queryFn: () => getEventListRequest(param),
