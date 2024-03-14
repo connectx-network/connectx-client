@@ -96,7 +96,7 @@ const EventCard = (props: EventCardProps) => {
         </Text>
       </Paper>
 
-      <ActionIcon
+      {/* <ActionIcon
         aria-label="Bookmark"
         variant="light"
         size="lg"
@@ -104,7 +104,7 @@ const EventCard = (props: EventCardProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <Icons.bookmarkGradient className="h-5 w-5" />
-      </ActionIcon>
+      </ActionIcon> */}
 
       <Stack mt={12} gap={8} className="bg-[#29313E]">
         <Title c="white" fz={18} lineClamp={2}>

@@ -19,7 +19,7 @@ const EventPage = () => {
     <div>
       <Flex justify="space-between">
         <Text fz={24}>Events</Text>
-        <EventFilter />
+        {/* <EventFilter /> */}
       </Flex>
       <Space h={20} />
       <SimpleGrid

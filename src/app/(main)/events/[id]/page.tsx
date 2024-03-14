@@ -154,7 +154,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 alt={eventDetailData.name}
               />
               <Flex gap={8} pos="absolute" top={8} right={8}>
-                <ActionIcon
+                {/* <ActionIcon
                   aria-label="Bookmark event"
                   size="lg"
                   variant="gradient"
@@ -165,7 +165,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   }}
                 >
                   <IconBookmark />
-                </ActionIcon>
+                </ActionIcon> */}
                 <EventShareBtn id={id} />
               </Flex>
               <Flex

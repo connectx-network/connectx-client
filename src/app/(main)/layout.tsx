@@ -197,7 +197,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           >
             {children}
           </AppShell.Main>
-          <AppShell.Footer className="flex justify-center items-center p-2 md:ml-[10%]">
+          <AppShell.Footer className="flex justify-center items-center p-2 md:ml-[300px]">
             <Text>
               Powered by{" "}
               <a target="_blank" href="https://twendeesoft.com/">
