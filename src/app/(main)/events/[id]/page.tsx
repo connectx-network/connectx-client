@@ -314,7 +314,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
           rightSection={<Icons.rightArrow />}
           style={{
             position: "fixed",
-            bottom: 20,
+            bottom: 50,
             left: "50%",
             transform: "translateX(-50%)",
           }}

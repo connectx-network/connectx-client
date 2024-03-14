@@ -191,12 +191,25 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             style={{
               position: "relative",
               maxWidth: !auth.isAuthenticated ? "960px" : "none",
-              margin: !auth.isAuthenticated ? "0 auto" : "0",
+              margin: !auth.isAuthenticated ? "0 auto" : "0 0 45px",
               // padding: isMobile && isEventMapPath ? "60px 0 0" : "none",
             }}
           >
             {children}
           </AppShell.Main>
+          <AppShell.Footer className="flex justify-center items-center p-2 md:ml-[10%]">
+            <Text>
+              Powered by{" "}
+              <a target="_blank" href="https://twendeesoft.com/">
+                <NextImage
+                  alt="Twendee software"
+                  src={"/logo-twendee.svg"}
+                  width={100}
+                  height={20}
+                />
+              </a>
+            </Text>
+          </AppShell.Footer>
         </AppShell>
       )}
     </>

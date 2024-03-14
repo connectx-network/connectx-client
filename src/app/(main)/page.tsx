@@ -60,7 +60,7 @@ const HomePage = () => {
         ))}
       </SimpleGrid>
       <Space h={40} />
-      <Box pos="relative" maw={500} h={230}>
+      <Box pos="relative" maw={500} h={230} hidden>
         <Image
           component={NextImage}
           src="https://cryptoevents.global/wp-content/uploads/Crypto-Fest-2022.jpg"
