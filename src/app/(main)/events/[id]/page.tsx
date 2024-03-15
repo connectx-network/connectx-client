@@ -26,7 +26,7 @@ import confetti from "canvas-confetti";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { IconCircleCheck } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import {
   checkJoinedEventRequest,
@@ -50,6 +50,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
   const queryClient = useQueryClient();
   const [openedQRCode, { open: openQRCode, close: closeQRCode }] =
     useDisclosure(false);
+  const isExistNavbar = useMediaQuery("(min-width: 768px)");
 
   const { data: eventDetailData } = useQuery({
     queryKey: [QUERY_KEY.GET_EVENT_DETAIL, id],
@@ -66,7 +67,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
 
   const joinEventMutation = useMutation({
     mutationFn: async () => {
-      if(!eventDetailData) return;
+      if (!eventDetailData) return;
       await joinEventRequest(eventDetailData.id);
     },
     onSuccess: async () => {
@@ -145,6 +146,52 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
+      {auth.isAuthenticated && (
+        <div
+          style={{
+            position: "sticky",
+            bottom: 0,
+            left: 0,
+            top: "calc(100vh - 120px)",
+            display: "flex",
+            justifyContent: "center",
+            pointerEvents: "none",
+          }}
+        >
+          <Button
+            className="hover:opacity-90 shadow-md"
+            h={58}
+            w={200}
+            radius={12}
+            variant="gradient"
+            gradient={{
+              from: "rgba(86, 105, 255, 1)",
+              to: "rgba(191, 86, 255, 1)",
+              deg: 180,
+            }}
+            justify="space-between"
+            leftSection={<span />}
+            rightSection={<Icons.rightArrow />}
+            style={
+              isExistNavbar
+                ? {
+                    position: "relative",
+                    pointerEvents: "auto",
+                  }
+                : {
+                    position: "fixed",
+                    bottom: 50,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    pointerEvents: "auto",
+                  }
+            }
+            onClick={() => handleProcessEvent(!!checkJoinedEvent?.joined)}
+          >
+            {checkJoinedEvent?.joined ? "Show QR code" : "Join"}
+          </Button>
+        </div>
+      )}
       {eventDetailData && (
         <Center pb={70} pt={20}>
           <Stack maw={672}>
@@ -298,32 +345,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
           </Stack>
         </Center>
       )}
-      {auth.isAuthenticated && (
-        <Button
-          className="hover:opacity-90"
-          h={58}
-          w={200}
-          radius={12}
-          variant="gradient"
-          gradient={{
-            from: "rgba(86, 105, 255, 1)",
-            to: "rgba(191, 86, 255, 1)",
-            deg: 180,
-          }}
-          justify="space-between"
-          leftSection={<span />}
-          rightSection={<Icons.rightArrow />}
-          style={{
-            position: "fixed",
-            bottom: 50,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-          onClick={() => handleProcessEvent(!!checkJoinedEvent?.joined)}
-        >
-          {checkJoinedEvent?.joined ? "Show QR code" : "Join"}
-        </Button>
-      )}
+
       <Modal
         opened={openedQRCode}
         onClose={closeQRCode}
