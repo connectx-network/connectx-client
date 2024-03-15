@@ -66,7 +66,8 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
 
   const joinEventMutation = useMutation({
     mutationFn: async () => {
-      await joinEventRequest(id);
+      if(!eventDetailData) return;
+      await joinEventRequest(eventDetailData.id);
     },
     onSuccess: async () => {
       confetti({
