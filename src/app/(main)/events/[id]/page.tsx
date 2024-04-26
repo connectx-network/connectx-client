@@ -27,6 +27,7 @@ import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { IconCircleCheck } from "@tabler/icons-react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import ReactPlayer from "react-player";
 
 import {
   checkJoinedEventRequest,
@@ -344,7 +345,20 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 }}
               />
             </Link>
+
+            {eventAssets.video && (
+              <>
+                <Divider />
+                <Text fz={18} fw={500}>
+                  Video
+                </Text>
+                <Flex justify="center" gap={8}>
+                  <ReactPlayer url={eventAssets.video} />
+                </Flex>
+              </>
+            )}
             <Divider />
+
             <Text fz={18} fw={500}>
               Host by
             </Text>
@@ -362,11 +376,15 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 </Link>
               ))}
             </Flex>
-            <Divider />
-            <Text fz={18} fw={500}>
-              Thông tin đăng ký
-            </Text>
-            <EventForm eventData={eventDetailData} />
+            {eventDetailData.eventPhases.length > 0 && (
+              <>
+                <Divider />
+                <Text fz={18} fw={500}>
+                  Attendee contact details
+                </Text>
+                <EventForm eventData={eventDetailData} />
+              </>
+            )}
           </Stack>
         </Center>
       )}
