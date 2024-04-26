@@ -3,6 +3,7 @@ import { objectToQueryStringByComma } from "@/utils/query";
 import { PaginationResponse } from "@/types/common";
 import {
   CheckJoinedEventResponse,
+  EventContactBody,
   EventDetail,
   EventListParam,
   EventListResponse,
@@ -41,5 +42,10 @@ export const checkJoinedEventRequest = async (
   eventId: string
 ): Promise<CheckJoinedEventResponse> => {
   const { data } = await axiosInstance.get(`/event/check-join/${eventId}`);
+  return data;
+};
+
+export const resgiterContactEventRequest = async (body: EventContactBody) => {
+  const { data } = await axiosInstance.post(`/user/import-event`, body);
   return data;
 };

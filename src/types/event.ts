@@ -46,6 +46,7 @@ export type EventDetail = {
   eventAssets: EventAsset[];
   eventHosts: EventHost[];
   joinedEventUsers: JoinedEventUser[];
+  eventPhases: EventPhases[];
   _count: EventCount;
 };
 
@@ -54,10 +55,16 @@ export type EventCategory = {
   name: string;
 };
 
+export enum EventAssetType {
+  IMAGE = "IMAGE",
+  VIDEO = "VIDEO",
+  BACKGROUND = "BACKGROUND",
+}
+
 export type EventAsset = {
   id: string;
   url: string;
-  type: string;
+  type: EventAssetType;
   eventId: string;
 };
 
@@ -93,4 +100,24 @@ export type EventCount = {
 
 export type CheckJoinedEventResponse = {
   joined: boolean;
+};
+
+export type EventPhases = {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+  eventId: string;
+};
+
+export type EventContactBody = {
+  email: string;
+  fullName: string;
+  phoneNumber: string;
+  company: string;
+  jobTitle: string;
+  gender: string;
+  eventId: string;
+  phaseIds: string[];
+  knowEventBy: string;
 };

@@ -31,6 +31,7 @@ import { showErrorNotification } from "@/utils";
 import { IconCurrentLocation } from "@tabler/icons-react";
 import { MAIN_LAYOUT } from "@/constant";
 import NextImage from "next/image";
+import { EventAssetType } from "@/types/event";
 const INITIAL_CAMERA = {
   center: { lat: 21.0278, lng: 105.8342 },
   zoom: 13,
@@ -99,8 +100,12 @@ const EventMapPage = () => {
   > = useMemo(() => {
     if (!eventListData) return {};
     return eventListData.data.reduce((acc, event) => {
+      const backgroundImage =
+        event.eventAssets?.find(
+          (item) => item.type === EventAssetType.BACKGROUND
+        )?.url || "";
       acc[event.name] = {
-        image: event.eventAssets?.[0]?.url || "",
+        image: backgroundImage,
         name: event.name || "",
         location: event.location || "",
       };
@@ -110,28 +115,26 @@ const EventMapPage = () => {
 
   const renderAutocompleteOption: AutocompleteProps["renderOption"] = ({
     option,
-  }) => (
-    <Flex gap="sm">
-      <div className="w-14 h-14">
+  }) => {
+    return (
+      <Flex gap="sm">
         <Image
-          component={NextImage}
           src={dataEventOptions[option.value].image}
           alt={dataEventOptions[option.value].name}
-          fill
-          quality={70}
-          radius={4}
+          w={56}
+          h={56}
         />
-      </div>
-      <div>
-        <Text size="sm" lineClamp={1}>
-          {dataEventOptions[option.value].name}
-        </Text>
-        <Text size="xs" opacity={0.5} lineClamp={1}>
-          {dataEventOptions[option.value].location}
-        </Text>
-      </div>
-    </Flex>
-  );
+        <div>
+          <Text size="sm" lineClamp={1}>
+            {dataEventOptions[option.value].name}
+          </Text>
+          <Text size="xs" opacity={0.5} lineClamp={1}>
+            {dataEventOptions[option.value].location}
+          </Text>
+        </div>
+      </Flex>
+    );
+  };
 
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -193,20 +196,26 @@ const EventMapPage = () => {
             {...cameraProps}
             onCameraChanged={handleCameraChange}
           >
-            {eventListData?.data.map((event, index) => (
-              <MapMarker
-                key={index}
-                event={{
-                  name: event.name,
-                  image: event.eventAssets?.[0]?.url,
-                }}
-                position={{
-                  lat: Number(event.eventLocationDetail.latitude),
-                  lng: Number(event.eventLocationDetail.longitude),
-                }}
-                active={event.id === activeMarker}
-              />
-            ))}
+            {eventListData?.data.map((event, index) => {
+              const backgroundImage =
+                event.eventAssets?.find(
+                  (item) => item.type === EventAssetType.BACKGROUND
+                )?.url || "";
+              return (
+                <MapMarker
+                  key={index}
+                  event={{
+                    name: event.name,
+                    image: backgroundImage,
+                  }}
+                  position={{
+                    lat: Number(event.eventLocationDetail.latitude),
+                    lng: Number(event.eventLocationDetail.longitude),
+                  }}
+                  active={event.id === activeMarker}
+                />
+              );
+            })}
             {currentLocation && (
               <CurrentLocationMark
                 position={{
@@ -278,72 +287,80 @@ const EventMapPage = () => {
             style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
             onSlideChange={handleEventSlideChange}
           >
-            {eventListData?.data.map((event, index) => (
-              <Carousel.Slide
-                key={index}
-                style={{
-                  width: "100%",
-                  height: "100px",
-                }}
-              >
-                <Flex
-                  pos="relative"
-                  align="center"
+            {eventListData?.data.map((event, index) => {
+              const backgroundImage =
+                event.eventAssets?.find(
+                  (item) => item.type === EventAssetType.BACKGROUND
+                )?.url || "";
+              return (
+                <Carousel.Slide
+                  key={index}
                   style={{
-                    borderRadius: "16px",
-                    backgroundColor: "#29313E",
-                    border:
-                      activeMarker === event.id ? `1px solid #5669ff` : "none",
+                    width: "100%",
+                    height: "100px",
                   }}
                 >
-                  <Image
-                    src={event.eventAssets?.[0]?.url}
-                    alt={event.name}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                      borderRadius: "12px",
-                      marginLeft: "8px",
-                    }}
-                  />
                   <Flex
-                    direction="column"
-                    justify="space-between"
-                    align="flex-start"
-                    gap={20}
-                    p={8}
+                    pos="relative"
+                    align="center"
+                    style={{
+                      borderRadius: "16px",
+                      backgroundColor: "#29313E",
+                      border:
+                        activeMarker === event.id
+                          ? `1px solid #5669ff`
+                          : "none",
+                    }}
                   >
-                    <Stack gap={4}>
-                      <Text fz={12} c="rgba(255, 255, 255, 1)">
-                        {dayjs(event.eventDate).format("DD/MM/YYYY")}
-                      </Text>
-                      <Title
-                        order={6}
-                        lineClamp={2}
-                        h={42}
-                        c="rgba(255, 255, 255, 1)"
-                      >
-                        {event.name}
-                      </Title>
-                    </Stack>
-                    <Flex gap={8} align="center">
-                      <Icons.location />
-                      <Text c="gray" fz={12} lineClamp={1}>
-                        {event.location}
-                      </Text>
+                    <Image
+                      src={backgroundImage}
+                      alt={event.name}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        borderRadius: "12px",
+                        marginLeft: "8px",
+                      }}
+                    />
+                    <Flex
+                      direction="column"
+                      justify="space-between"
+                      align="flex-start"
+                      gap={20}
+                      p={8}
+                    >
+                      <Stack gap={4}>
+                        <Text fz={12} c="rgba(255, 255, 255, 1)">
+                          {dayjs(event.eventDate).format("DD/MM/YYYY")}
+                        </Text>
+                        <Title
+                          order={6}
+                          lineClamp={2}
+                          h={42}
+                          c="rgba(255, 255, 255, 1)"
+                        >
+                          {event.name}
+                        </Title>
+                      </Stack>
+                      <Flex gap={8} align="center">
+                        <Icons.location />
+                        <Text c="gray" fz={12} lineClamp={1}>
+                          {event.location}
+                        </Text>
+                      </Flex>
                     </Flex>
-                  </Flex>
-                  {/* <UnstyledButton
+                    {/* <UnstyledButton
                     style={{ position: "absolute", top: 8, right: 12 }}
                   >
                     <Text fz={10} c={"grape"} td="underline">
                       Go to location
                     </Text>
                   </UnstyledButton> */}
-                </Flex>
-              </Carousel.Slide>
-            ))}
+                  </Flex>
+                </Carousel.Slide>
+              );
+            })}
           </Carousel>
         )}
       </div>

@@ -7,6 +7,7 @@ import { QUERY_KEY } from "@/constant/query-key";
 import { useEventListParamStore } from "@/store/event-list.store";
 import { getEventListRequest } from "@/api/event";
 import { useCheckExistNavbar } from "@/hooks";
+import { EventAssetType } from "@/types/event";
 
 const EventPage = () => {
   const { param } = useEventListParamStore();
@@ -31,19 +32,25 @@ const EventPage = () => {
           xl: isExistNavbar ? 3 : 2,
         }}
       >
-        {eventListData?.data.map((event) => (
-          <EventHorizontialCard
-            key={event.id}
-            event={{
-              id: event.id,
-              shortId: event.shortId,
-              name: event.name,
-              date: event.eventDate,
-              imageUrl: event.eventAssets?.[0]?.url,
-              location: event.location,
-            }}
-          />
-        ))}
+        {eventListData?.data.map((event) => {
+          const backgroundImage =
+            event.eventAssets?.find(
+              (item) => item.type === EventAssetType.BACKGROUND
+            )?.url || "";
+          return (
+            <EventHorizontialCard
+              key={event.id}
+              event={{
+                id: event.id,
+                shortId: event.shortId,
+                name: event.name,
+                date: event.eventDate,
+                imageUrl: backgroundImage,
+                location: event.location,
+              }}
+            />
+          );
+        })}
       </SimpleGrid>
     </div>
   );
