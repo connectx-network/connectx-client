@@ -21,6 +21,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
+import { EventAssetType } from "@/types/event";
 
 const HomePage = () => {
   const { param } = useEventListParamStore();
@@ -45,19 +46,25 @@ const HomePage = () => {
         cols={{ base: 1, xs: 2, md: 3, lg: isExistNavbar ? 4 : 3 }}
         mt={6}
       >
-        {eventListData?.data.map((event) => (
-          <EventCard
-            key={event.id}
-            id={event.shortId}
-            name={event.name}
-            imageUrl={event.eventAssets?.[0].url}
-            eventDate={event.eventDate}
-            location={event.location}
-            joinedUser={event.joinedEventUsers}
-            count={event._count}
-            shortId={event.shortId}
-          />
-        ))}
+        {eventListData?.data.map((event) => {
+          const backgroundImage =
+            event.eventAssets?.find(
+              (item) => item.type === EventAssetType.BACKGROUND
+            )?.url || "";
+          return (
+            <EventCard
+              key={event.id}
+              id={event.shortId}
+              name={event.name}
+              imageUrl={backgroundImage}
+              eventDate={event.eventDate}
+              location={event.location}
+              joinedUser={event.joinedEventUsers}
+              count={event._count}
+              shortId={event.shortId}
+            />
+          );
+        })}
       </SimpleGrid>
       <Space h={40} />
       <Box pos="relative" maw={500} h={230} hidden>
@@ -124,19 +131,25 @@ const HomePage = () => {
             xl: isExistNavbar ? 3 : 2,
           }}
         >
-          {eventListData?.data.map((event) => (
-            <EventHorizontialCard
-              key={event.id}
-              event={{
-                id: event.shortId,
-                name: event.name,
-                date: event.eventDate,
-                imageUrl: event.eventAssets?.[0]?.url,
-                location: event.location,
-                shortId: event.shortId,
-              }}
-            />
-          ))}
+          {eventListData?.data.map((event) => {
+            const backgroundImage =
+              event.eventAssets?.find(
+                (item) => item.type === EventAssetType.BACKGROUND
+              )?.url || "";
+            return (
+              <EventHorizontialCard
+                key={event.id}
+                event={{
+                  id: event.shortId,
+                  name: event.name,
+                  date: event.eventDate,
+                  imageUrl: backgroundImage,
+                  location: event.location,
+                  shortId: event.shortId,
+                }}
+              />
+            );
+          })}
         </SimpleGrid>
       </Stack>
     </div>

@@ -35,10 +35,11 @@ import {
 } from "@/api/event";
 import { Icons } from "@/components/icons";
 import { QUERY_KEY } from "@/constant/query-key";
-import { EventInviteBtn, EventShareBtn } from "@/components/event";
+import { EventForm, EventInviteBtn, EventShareBtn } from "@/components/event";
 import { useAuthStore } from "@/store/auth.store";
 import { showErrorNotification, showSuccessNotification } from "@/utils";
 import { COLORS } from "@/constant/color";
+import { EventAssetType } from "@/types/event";
 
 dayjs.extend(LocalizedFormat);
 const MAP_MODE = "search";
@@ -119,6 +120,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
       text: text,
     };
   }, [eventDetailData]);
+
   const eventLocationUrl = useMemo(() => {
     if (!eventDetailData?.location)
       return {
@@ -144,6 +146,23 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const eventAssets = useMemo(() => {
+    const urlBackground =
+      eventDetailData?.eventAssets?.find(
+        (item) => item.type === EventAssetType.BACKGROUND
+      )?.url || "";
+
+    const urlVideo =
+      eventDetailData?.eventAssets?.find(
+        (item) => item.type === EventAssetType.VIDEO
+      )?.url || "";
+
+    return {
+      background: urlBackground,
+      video: urlVideo,
+    };
+  }, [eventDetailData?.eventAssets]);
+
   return (
     <div>
       {auth.isAuthenticated && (
@@ -156,6 +175,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             display: "flex",
             justifyContent: "center",
             pointerEvents: "none",
+            zIndex: 100,
           }}
         >
           <Button
@@ -197,7 +217,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
           <Stack maw={672}>
             <Box maw={672} pos="relative">
               <Image
-                src={eventDetailData.eventAssets?.[0].url}
+                src={eventAssets.background}
                 radius={12}
                 alt={eventDetailData.name}
               />
@@ -342,6 +362,11 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 </Link>
               ))}
             </Flex>
+            <Divider />
+            <Text fz={18} fw={500}>
+              Thông tin đăng ký
+            </Text>
+            <EventForm eventData={eventDetailData} />
           </Stack>
         </Center>
       )}
