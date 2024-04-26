@@ -96,7 +96,7 @@ const EventForm = (props: EventFormProps) => {
         )}
       >
         <Grid gutter="xl" pb={40}>
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <NativeSelect
               withAsterisk
               label="Prefix / Danh xưng"
@@ -105,7 +105,7 @@ const EventForm = (props: EventFormProps) => {
             />
           </Grid.Col>
 
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <TextInput
               withAsterisk
               label="Full name / Họ và tên"
@@ -114,7 +114,7 @@ const EventForm = (props: EventFormProps) => {
             />
           </Grid.Col>
 
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <TextInput
               withAsterisk
               label="Mobile / Số điện thoại"
@@ -123,7 +123,7 @@ const EventForm = (props: EventFormProps) => {
             />
           </Grid.Col>
 
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <TextInput
               withAsterisk
               label="Bussiness email / Email công việc"
@@ -133,7 +133,7 @@ const EventForm = (props: EventFormProps) => {
             />
           </Grid.Col>
 
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <TextInput
               withAsterisk
               label="Job title / Chức vụ"
@@ -142,7 +142,7 @@ const EventForm = (props: EventFormProps) => {
             />
           </Grid.Col>
 
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <TextInput
               withAsterisk
               label="Organization / Tổ chức"
