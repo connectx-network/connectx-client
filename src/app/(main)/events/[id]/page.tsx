@@ -353,7 +353,13 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   Video
                 </Text>
                 <Flex justify="center" gap={8}>
-                  <ReactPlayer url={eventAssets.video} />
+                  <div className="relative w-full min-h-72">
+                    <ReactPlayer
+                      url={eventAssets.video}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
                 </Flex>
               </>
             )}
