@@ -1,4 +1,4 @@
-import { EventDetail } from "@/types/event";
+import { EventAssetType, EventDetail } from "@/types/event";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -15,6 +15,10 @@ export async function generateMetadata({
     (res) => res.json()
   );
 
+  const backgroundImage =
+    event?.eventAssets?.find((item) => item.type === EventAssetType.BACKGROUND)
+      ?.url || "";
+
   return {
     title: event.name,
     openGraph: {
@@ -23,7 +27,7 @@ export async function generateMetadata({
       description: event.description,
       images: [
         {
-          url: event?.eventAssets?.[0].url, // Must be an absolute URL
+          url: backgroundImage, // Must be an absolute URL
           width: 800,
           height: 600,
         },

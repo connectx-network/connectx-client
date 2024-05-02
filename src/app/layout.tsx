@@ -7,7 +7,6 @@ import "@mantine/dates/styles.css";
 import "@mantine/spotlight/styles.css";
 import "@mantine/carousel/styles.css";
 import Providers from "@/utils/provider";
-import Head from "next/head";
 
 const lexend = Lexend({ subsets: ["latin"] });
 
@@ -20,6 +19,19 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     title: "ConnectX Network",
+  },
+  openGraph: {
+    title: "ConnectX",
+    type: "website",
+    description: "ConnectX",
+    images: [
+      {
+        url: "https://storage.googleapis.com/connectx-322be.appspot.com/APP_LOGO%2Fconnectx_logo.png", // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    url: "https://connectx.network",
   },
 };
 
