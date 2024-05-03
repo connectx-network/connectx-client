@@ -87,7 +87,6 @@ const VerificationPage = () => {
     }
 
     const data = mutationVerifyOtpAccount.mutateAsync(verifyOtpBody);
-    console.log("😻 ~ handleVerifyCode ~ data:", data);
   };
 
   useEffect(() => {

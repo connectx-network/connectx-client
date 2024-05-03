@@ -20,12 +20,10 @@ const SliderEvent = (props: SliderEventProps) => {
 
   useEffect(() => {
     if (!map) return;
-    console.log("😻 ~ useEffect ~ map:", map);
   }, [map]);
 
   const handleEventSlideChange = useCallback(
     (index: number) => {
-      console.log("😻 ~ handleEventSlideChange ~ index:", map);
       new Tween(cameraProps)
         .to(
           {

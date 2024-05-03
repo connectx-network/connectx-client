@@ -382,15 +382,16 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 </Link>
               ))}
             </Flex>
-            {eventDetailData.eventPhases.length > 0 && (
-              <>
-                <Divider />
-                <Text fz={18} fw={500}>
-                  Attendee contact details
-                </Text>
-                <EventForm eventData={eventDetailData} />
-              </>
-            )}
+            {!auth.isAuthenticated &&
+              eventDetailData.eventPhases.length > 0 && (
+                <>
+                  <Divider />
+                  <Text fz={18} fw={500}>
+                    Attendee contact details
+                  </Text>
+                  <EventForm eventData={eventDetailData} />
+                </>
+              )}
           </Stack>
         </Center>
       )}

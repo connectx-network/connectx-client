@@ -8,7 +8,6 @@ import { useMemo } from "react";
 
 const CXDateRangePicker = (props: DatePickerProps<"range">) => {
   const { value, onChange } = props;
-  console.log("😻 ~ CXDateRangePicker ~ value:", value);
   const [opened, { close, open, toggle }] = useDisclosure(false);
   const handleDateChange = (value: DatesRangeValue) => {
     onChange?.(value);
@@ -41,12 +40,7 @@ const CXDateRangePicker = (props: DatePickerProps<"range">) => {
         </Button>
       </Popover.Target>
       <Popover.Dropdown>
-        <DatePicker
-          type="range"
-          value={value}
-          onChange={handleDateChange}
-          onLevelChange={(level) => console.log("level", level)}
-        />
+        <DatePicker type="range" value={value} onChange={handleDateChange} />
       </Popover.Dropdown>
     </Popover>
   );

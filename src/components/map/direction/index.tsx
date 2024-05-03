@@ -38,7 +38,6 @@ export default function Directions(props: DirectionsProps) {
         provideRouteAlternatives: true,
       })
       .then((response) => {
-        console.log("😻 ~ .then ~ response:", response);
         directionsRenderer.setDirections(response);
         setRoutes(response.routes);
       });
