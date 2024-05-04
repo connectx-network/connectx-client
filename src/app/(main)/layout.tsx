@@ -197,8 +197,21 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           >
             {children}
           </AppShell.Main>
-          <AppShell.Footer className="flex justify-center items-center p-2 md:ml-[300px]">
-            <Text>Powered by Twendee</Text>
+          <AppShell.Footer
+            className={`flex justify-center items-center p-2 ${
+              auth.isAuthenticated ? "md:ml-[300px]" : ""
+            }`}
+          >
+            <Text>
+              Powered by{" "}
+              <a
+                className="text-white"
+                target="_blank"
+                href="https://twendeesoft.com/"
+              >
+                Twendee
+              </a>
+            </Text>
           </AppShell.Footer>
         </AppShell>
       )}
