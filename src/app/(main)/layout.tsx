@@ -53,6 +53,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     queryFn: getUserInfoRequest,
     retry: 0,
     enabled: !auth.isAuthenticated,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
