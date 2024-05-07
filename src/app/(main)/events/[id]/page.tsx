@@ -386,7 +386,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             {eventDetailData?.eventLinks.length > 0 &&
               eventDetailData?.eventLinks.map((link) => (
                 <div key={link.id}>
-                  <Text fz={18} fw={500}>
+                  <Text fz={18} fw={500} mb={12}>
                     {link.title}
                   </Text>
 
