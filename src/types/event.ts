@@ -47,6 +47,7 @@ export type EventDetail = {
   eventHosts: EventHost[];
   joinedEventUsers: JoinedEventUser[];
   eventPhases: EventPhases[];
+  eventLinks: EventLinks[];
   _count: EventCount;
 };
 
@@ -107,6 +108,13 @@ export type EventPhases = {
   title: string;
   description: string;
   order: number;
+  eventId: string;
+};
+
+export type EventLinks = {
+  id: string;
+  title: string;
+  url: string;
   eventId: string;
 };
 

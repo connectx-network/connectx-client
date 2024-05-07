@@ -382,6 +382,26 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 </Link>
               ))}
             </Flex>
+
+            {eventDetailData?.eventLinks.length > 0 &&
+              eventDetailData?.eventLinks.map((link) => (
+                <div key={link.id}>
+                  <Text fz={18} fw={500}>
+                    {link.title}
+                  </Text>
+
+                  <Link
+                    href={link.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className=" text-[#5669ff]"
+                  >
+                    <span className="hover:underline hover:cursor-pointer">
+                      Xem tại đây
+                    </span>
+                  </Link>
+                </div>
+              ))}
             {!auth.isAuthenticated &&
               eventDetailData.eventPhases.length > 0 && (
                 <>
