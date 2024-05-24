@@ -63,7 +63,7 @@ const EventForm = (props: EventFormProps) => {
       await resgiterContactEventRequest(data),
     onSuccess: (data) => {
       showSuccessNotification({
-        message: "Submit successfully!",
+        message: "Registration successfully!",
       });
       registerContactEventForm.reset();
       registerContactEventForm.setValues({});
@@ -102,7 +102,6 @@ const EventForm = (props: EventFormProps) => {
             <TextInput
               withAsterisk
               label="Name"
-              placeholder="Name"
               {...registerContactEventForm.getInputProps("fullName")}
             />
           </Grid.Col>
@@ -112,7 +111,6 @@ const EventForm = (props: EventFormProps) => {
               withAsterisk
               label="Email"
               type="email"
-              placeholder="Email"
               {...registerContactEventForm.getInputProps("email")}
             />
           </Grid.Col>
@@ -121,7 +119,6 @@ const EventForm = (props: EventFormProps) => {
             <TextInput
               withAsterisk
               label="Your company"
-              placeholder="Your company"
               {...registerContactEventForm.getInputProps("company")}
             />
           </Grid.Col>
@@ -129,7 +126,6 @@ const EventForm = (props: EventFormProps) => {
           <Grid.Col span={12}>
             <TextInput
               label="Your company's website"
-              placeholder="Your company's website"
               {...registerContactEventForm.getInputProps("companyWebsite")}
             />
           </Grid.Col>
@@ -138,7 +134,6 @@ const EventForm = (props: EventFormProps) => {
             <TextInput
               withAsterisk
               label="Your Title"
-              placeholder="Your Title"
               {...registerContactEventForm.getInputProps("jobTitle")}
             />
           </Grid.Col>
@@ -146,7 +141,6 @@ const EventForm = (props: EventFormProps) => {
           <Grid.Col span={12}>
             <TextInput
               label="Your Linkedin Profile"
-              placeholder="Your Linkedin Profile"
               {...registerContactEventForm.getInputProps("linkedinProfile")}
             />
           </Grid.Col>
@@ -155,7 +149,6 @@ const EventForm = (props: EventFormProps) => {
             <TextInput
               withAsterisk
               label="Your Telegram ID"
-              placeholder="Your Telegram ID"
               {...registerContactEventForm.getInputProps("telegram")}
             />
           </Grid.Col>
@@ -163,7 +156,6 @@ const EventForm = (props: EventFormProps) => {
           <Grid.Col span={12}>
             <TextInput
               label="How did you find us (ConnectX, Luma, Friend, Organizer, Other)"
-              placeholder="How did you find us (ConnectX, Luma, Friend, Organizer, Other)"
               {...registerContactEventForm.getInputProps("knowEventBy")}
             />
           </Grid.Col>
