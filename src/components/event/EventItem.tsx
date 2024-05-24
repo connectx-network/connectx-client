@@ -39,7 +39,7 @@ export const EventItem: React.FC<EventItemProps> = ({ event }) => {
             <Text fz={12} c="blue">
               {dayjs(event.eventDate).format("HH:mm A - DD MMM YYYY")}
             </Text>
-            <Link href={`${ROUTER.EVENT}/${event.id}`}>
+            <Link href={`${ROUTER.EVENT}/${event.shortId}`}>
               <Text
                 c={computedColorScheme === "dark" ? "white" : "black"}
                 fz={18}

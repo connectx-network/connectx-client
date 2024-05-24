@@ -67,6 +67,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     }
   );
 
+  console.log("😻 ~ EventDetail ~ checkJoinedEvent:", checkJoinedEvent);
   const joinEventMutation = useMutation({
     mutationFn: async () => {
       if (!eventDetailData) return;
@@ -209,7 +210,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
             bottom: 0,
             left: 0,
             top: "calc(100vh - 120px)",
-            display: "flex",
+            display: "none",
             justifyContent: "center",
             pointerEvents: "none",
             zIndex: 100,
@@ -438,7 +439,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   </Link>
                 </div>
               ))}
-            {
+            {!checkJoinedEvent?.joined && (
               <>
                 <Divider />
                 <Text fz={18} fw={500}>
@@ -446,7 +447,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                 </Text>
                 <EventForm eventData={eventDetailData} />
               </>
-            }
+            )}
           </Stack>
         </Center>
       )}
