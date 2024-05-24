@@ -9,12 +9,18 @@ export type JoinedUserEventParam = PaginationParam & {
   eventId: string;
 };
 
+export enum EventType {
+  READONLY = "READONLY",
+  NORMAL = "NORMAL",
+}
+
 export type EventListResponse = {
   id: string;
   name: string;
   tiketPrice: any;
   createdAt: string;
   eventDate: string;
+  eventEndDate: string;
   location: string;
   description: string;
   sponsors: any;
@@ -49,6 +55,8 @@ export type EventDetail = {
   eventPhases: EventPhases[];
   eventLinks: EventLinks[];
   _count: EventCount;
+  eventType: EventType;
+  registUrl: string;
 };
 
 export type EventCategory = {
@@ -121,11 +129,17 @@ export type EventLinks = {
 export type EventContactBody = {
   email: string;
   fullName: string;
-  phoneNumber: string;
   company: string;
   jobTitle: string;
-  gender: string;
   eventId: string;
-  phaseIds: string[];
   knowEventBy: string;
+  linkedInUrl: string;
+  companyUrl: string;
+  telegramId: string;
 };
+
+export enum EventStatus {
+  UPCOMING = "UPCOMING",
+  ONGOING = "ONGOING",
+  ENDED = "ENDED",
+}

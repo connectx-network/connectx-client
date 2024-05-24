@@ -21,14 +21,14 @@ const GENDER_SELECT = [
 ];
 
 export type RegisterContactEventDataForm = {
-  email: string;
   fullName: string;
-  phoneNumber: string;
+  email: string;
   company: string;
+  companyWebsite: string;
   jobTitle: string;
-  gender: string;
+  linkedinProfile: string;
+  telegram: string;
   knowEventBy: string;
-  phaseIds: string[];
 };
 
 type EventFormProps = {
@@ -39,25 +39,22 @@ const EventForm = (props: EventFormProps) => {
   const { eventData } = props;
   const registerContactEventForm = useForm<RegisterContactEventDataForm>({
     initialValues: {
-      email: "",
       fullName: "",
-      phoneNumber: "",
+      email: "",
       company: "",
+      companyWebsite: "",
       jobTitle: "",
-      gender: "MALE",
+      linkedinProfile: "",
+      telegram: "",
       knowEventBy: "",
-      phaseIds: [],
     },
 
     validate: {
-      email: (value) =>
-        /^\S+@\S+$/.test(value) ? null : "Bussiness email is invalid",
       fullName: (value) => (value.length > 0 ? null : "Full name is required"),
-      phoneNumber: (value) => (value.length > 0 ? null : "Mobile is required"),
-      company: (value) =>
-        value.length > 0 ? null : "Organization is required",
-      jobTitle: (value) => (value.length > 0 ? null : "Job title is required"),
-      gender: (value) => (value.length > 0 ? null : "Gender is required"),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Email is invalid"),
+      company: (value) => (value.length > 0 ? null : "Company is required"),
+      jobTitle: (value) => (value.length > 0 ? null : "Your title is required"),
+      telegram: (value) => (value.length > 0 ? null : "Telegram is required"),
     },
   });
 
@@ -69,9 +66,7 @@ const EventForm = (props: EventFormProps) => {
         message: "Submit successfully!",
       });
       registerContactEventForm.reset();
-      registerContactEventForm.setValues({
-        phaseIds: [],
-      });
+      registerContactEventForm.setValues({});
     },
     onError: (error) => {
       showErrorNotification({
@@ -82,7 +77,14 @@ const EventForm = (props: EventFormProps) => {
 
   const handleSubmitData = (data: RegisterContactEventDataForm) => {
     const dataBody: EventContactBody = {
-      ...data,
+      email: data.email,
+      fullName: data.fullName,
+      company: data.company,
+      companyUrl: data.companyWebsite,
+      jobTitle: data.jobTitle,
+      linkedInUrl: data.linkedinProfile,
+      telegramId: data.telegram,
+      knowEventBy: data.knowEventBy,
       eventId: eventData.id,
     };
     mutation.mutateAsync(dataBody);
@@ -96,91 +98,72 @@ const EventForm = (props: EventFormProps) => {
         )}
       >
         <Grid gutter="xl" pb={40}>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <NativeSelect
-              withAsterisk
-              label="Prefix / Danh xưng"
-              data={GENDER_SELECT}
-              {...registerContactEventForm.getInputProps("gender")}
-            />
-          </Grid.Col>
-
-          <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col span={12}>
             <TextInput
               withAsterisk
-              label="Full name / Họ và tên"
-              placeholder="Full name / Họ và tên"
+              label="Name"
+              placeholder="Name"
               {...registerContactEventForm.getInputProps("fullName")}
             />
           </Grid.Col>
 
-          <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col span={12}>
             <TextInput
               withAsterisk
-              label="Mobile / Số điện thoại"
-              placeholder="Mobile / Số điện thoại"
-              {...registerContactEventForm.getInputProps("phoneNumber")}
-            />
-          </Grid.Col>
-
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <TextInput
-              withAsterisk
-              label="Bussiness email / Email công việc"
+              label="Email"
               type="email"
-              placeholder="Bussiness email / Email công việc"
+              placeholder="Email"
               {...registerContactEventForm.getInputProps("email")}
             />
           </Grid.Col>
 
-          <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col span={12}>
             <TextInput
               withAsterisk
-              label="Job title / Chức vụ"
-              placeholder="Job title / Chức vụ"
-              {...registerContactEventForm.getInputProps("jobTitle")}
-            />
-          </Grid.Col>
-
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <TextInput
-              withAsterisk
-              label="Organization / Tổ chức"
-              placeholder="Organization / Tổ chức"
+              label="Your company"
+              placeholder="Your company"
               {...registerContactEventForm.getInputProps("company")}
             />
           </Grid.Col>
 
           <Grid.Col span={12}>
-            <Checkbox.Group
-              label="Quý khách muốn đăng ký tham gia phiên hội thảo nào?"
-              {...registerContactEventForm.getInputProps("phaseIds", {
-                type: "checkbox",
-              })}
-            >
-              <Stack mt={12} ml={24}>
-                {eventData.eventPhases.map((phase) => (
-                  <Checkbox
-                    key={phase.id}
-                    value={phase.id}
-                    label={`${phase.title}: ${phase.description}`}
-                    styles={{
-                      label: {
-                        fontSize: 14,
-                        fontWeight: 200,
-                        lineHeight: "24px",
-                      },
-                    }}
-                  />
-                ))}
-              </Stack>
-            </Checkbox.Group>
+            <TextInput
+              label="Your company's website"
+              placeholder="Your company's website"
+              {...registerContactEventForm.getInputProps("companyWebsite")}
+            />
           </Grid.Col>
+
           <Grid.Col span={12}>
-            <Textarea
-              label="Quý vị biết đến Diễn đàn Đổi mới sáng tạo Quốc gia qua kênh thông tin nào"
-              placeholder="Quý vị biết đến Diễn đàn Đổi mới sáng tạo Quốc gia qua kênh thông tin nào"
-              rows={4}
+            <TextInput
+              withAsterisk
+              label="Your Title"
+              placeholder="Your Title"
+              {...registerContactEventForm.getInputProps("jobTitle")}
+            />
+          </Grid.Col>
+
+          <Grid.Col span={12}>
+            <TextInput
+              label="Your Linkedin Profile"
+              placeholder="Your Linkedin Profile"
+              {...registerContactEventForm.getInputProps("linkedinProfile")}
+            />
+          </Grid.Col>
+
+          <Grid.Col span={12}>
+            <TextInput
+              withAsterisk
+              label="Your Telegram ID"
+              placeholder="Your Telegram ID"
+              {...registerContactEventForm.getInputProps("telegram")}
+            />
+          </Grid.Col>
+
+          <Grid.Col span={12}>
+            <TextInput
+              label="How did you find us (ConnectX, Luma, Friend, Organizer, Other)"
+              placeholder="How did you find us (ConnectX, Luma, Friend, Organizer, Other)"
               {...registerContactEventForm.getInputProps("knowEventBy")}
             />
           </Grid.Col>

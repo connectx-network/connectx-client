@@ -58,6 +58,7 @@ const HomePage = () => {
               name={event.name}
               imageUrl={backgroundImage}
               eventDate={event.eventDate}
+              eventEndDate={event.eventEndDate}
               location={event.location}
               joinedUser={event.joinedEventUsers}
               count={event._count}

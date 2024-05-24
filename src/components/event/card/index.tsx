@@ -3,6 +3,7 @@ import { Icons } from "@/components/icons";
 import {
   ActionIcon,
   Avatar,
+  Badge,
   Card,
   Flex,
   Image,
@@ -17,7 +18,14 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { ROUTER } from "@/constant";
-import { EventCount, JoinedEventUser } from "@/types/event";
+import { EventCount, EventStatus, JoinedEventUser } from "@/types/event";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isBetween);
 
 type EventCardProps = {
   id: string;
@@ -25,6 +33,7 @@ type EventCardProps = {
   imageUrl: string;
   location: string;
   eventDate: string;
+  eventEndDate: string;
   joinedUser: JoinedEventUser[];
   count: EventCount;
   shortId: string;
@@ -32,7 +41,16 @@ type EventCardProps = {
 const MAX_USER_DISPLAY = 3;
 
 const EventCard = (props: EventCardProps) => {
-  const { id, name, imageUrl, location, eventDate, joinedUser, count } = props;
+  const {
+    id,
+    name,
+    imageUrl,
+    location,
+    eventDate,
+    eventEndDate,
+    joinedUser,
+    count,
+  } = props;
   const router = useRouter();
   const eventDateFormat = useMemo(() => {
     return {
@@ -40,6 +58,33 @@ const EventCard = (props: EventCardProps) => {
       day: dayjs(eventDate).format("DD"),
     };
   }, [eventDate]);
+
+  const eventStatus = useMemo(() => {
+    if (dayjs().isSameOrAfter(dayjs(eventEndDate))) {
+      return {
+        color: "red",
+        title: EventStatus.ENDED,
+      };
+    }
+    if (dayjs().isBetween(dayjs(eventDate), dayjs(eventEndDate))) {
+      return {
+        color: "green",
+        title: EventStatus.ONGOING,
+      };
+    }
+
+    if (dayjs().isSameOrBefore(dayjs(eventDate))) {
+      return {
+        color: "blue",
+        title: EventStatus.UPCOMING,
+      };
+    }
+    return {
+      color: "green",
+      title: EventStatus.ONGOING,
+    };
+  }, [eventEndDate, eventDate]);
+
   return (
     <Card
       shadow="sm"
@@ -67,7 +112,16 @@ const EventCard = (props: EventCardProps) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </Card.Section>
-
+      <Badge
+        variant="filled"
+        color={eventStatus.color}
+        pos="absolute"
+        top={16}
+        right={16}
+        radius={4}
+      >
+        {eventStatus.title}
+      </Badge>
       <Paper className={classes.date}>
         <Text
           variant="gradient"
