@@ -40,7 +40,7 @@ import { EventForm, EventInviteBtn, EventShareBtn } from "@/components/event";
 import { useAuthStore } from "@/store/auth.store";
 import { showErrorNotification, showSuccessNotification } from "@/utils";
 import { COLORS } from "@/constant/color";
-import { EventAssetType } from "@/types/event";
+import { EventAssetType, EventStatus, EventType } from "@/types/event";
 
 dayjs.extend(LocalizedFormat);
 const MAP_MODE = "search";
@@ -140,6 +140,9 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     };
   }, [eventDetailData?.location]);
   const handleProcessEvent = (isJoinedEvent: boolean) => {
+    if (eventDetailData?.eventType === EventType.READONLY) {
+      window.open(eventDetailData?.registUrl, "_blank");
+    }
     if (isJoinedEvent) {
       openQRCode();
     } else {
@@ -164,9 +167,42 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
     };
   }, [eventDetailData?.eventAssets]);
 
+  const eventStatus = useMemo(() => {
+    if (!eventDetailData) return;
+    if (dayjs().isSameOrAfter(dayjs(eventDetailData.eventEndDate))) {
+      return {
+        color: "red",
+        title: EventStatus.ENDED,
+      };
+    }
+    if (
+      dayjs().isBetween(
+        dayjs(eventDetailData.eventDate),
+        dayjs(eventDetailData.eventEndDate)
+      )
+    ) {
+      return {
+        color: "green",
+        title: EventStatus.ONGOING,
+      };
+    }
+
+    if (dayjs().isSameOrBefore(dayjs(eventDetailData.eventDate))) {
+      return {
+        color: "blue",
+        title: EventStatus.UPCOMING,
+      };
+    }
+  }, [eventDetailData]);
+
+  const isEndEvent = useMemo(
+    () => eventStatus?.title && eventStatus.title !== EventStatus.ENDED,
+    [eventStatus]
+  );
+
   return (
     <div>
-      {auth.isAuthenticated && (
+      {auth.isAuthenticated && isEndEvent && (
         <div
           style={{
             position: "sticky",
@@ -318,7 +354,7 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
               About event
             </Text>
             <Spoiler
-              maxHeight={80}
+              maxHeight={400}
               showLabel="Show more"
               hideLabel="Hide"
               fz={16}
@@ -402,16 +438,15 @@ const EventDetail = ({ params }: { params: { id: string } }) => {
                   </Link>
                 </div>
               ))}
-            {!auth.isAuthenticated &&
-              eventDetailData.eventPhases.length > 0 && (
-                <>
-                  <Divider />
-                  <Text fz={18} fw={500}>
-                    Attendee contact details
-                  </Text>
-                  <EventForm eventData={eventDetailData} />
-                </>
-              )}
+            {
+              <>
+                <Divider />
+                <Text fz={18} fw={500}>
+                  Attendee contact details
+                </Text>
+                <EventForm eventData={eventDetailData} />
+              </>
+            }
           </Stack>
         </Center>
       )}
